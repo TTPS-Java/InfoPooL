@@ -1,5 +1,9 @@
+package objetos;
+
+import java.util.*;
+
 public class ViajePuntual extends Viaje {
- int id;
- Date fecha;
+ private int id;
+ private Date fecha;
 
 }
