@@ -12,4 +12,6 @@
 hs_err_pid*
 .classpath
 .settings
+.project
+MANIFEST.MF
 build
