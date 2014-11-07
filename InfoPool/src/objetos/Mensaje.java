@@ -1,11 +1,18 @@
 package objetos;
 
 public class Mensaje {
+	private int id;
 	private String asunto;
 	private String contenido;
 	private Evento evento;
 	private Viajero para;
 	private Viajero de;
+	public int getId() {
+		return id;
+	}
+	private void setId(int id) {
+		id = id;
+	}
 	
 	public Viajero getPara() {
 		return para;

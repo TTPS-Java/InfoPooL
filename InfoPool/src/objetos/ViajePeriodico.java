@@ -4,8 +4,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class ViajePeriodico extends Viaje {
-	public int id;
-	public LocalTime fecha;
+	private int id;
+	private LocalTime fecha;
 	private List<DiaSemana> dias;
 	public int getId() {
 		return id;

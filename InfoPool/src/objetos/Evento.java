@@ -4,12 +4,20 @@ import java.sql.Date;
 import java.time.LocalTime;
 
 public class Evento {
-	public String nombre;
-	public Date fecha;
-	public int duracionDias;
-	public LocalTime hora;
-	public String descripcion;
-	public Lugar lugar;
+	private int id;
+	private String nombre;
+	private Date fecha;
+	private int duracionDias;
+	private LocalTime hora;
+	private String descripcion;
+	private Lugar lugar;
+	public int getId() {
+		return id;
+	}
+	private void setId(int id) {
+		id = id;
+	}
+	
 	public void setHora(LocalTime hora){
 		this.hora=hora;
 	}

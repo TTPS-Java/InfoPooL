@@ -3,8 +3,6 @@ package objetos;
 public class Solicitud {
 	private int id;
 	private int cantidadAsientos;
-	//private Lugar desde;
-	//private Lugar hasta;
 	private Viaje viaje;
 	private Viajero solicitante;
 	private EstadoSolicitud estado;

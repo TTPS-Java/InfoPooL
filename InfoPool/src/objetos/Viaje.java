@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Viaje {
 	private int Id;
-	private int horaPartida;
-	private int horaVuelta;
+	private LocalTime horaPartida;
+	private LocalTime horaVuelta;
 	private int asientosLibres;
 	private Lugar desde;
 	private Lugar hasta;

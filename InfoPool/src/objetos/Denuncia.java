@@ -1,10 +1,10 @@
 package objetos;
 
 public class Denuncia {
-	public int id;
-	public String contenido;
-	public Viajero autor;
-	public Viajero denunciado;
+	private int id;
+	private String contenido;
+	private Viajero autor;
+	private Viajero denunciado;
 	public int getId() {
 		return id;
 	}

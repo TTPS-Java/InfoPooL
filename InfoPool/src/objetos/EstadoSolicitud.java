@@ -2,8 +2,8 @@ package objetos;
 
 
 public class EstadoSolicitud {
-	public int id;
-	public String nombre;
+	private int id;
+	private String nombre;
 	private int getId() {
 		return id;
 	}
