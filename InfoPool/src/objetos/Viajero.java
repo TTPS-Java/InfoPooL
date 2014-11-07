@@ -3,7 +3,6 @@ package objetos;
 import java.util.List;
 
 public class Viajero extends Usuario {
-	private int id;
 	private String Nombre;
 	private String Apellido;
 	private String mail;
@@ -13,12 +12,6 @@ public class Viajero extends Usuario {
 	private List<Viaje> viajes;
 	private List<Viaje> viajesEstoy;
 	private List<Calificacion> calificaciones;
-	public int getId() {
-		return id;
-	}
-	private void setId(int id) {
-		this.id = id;
-	}
 	public String getNombre() {
 		return Nombre;
 	}
