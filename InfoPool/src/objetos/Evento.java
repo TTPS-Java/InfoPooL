@@ -3,18 +3,24 @@ package objetos;
 import java.sql.Date;
 import java.time.LocalTime;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+@Entity
 public class Evento {
-	private int id;
+	@Id
+	@GeneratedValue
+	private long id;
 	private String nombre;
 	private Date fecha;
 	private int duracionDias;
 	private LocalTime hora;
 	private String descripcion;
 	private Lugar lugar;
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	private void setId(int id) {
+	private void setId(long id) {
 		id = id;
 	}
 	

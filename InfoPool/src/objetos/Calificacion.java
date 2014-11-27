@@ -1,7 +1,14 @@
 package objetos;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Calificacion {
-	private int id;
+	@Id
+	@GeneratedValue
+	private long id;
 	private boolean esPositiva;
 	private String comentario;
 	private Viajero calificado;
@@ -25,10 +32,10 @@ public class Calificacion {
 	public void setViaje(Viaje viaje) {
 		this.viaje = viaje;
 	}
-	private void  setId(int id){
+	private void  setId(long id){
 		this.id=id;
 	}
-	public int getId(){
+	public long getId(){
 		return this.id;
 	}
 	

@@ -1,14 +1,20 @@
 package objetos;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+@Entity
 public class Lugar {
-	private int id;
+	@Id
+	@GeneratedValue
+	private long id;
 	private String descripcion;
 	private long latitud;
 	private long longitud;
-	private int getId() {
+	private long getId() {
 		return id;
 	}
-	private void setId(int id) {
+	private void setId(long id) {
 		this.id = id;
 	}
 	public String getDescripcion() {

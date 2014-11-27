@@ -1,14 +1,20 @@
 package objetos;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+@Entity
 public class Denuncia {
-	private int id;
+	@Id
+	@GeneratedValue
+	private long id;
 	private String contenido;
 	private Viajero autor;
 	private Viajero denunciado;
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	private void setId(int id) {
+	private void setId(long id) {
 		this.id = id;
 	}
 	public String getContenido() {

@@ -2,6 +2,8 @@ package objetos;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+@Entity
 public class Viajero extends Usuario {
 	private String Nombre;
 	private String Apellido;

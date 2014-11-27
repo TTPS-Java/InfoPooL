@@ -4,8 +4,14 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+@Entity
 public class Viaje {
-	private int Id;
+	@Id
+	@GeneratedValue
+	private long Id;
 	private LocalTime horaPartida;
 	private LocalTime horaVuelta;
 	private Date fecha;
@@ -17,11 +23,11 @@ public class Viaje {
 	private List<Viajero> pasajeros;
 	private List<Solicitud> solicitudes;
 
-	public int getId() {
+	public long getId() {
 		return Id;
 	}
 
-	private void setId(int id) {
+	private void setId(long id) {
 		Id = id;
 	}
 

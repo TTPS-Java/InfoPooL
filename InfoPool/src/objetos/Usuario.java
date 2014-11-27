@@ -1,13 +1,19 @@
 package objetos;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+@Entity
 public class Usuario {
-	private int id;
+	@Id
+	@GeneratedValue
+	private long id;
 	private String nombreUsuario;
 	private String contrasenia;
-	public int getId() {
+	public long getId() {
 		return id;
 	}
-	private void setId(int id) {
+	private void setId(long id) {
 		this.id = id;
 	}
 	public String getNombreUsuario() {
