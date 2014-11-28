@@ -3,7 +3,9 @@ package objetos;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-@Entity
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+@Entity @Inheritance(strategy=InheritanceType.JOINED)
 public class Usuario {
 	@Id
 	@GeneratedValue

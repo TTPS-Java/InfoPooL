@@ -7,7 +7,12 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-@Entity
+import javax.persistence.Inheritance;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+@Entity @Inheritance
 public class Viaje {
 	@Id
 	@GeneratedValue
@@ -16,11 +21,17 @@ public class Viaje {
 	private LocalTime horaVuelta;
 	private Date fecha;
 	private int asientosLibres;
+	@OneToOne
 	private Lugar desde;
+	@OneToOne
 	private Lugar hasta;
+	@ManyToOne
 	private Viajero conductor;
+	@OneToOne
 	private Evento eventoAsociado;
+	@ManyToMany
 	private List<Viajero> pasajeros;
+	@OneToMany
 	private List<Solicitud> solicitudes;
 
 	public long getId() {

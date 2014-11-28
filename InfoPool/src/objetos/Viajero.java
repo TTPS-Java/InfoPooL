@@ -3,6 +3,9 @@ package objetos;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 @Entity
 public class Viajero extends Usuario {
 	private String Nombre;
@@ -11,8 +14,11 @@ public class Viajero extends Usuario {
 	private String telefono;
 	private String foto;
 	private boolean estaActivo;
+	@OneToMany
 	private List<Viaje> viajes;
+	@ManyToMany
 	private List<Viaje> viajesEstoy;
+	@OneToMany
 	private List<Calificacion> calificaciones;
 	public String getNombre() {
 		return Nombre;

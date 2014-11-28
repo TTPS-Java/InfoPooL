@@ -3,13 +3,16 @@ package objetos;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 @Entity
 public class Denuncia {
 	@Id
 	@GeneratedValue
 	private long id;
 	private String contenido;
+	@OneToOne
 	private Viajero autor;
+	@OneToOne
 	private Viajero denunciado;
 	public long getId() {
 		return id;

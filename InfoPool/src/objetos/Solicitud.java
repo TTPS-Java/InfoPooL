@@ -3,14 +3,18 @@ package objetos;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 @Entity
 public class Solicitud {
 	@Id
 	@GeneratedValue
 	private long id;
 	private int cantidadAsientos;
+	@ManyToOne
 	private Viaje viaje;
+	@ManyToOne
 	private Viajero solicitante;
+	@ManyToOne
 	private EstadoSolicitud estado;
 	public long getId() {
 		return id;

@@ -3,6 +3,8 @@ package objetos;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Calificacion {
@@ -11,8 +13,11 @@ public class Calificacion {
 	private long id;
 	private boolean esPositiva;
 	private String comentario;
+	@ManyToOne
 	private Viajero calificado;
+	@OneToOne
 	private Viajero autor;
+	@OneToOne
 	private Viaje viaje;
 	public Viajero getCalificado() {
 		return calificado;

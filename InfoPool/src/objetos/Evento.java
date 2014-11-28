@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 @Entity
 public class Evento {
 	@Id
@@ -16,6 +17,7 @@ public class Evento {
 	private int duracionDias;
 	private LocalTime hora;
 	private String descripcion;
+	@OneToOne
 	private Lugar lugar;
 	public long getId() {
 		return id;

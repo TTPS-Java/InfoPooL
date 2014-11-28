@@ -3,6 +3,7 @@ package objetos;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 @Entity
 public class Mensaje {
 	@Id
@@ -10,8 +11,11 @@ public class Mensaje {
 	private long id;
 	private String asunto;
 	private String contenido;
+	@OneToOne
 	private Evento evento;
+	@OneToOne
 	private Viajero para;
+	@OneToOne
 	private Viajero de;
 	public long getId() {
 		return id;

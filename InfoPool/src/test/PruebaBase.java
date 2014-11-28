@@ -31,8 +31,7 @@ public class PruebaBase extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("antes");
-		EntityManager em = MiEntityManagerFactory.getEMF()
-				.createEntityManager();
+		EntityManager em = MiEntityManagerFactory.getEMF().createEntityManager();
 		em.close();
 		System.out.println("despues");
 	}
