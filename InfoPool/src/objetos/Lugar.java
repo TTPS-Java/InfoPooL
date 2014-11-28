@@ -9,9 +9,21 @@ public class Lugar {
 	@GeneratedValue
 	private long id;
 	private String descripcion;
-	private long latitud;
-	private long longitud;
-	private long getId() {
+	private double latitud;
+	private double longitud;
+	
+	public Lugar() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public Lugar(String descripcion, long latitud, long longitud) {
+		super();
+		this.descripcion = descripcion;
+		this.latitud = latitud;
+		this.longitud = longitud;
+	}
+	public long getId() {
 		return id;
 	}
 	private void setId(long id) {
@@ -23,17 +35,25 @@ public class Lugar {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public long getLatitud() {
+	public double getLatitud() {
 		return latitud;
 	}
-	public void setLatitud(long latitud) {
+	public void setLatitud(double latitud) {
 		this.latitud = latitud;
 	}
-	public long getLongitud() {
+	public double getLongitud() {
 		return longitud;
 	}
-	public void setLongitud(long longitud) {
+	public void setLongitud(double longitud) {
 		this.longitud = longitud;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Lugar [id=" + id + ", descripcion=" + descripcion
+				+ ", latitud=" + latitud + ", longitud=" + longitud + "]";
+	}
+	
 	
 }

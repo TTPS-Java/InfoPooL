@@ -10,6 +10,9 @@ public interface ViajeroDAO extends GenericDAO<Viajero>{
 	public void borrar(Viajero u);
 	public Viajero persistir(Viajero u);
 	public Viajero recuperar(Serializable id);
+	public Viajero recuperarConViajesEstoy(Serializable id);
+	public Viajero recuperarConViajes(Serializable id);
+	public Viajero recuperarConCalificaciones(Serializable id);
 	public List<Viajero> recuperarTodos(String columnOrder);
 	public List<Viajero> recuperarTodos(int page, int maxResult);
 	public List<Viajero> recuperarTodos(int page, int maxResult, String columnOrder);

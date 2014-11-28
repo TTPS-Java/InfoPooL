@@ -12,6 +12,16 @@ public class Usuario {
 	private long id;
 	private String nombreUsuario;
 	private String contrasenia;
+	
+	public Usuario() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Usuario(String nombreUsuario, String contrasenia) {
+		super();
+		this.nombreUsuario = nombreUsuario;
+		this.contrasenia = contrasenia;
+	}
 	public long getId() {
 		return id;
 	}
@@ -29,6 +39,12 @@ public class Usuario {
 	}
 	public void setContrasenia(String contrasenia) {
 		this.contrasenia = contrasenia;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nombreUsuario=" + nombreUsuario
+				+ ", contrasenia=" + contrasenia + "]";
 	}
 	
 	

@@ -16,6 +16,20 @@ public class Solicitud {
 	private Viajero solicitante;
 	@ManyToOne
 	private EstadoSolicitud estado;
+	
+	
+	public Solicitud() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Solicitud(int cantidadAsientos, Viaje viaje, Viajero solicitante,
+			EstadoSolicitud estado) {
+		super();
+		this.cantidadAsientos = cantidadAsientos;
+		this.viaje = viaje;
+		this.solicitante = solicitante;
+		this.estado = estado;
+	}
 	public long getId() {
 		return id;
 	}
@@ -46,5 +60,13 @@ public class Solicitud {
 	public void setEstado(EstadoSolicitud estado) {
 		this.estado = estado;
 	}
+
+	@Override
+	public String toString() {
+		return "Solicitud [id=" + id + ", cantidadAsientos=" + cantidadAsientos
+				+ ", viaje=" + viaje + ", solicitante=" + solicitante
+				+ ", estado=" + estado + "]";
+	}
+	
 	
 }

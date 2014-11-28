@@ -10,6 +10,7 @@ public interface ViajePeriodicoDAO extends GenericDAO<ViajePeriodico>{
 	public void borrar(ViajePeriodico u);
 	public ViajePeriodico persistir(ViajePeriodico u);
 	public ViajePeriodico recuperar(Serializable id);
+	public ViajePeriodico recuperarConDias(Serializable id);
 	public List<ViajePeriodico> recuperarTodos(String columnOrder);
 	public List<ViajePeriodico> recuperarTodos(int page, int maxResult);
 	public List<ViajePeriodico> recuperarTodos(int page, int maxResult, String columnOrder);

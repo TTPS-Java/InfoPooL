@@ -19,6 +19,21 @@ public class Evento {
 	private String descripcion;
 	@OneToOne
 	private Lugar lugar;
+	
+	
+	public Evento() {
+		// TODO Auto-generated constructor stub
+	}
+	public Evento(String nombre, Date fecha, int duracionDias, LocalTime hora,
+			String descripcion, Lugar lugar) {
+		super();
+		this.nombre = nombre;
+		this.fecha = fecha;
+		this.duracionDias = duracionDias;
+		this.hora = hora;
+		this.descripcion = descripcion;
+		this.lugar = lugar;
+	}
 	public long getId() {
 		return id;
 	}
@@ -62,4 +77,12 @@ public class Evento {
 	public void setLugar(Lugar lugar) {
 		this.lugar = lugar;
 	}
+	@Override
+	public String toString() {
+		return "Evento [id=" + id + ", nombre=" + nombre + ", fecha=" + fecha
+				+ ", duracionDias=" + duracionDias + ", hora=" + hora
+				+ ", descripcion=" + descripcion + ", lugar=" + lugar + "]";
+	}
+	
+	
 }
