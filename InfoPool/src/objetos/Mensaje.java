@@ -17,6 +17,20 @@ public class Mensaje {
 	private Viajero para;
 	@OneToOne
 	private Viajero de;
+	
+	public Mensaje() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Mensaje(String asunto, String contenido, Evento evento,
+			Viajero para, Viajero de) {
+		super();
+		this.asunto = asunto;
+		this.contenido = contenido;
+		this.evento = evento;
+		this.para = para;
+		this.de = de;
+	}
 	public long getId() {
 		return id;
 	}

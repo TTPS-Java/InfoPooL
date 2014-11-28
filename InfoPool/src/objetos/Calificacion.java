@@ -19,6 +19,21 @@ public class Calificacion {
 	private Viajero autor;
 	@OneToOne
 	private Viaje viaje;
+	
+	
+	public Calificacion() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Calificacion(boolean esPositiva, String comentario,
+			Viajero calificado, Viajero autor, Viaje viaje) {
+		super();
+		this.esPositiva = esPositiva;
+		this.comentario = comentario;
+		this.calificado = calificado;
+		this.autor = autor;
+		this.viaje = viaje;
+	}
 	public Viajero getCalificado() {
 		return calificado;
 	}

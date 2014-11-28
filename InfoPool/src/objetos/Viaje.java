@@ -34,6 +34,25 @@ public class Viaje {
 	@OneToMany
 	private List<Solicitud> solicitudes;
 
+  public Viaje() {
+	// TODO Auto-generated constructor stub
+}
+	
+	public Viaje(LocalTime horaPartida, LocalTime horaVuelta, Date fecha,
+			int asientosLibres, Lugar desde, Lugar hasta, Viajero conductor,
+			Evento eventoAsociado) {
+		super();
+		this.horaPartida = horaPartida;
+		this.horaVuelta = horaVuelta;
+		this.fecha = fecha;
+		this.asientosLibres = asientosLibres;
+		this.desde = desde;
+		this.hasta = hasta;
+		this.conductor = conductor;
+		this.eventoAsociado = eventoAsociado;
+		
+	}
+
 	public long getId() {
 		return id;
 	}

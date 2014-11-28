@@ -10,6 +10,15 @@ public class EstadoSolicitud {
 	@GeneratedValue
 	private long id;
 	private String nombre;
+	
+	public EstadoSolicitud() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public EstadoSolicitud(String nombre) {
+		super();
+		this.nombre = nombre;
+	}
 	private long getId() {
 		return id;
 	}

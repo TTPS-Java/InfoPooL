@@ -1,5 +1,6 @@
 package objetos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -20,6 +21,26 @@ public class Viajero extends Usuario {
 	private List<Viaje> viajesEstoy;
 	@OneToMany
 	private List<Calificacion> calificaciones;
+	
+	public Viajero() {
+		// TODO Auto-generated constructor stub
+		
+	}
+	
+	public Viajero(String nombre, String apellido, String mail,
+			String telefono, String foto, boolean estaActivo,String nombreUsuario, String contrasenia) {
+		super(nombreUsuario,contrasenia);
+		Nombre = nombre;
+		Apellido = apellido;
+		this.mail = mail;
+		this.telefono = telefono;
+		this.foto = foto;
+		this.estaActivo = estaActivo;
+		this.viajes = new ArrayList<Viaje>();
+		this.viajesEstoy=new ArrayList<Viaje>();
+		this.calificaciones= new ArrayList<Calificacion>();
+	}
+
 	public String getNombre() {
 		return Nombre;
 	}

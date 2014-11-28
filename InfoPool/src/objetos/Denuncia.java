@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 @Entity
 public class Denuncia {
+
 	@Id
 	@GeneratedValue
 	private long id;
@@ -14,6 +15,17 @@ public class Denuncia {
 	private Viajero autor;
 	@OneToOne
 	private Viajero denunciado;
+	
+	
+	public Denuncia() {
+		// TODO Auto-generated constructor stub
+	}
+	public Denuncia(String contenido, Viajero autor, Viajero denunciado) {
+		super();
+		this.contenido = contenido;
+		this.autor = autor;
+		this.denunciado = denunciado;
+	}
 	public long getId() {
 		return id;
 	}

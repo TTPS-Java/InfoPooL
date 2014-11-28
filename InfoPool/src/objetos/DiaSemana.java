@@ -10,6 +10,15 @@ public class DiaSemana {
 	@GeneratedValue
 	private long id;
 	private String nombre;
+	
+	public DiaSemana() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public DiaSemana(String nombre) {
+		super();
+		this.nombre = nombre;
+	}
 	private long getId() {
 		return id;
 	}

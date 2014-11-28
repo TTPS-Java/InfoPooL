@@ -11,6 +11,18 @@ public class Lugar {
 	private String descripcion;
 	private long latitud;
 	private long longitud;
+	
+	public Lugar() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public Lugar(String descripcion, long latitud, long longitud) {
+		super();
+		this.descripcion = descripcion;
+		this.latitud = latitud;
+		this.longitud = longitud;
+	}
 	private long getId() {
 		return id;
 	}
