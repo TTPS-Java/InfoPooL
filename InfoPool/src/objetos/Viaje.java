@@ -16,7 +16,7 @@ import javax.persistence.OneToOne;
 public class Viaje {
 	@Id
 	@GeneratedValue
-	private long Id;
+	private long id;
 	private LocalTime horaPartida;
 	private LocalTime horaVuelta;
 	private Date fecha;
@@ -35,11 +35,11 @@ public class Viaje {
 	private List<Solicitud> solicitudes;
 
 	public long getId() {
-		return Id;
+		return id;
 	}
 
 	private void setId(long id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public List<Viajero> getPasajeros() {
