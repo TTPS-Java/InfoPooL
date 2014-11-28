@@ -1,5 +1,6 @@
 package DAOhiberJPA;
 
+import interfacesDAO.CalificacionDAO;
 import objetos.Calificacion;
 
 public class CalificacionDAOhiberJPA

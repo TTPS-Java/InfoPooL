@@ -1,5 +1,6 @@
 package DAOhiberJPA;
 
+import interfacesDAO.SolicitudDAO;
 import objetos.Solicitud;
 
 public class SolicitudDAOhiberJPA 

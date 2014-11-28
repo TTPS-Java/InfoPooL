@@ -1,5 +1,6 @@
 package DAOhiberJPA;
 
+import interfacesDAO.ViajePeriodicoDAO;
 import objetos.ViajePeriodico;
 
 public class ViajePeriodicoDAOhiberJPA 

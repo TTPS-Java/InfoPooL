@@ -1,5 +1,6 @@
 package DAOhiberJPA;
 
+import interfacesDAO.DiaSemanaDAO;
 import objetos.DiaSemana;
 
 public class DiaSemanaDAOhiberJPA 

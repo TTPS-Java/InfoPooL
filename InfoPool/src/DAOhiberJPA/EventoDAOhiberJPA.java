@@ -1,5 +1,6 @@
 package DAOhiberJPA;
 
+import interfacesDAO.EventoDAO;
 import objetos.Evento;
 
 public class EventoDAOhiberJPA 

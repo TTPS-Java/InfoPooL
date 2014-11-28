@@ -1,5 +1,6 @@
 package DAOhiberJPA;
 
+import interfacesDAO.UsuarioDAO;
 import objetos.Usuario;
 
 public class UsuarioDAOhiberJPA

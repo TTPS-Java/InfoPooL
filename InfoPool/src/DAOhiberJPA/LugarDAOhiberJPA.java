@@ -1,5 +1,6 @@
 package DAOhiberJPA;
 
+import interfacesDAO.LugarDAO;
 import objetos.Lugar;
 
 public class LugarDAOhiberJPA 

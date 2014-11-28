@@ -1,5 +1,6 @@
 package DAOhiberJPA;
 
+import interfacesDAO.DenunciaDAO;
 import objetos.Denuncia;
 
 public class DenunciaDAOhiberJPA  extends GenericDAOhiberJPA<Denuncia> implements DenunciaDAO
