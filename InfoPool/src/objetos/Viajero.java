@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 @Entity
 public class Viajero extends Usuario {
 	private String Nombre;
@@ -15,7 +14,7 @@ public class Viajero extends Usuario {
 	private String telefono;
 	private String foto;
 	private boolean estaActivo;
-	@OneToMany
+	@OneToMany(mappedBy="conductor")
 	private List<Viaje> viajes;
 	@ManyToMany
 	private List<Viaje> viajesEstoy;
@@ -89,11 +88,50 @@ public class Viajero extends Usuario {
 	public void setViajesEstoy(List<Viaje> viajesEstoy) {
 		this.viajesEstoy = viajesEstoy;
 	}
+	
+	public void addViajeEstoy(Viaje viajeEstoy) {
+		this.viajesEstoy.add(viajeEstoy);
+	}
+	
+	public void removeViajeEstoy(Viaje viajeEstoy) {
+		this.viajesEstoy.remove(viajeEstoy);
+	}
 	public List<Calificacion> getCalificaciones() {
 		return calificaciones;
 	}
 	public void setCalificaciones(List<Calificacion> calificaciones) {
 		this.calificaciones = calificaciones;
 	}
+
+	public void addCalificacion(Calificacion calificacion) {
+		calificaciones.add(calificacion);
+	}
+	public void removeCalificacion(Calificacion calificacion) {
+		calificaciones.remove(calificacion);
+	}
+	@Override
+	public String toString() {
+		return "Viajero [Nombre=" + Nombre + ", Apellido=" + Apellido
+				+ ", mail=" + mail + ", telefono=" + telefono + ", foto="
+				+ foto + ", estaActivo=" + estaActivo + ", getId()=" + getId()
+				+ ", getNombreUsuario()=" + getNombreUsuario()
+				+ ", getContrasenia()=" + getContrasenia() + "]";
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if (object == this)
+			return true;
+		if (object == null)
+			return false;
+
+		final Viajero b = (Viajero) object;
+
+		if (this.getId() != 0 && b.getId() != 0) {
+			return this.getId() == b.getId();
+		}
+		return false;
+	}
+	
 	
 }

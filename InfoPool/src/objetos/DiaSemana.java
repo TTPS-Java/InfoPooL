@@ -19,7 +19,8 @@ public class DiaSemana {
 		super();
 		this.nombre = nombre;
 	}
-	private long getId() {
+
+	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
@@ -31,7 +32,26 @@ public class DiaSemana {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	@Override
+	public String toString() {
+		return "DiaSemana [id=" + id + ", nombre=" + nombre + "]";
+	}
 	
+	@Override
+	public boolean equals(Object object) {
+		if (object == this)
+			return true;
+		if (object == null)
+			return false;
+
+		final DiaSemana b = (DiaSemana) object;
+
+		if (this.getId() != 0 && b.getId() != 0) {
+			return this.getId() == b.getId();
+		}
+		return false;
+	}
 	
 	
 }

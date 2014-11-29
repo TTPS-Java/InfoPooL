@@ -19,10 +19,12 @@ public class EstadoSolicitud {
 		super();
 		this.nombre = nombre;
 	}
-	private long getId() {
+
+	public long getId() {
+
 		return id;
 	}
-	public void setId(long id) {
+	private void setId(long id) {
 		this.id = id;
 	}
 	public String getNombre() {
@@ -31,5 +33,11 @@ public class EstadoSolicitud {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	@Override
+	public String toString() {
+		return "EstadoSolicitud [id=" + id + ", nombre=" + nombre + "]";
+	}
+	
 	
 }

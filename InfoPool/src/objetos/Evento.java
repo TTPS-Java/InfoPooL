@@ -77,4 +77,12 @@ public class Evento {
 	public void setLugar(Lugar lugar) {
 		this.lugar = lugar;
 	}
+	@Override
+	public String toString() {
+		return "Evento [id=" + id + ", nombre=" + nombre + ", fecha=" + fecha
+				+ ", duracionDias=" + duracionDias + ", hora=" + hora
+				+ ", descripcion=" + descripcion + ", lugar=" + lugar + "]";
+	}
+	
+	
 }

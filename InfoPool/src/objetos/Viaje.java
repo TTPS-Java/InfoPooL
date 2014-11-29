@@ -1,13 +1,16 @@
 package objetos;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -50,7 +53,9 @@ public class Viaje {
 		this.hasta = hasta;
 		this.conductor = conductor;
 		this.eventoAsociado = eventoAsociado;
-		
+		this.pasajeros = new ArrayList<Viajero>();
+		this.solicitudes = new ArrayList<Solicitud>();
+
 	}
 
 	public long getId() {
@@ -70,6 +75,13 @@ public class Viaje {
 		this.pasajeros = pasajeros;
 	}
 
+	public void addPasajero (Viajero pasajero) {
+		this.pasajeros.add(pasajero);
+	}
+	
+	public void removePasajero (Viajero pasajero) {
+		this.pasajeros.remove(pasajero);
+	}
 	public LocalTime getHoraPartida() {
 		return horaPartida;
 	}
@@ -142,4 +154,27 @@ public class Viaje {
 		this.horaVuelta = horaVuelta;
 	}
 
+	@Override
+	public String toString() {
+		return "Viaje [id=" + id + ", horaPartida=" + horaPartida
+				+ ", horaVuelta=" + horaVuelta + ", fecha=" + fecha
+				+ ", asientosLibres=" + asientosLibres + ", desde=" + desde
+				+ ", hasta=" + hasta + ", conductor=" + conductor
+				+ ", eventoAsociado=" + eventoAsociado + "]";
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if (object == this)
+			return true;
+		if (object == null)
+			return false;
+
+		final Viaje b = (Viaje) object;
+
+		if (this.getId() != 0 && b.getId() != 0) {
+			return this.getId() == b.getId();
+		}
+		return false;
+	}
 }

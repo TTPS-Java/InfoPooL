@@ -12,5 +12,11 @@ public class Administrador extends Usuario {
 	public Administrador(){
 		
 	}
+
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+
 	
 }

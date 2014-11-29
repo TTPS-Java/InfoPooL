@@ -11,9 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import dataSource.MiEntityManagerFactory;
 
-/**
- * Servlet implementation class PruebaHiber
- */
 @WebServlet("/PruebaBase")
 public class PruebaBase extends HttpServlet {
 	private static final long serialVersionUID = 1L;

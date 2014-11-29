@@ -68,6 +68,13 @@ public class Mensaje {
 	public void setEvento(Evento evento) {
 		this.evento = evento;
 	}
+
+	@Override
+	public String toString() {
+		return "Mensaje [id=" + id + ", asunto=" + asunto + ", contenido="
+				+ contenido + ", para=" + para + ", de="
+				+ de + "]";
+	}
 	
 	
 	

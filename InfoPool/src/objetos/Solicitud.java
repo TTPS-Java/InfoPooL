@@ -60,5 +60,13 @@ public class Solicitud {
 	public void setEstado(EstadoSolicitud estado) {
 		this.estado = estado;
 	}
+
+	@Override
+	public String toString() {
+		return "Solicitud [id=" + id + ", cantidadAsientos=" + cantidadAsientos
+				+ ", viaje=" + viaje + ", solicitante=" + solicitante
+				+ ", estado=" + estado + "]";
+	}
+	
 	
 }

@@ -72,4 +72,28 @@ public class Calificacion {
 	public String getComentario(){
 		return this.comentario;
 	}
+
+	@Override
+	public String toString() {
+		return "Calificacion [id=" + id + ", esPositiva=" + esPositiva
+				+ ", comentario=" + comentario + ", calificado=" + calificado
+				+ ", autor=" + autor + ", viaje=" + viaje + "]";
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if (object == this)
+			return true;
+		if (object == null)
+			return false;
+
+		final Calificacion b = (Calificacion) object;
+
+		if (this.getId() != 0 && b.getId() != 0) {
+			return this.getId() == b.getId();
+		}
+		return false;
+	}
+	
 }
+

@@ -50,4 +50,11 @@ public class Denuncia {
 	public void setDenunciado(Viajero denunciado) {
 		this.denunciado = denunciado;
 	}
+	@Override
+	public String toString() {
+		return "Denuncia [id=" + id + ", contenido=" + contenido + ", autor="
+				+ autor + ", denunciado=" + denunciado + "]";
+	}
+	
+	
 }

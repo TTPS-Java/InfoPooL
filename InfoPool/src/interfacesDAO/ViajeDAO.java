@@ -13,4 +13,5 @@ public interface ViajeDAO extends GenericDAO<Viaje>{
 	public List<Viaje> recuperarTodos(String columnOrder);
 	public List<Viaje> recuperarTodos(int page, int maxResult);
 	public List<Viaje> recuperarTodos(int page, int maxResult, String columnOrder);
+	public Viaje recuperarConPasajeros(Serializable id);
 }
