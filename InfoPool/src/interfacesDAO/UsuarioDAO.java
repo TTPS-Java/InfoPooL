@@ -7,6 +7,8 @@ import objetos.Usuario;
 
 public interface UsuarioDAO extends GenericDAO<Usuario>{
 	public Usuario borrar(Serializable id);
+	public Boolean existe(String usuario);
+	public Usuario recuperar(String usuario);
 	public void borrar(Usuario u);
 	public Usuario persistir(Usuario u);
 	public Usuario recuperar(Serializable id);

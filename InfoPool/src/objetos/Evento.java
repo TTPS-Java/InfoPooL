@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 public class Evento {
 	@Id
 	@GeneratedValue
-	private long id;
+	private Long id;
 	private String nombre;
 	private Date fecha;
 	private int duracionDias;
@@ -34,11 +34,11 @@ public class Evento {
 		this.descripcion = descripcion;
 		this.lugar = lugar;
 	}
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	private void setId(long id) {
-		id = id;
+	private void setId(Long id) {
+		this.id = id;
 	}
 	
 	public void setHora(LocalTime hora){
