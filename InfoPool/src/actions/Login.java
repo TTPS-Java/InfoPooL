@@ -64,9 +64,10 @@ public class Login extends ActionSupport implements SessionAware {
 				if (us instanceof Administrador) {
 					Administrador ad = FactoryDAO.getAdministradorDAO()
 							.recuperar(us.getId());
-					session.put("admin", true);
+					session.put("esAdmin", true);
 					session.put("usuario", ad);
 				} else {
+					session.put("esAdmin", false);
 					session.put("usuario", us);
 				}
 
