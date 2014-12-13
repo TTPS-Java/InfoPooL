@@ -2,8 +2,9 @@ package actions;
 
 import interfacesDAO.UsuarioDAO;
 
-import java.util.List;
 import java.util.Map;
+
+import objetos.Viajero;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
@@ -12,19 +13,17 @@ import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import DAOhiberJPA.FactoryDAO;
-//import objetos.Tema;
-import objetos.Usuario;
-import objetos.Viajero;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
+//import objetos.Tema;
 
 public class UsuarioAction extends ActionSupport implements SessionAware, ModelDriven<Viajero>{
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private Viajero user = new Viajero();
 	private String confirmPass;
 	private SessionMap<String, Object> session;
@@ -48,7 +47,6 @@ public class UsuarioAction extends ActionSupport implements SessionAware, ModelD
 	@SkipValidation
 	@Action(value = "registro")
 	public String registro() throws Exception {
-		
 		return SUCCESS;
 	}
 	
@@ -64,6 +62,7 @@ public class UsuarioAction extends ActionSupport implements SessionAware, ModelD
 			session.put("usuario", user);
 			return SUCCESS;
 		} else {
+
 			if(dao.existe(user.getNombreUsuario())) {
 				addFieldError("nombre","El usuario ya existe");
 				return INPUT;
@@ -113,5 +112,4 @@ public class UsuarioAction extends ActionSupport implements SessionAware, ModelD
 			addFieldError("telefono", "Debe ingresar un telefono");
 		}
 	}
-	
 }

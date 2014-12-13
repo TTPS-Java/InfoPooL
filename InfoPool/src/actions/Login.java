@@ -12,6 +12,7 @@ import DAOhiberJPA.FactoryDAO;
 import objetos.Administrador;
 import objetos.Usuario;
 
+
 import com.opensymphony.xwork2.ActionSupport;
 
 public class Login extends ActionSupport implements SessionAware {
@@ -47,8 +48,9 @@ public class Login extends ActionSupport implements SessionAware {
 	}
 
 	@Action(value = "procesarLogin", results = {
-			@Result(name = "success", location = "index", type = "redirect"),
+			@Result(name = "success", location = "Index", type = "redirect"),
 			@Result(name = "input", location = "login.jsp") })
+
 	
 	public String procesarLogin() throws Exception {
 		Usuario us = FactoryDAO.getUsuarioDAO().recuperar(getNombre());
@@ -67,13 +69,13 @@ public class Login extends ActionSupport implements SessionAware {
 				} else {
 					session.put("usuario", us);
 				}
-				 System.out.println("OK");
+
+				System.out.println("OK");
 				return SUCCESS;
 			} else {
 				 System.out.println(pass+":"+us.getContrasenia());
 				 System.out.println("contraseña mal");
-				addFieldError("pass", "ContraseÃ±a incorrecta");
-				return INPUT;
+				return SUCCESS;
 			}
 		}
 	}

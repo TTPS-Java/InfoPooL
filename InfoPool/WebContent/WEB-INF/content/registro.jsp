@@ -28,7 +28,6 @@
 <s:textfield label="Nombre" value="%{ #session.usuario.nombre }" name="nombre"></s:textfield>
 <s:textfield label="Apellido" value="%{ #session.usuario.apellido }" name="apellido"></s:textfield>
 <s:textfield label="Mail" value="%{ #session.usuario.mail }" name="mail"></s:textfield>
-
 <s:hidden value="%{ #session.usuario.id }" name="id"></s:hidden>
 <s:submit value="Enviar"></s:submit>
 </s:form>
