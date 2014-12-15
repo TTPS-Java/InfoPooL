@@ -23,8 +23,4 @@
 		<filter-name>action2</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<filter-mapping>
-		<filter-name>org.apache.struts2.dispatcher.FilterDispatcher</filter-name>
-		<url-pattern>*.action</url-pattern>
-	</filter-mapping>
 </web-app>

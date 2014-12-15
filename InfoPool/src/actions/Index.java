@@ -27,7 +27,7 @@ public class Index extends ActionSupport {
 		//REVISARRRR!!!
 		   //u = FactoryDAO.getUsuarioDAO().recuperar(u.getId());
 		if(u!=null){
-			if (true==(Boolean)ActionContext.getContext().getSession().get("esAdmin ")){
+			if (true==(Boolean)ActionContext.getContext().getSession().get("esAdmin")){
 				System.out.println("paso aadmin");
 				return "admin";
 			}
