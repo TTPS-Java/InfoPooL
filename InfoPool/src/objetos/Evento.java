@@ -15,7 +15,7 @@ public class Evento {
 	private String nombre;
 	private Date fecha;
 	private int duracionDias;
-	private LocalTime hora;
+	private String hora;
 	private String descripcion;
 	@OneToOne
 	private Lugar lugar;
@@ -24,7 +24,7 @@ public class Evento {
 	public Evento() {
 		// TODO Auto-generated constructor stub
 	}
-	public Evento(String nombre, Date fecha, int duracionDias, LocalTime hora,
+	public Evento(String nombre, Date fecha, int duracionDias, String hora,
 			String descripcion, Lugar lugar) {
 		super();
 		this.nombre = nombre;
@@ -41,10 +41,10 @@ public class Evento {
 		this.id = id;
 	}
 	
-	public void setHora(LocalTime hora){
+	public void setHora(String hora){
 		this.hora=hora;
 	}
-	public LocalTime getHora(){
+	public String getHora(){
 		return this.hora;
 	}
 	public String getNombre() {

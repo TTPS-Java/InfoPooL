@@ -6,13 +6,14 @@ import objetos.Usuario;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.springframework.stereotype.Controller;
 
 import DAOhiberJPA.FactoryDAO;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-
+@Controller
 public class Index extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 

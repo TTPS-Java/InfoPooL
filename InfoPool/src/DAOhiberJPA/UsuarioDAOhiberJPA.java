@@ -8,10 +8,13 @@ import javax.persistence.TypedQuery;
 
 
 
+
+import org.springframework.stereotype.Repository;
+
 import dataSource.MiEntityManagerFactory;
 import interfacesDAO.UsuarioDAO;
 import objetos.Usuario;
-
+@Repository
 public class UsuarioDAOhiberJPA
 extends GenericDAOhiberJPA<Usuario> implements UsuarioDAO {
 	public UsuarioDAOhiberJPA() {

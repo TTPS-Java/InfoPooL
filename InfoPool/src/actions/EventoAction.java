@@ -17,22 +17,23 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import DAOhiberJPA.FactoryDAO;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
-public class EventoAction extends ActionSupport implements ModelDriven<Evento>, SessionAware{
+public class EventoAction extends ActionSupport implements ModelDriven<Evento>{
 	private static final long serialVersionUID = 1L;
 	private Evento evento = new Evento();
 	private Collection<Evento> eventos;
-	private SessionMap<String, Object> session;
+	private SessionMap<String, Object> session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
 	@Override
 	public Evento getModel() {
 		return evento;
 	}
-	@Override
+	/*@Override
 	public void setSession(Map<String, Object> map) {
 		session = (SessionMap<String, Object>) map;
-	}
+	}*/
 	public Collection<Evento> getEventos() {
 		return eventos;
 	}

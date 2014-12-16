@@ -1,5 +1,8 @@
 package actions;
 
+import interfacesDAO.AdministradorDAO;
+import interfacesDAO.UsuarioDAO;
+
 import java.util.Map;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -7,15 +10,26 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.dispatcher.SessionMap;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
+import DAOhiberJPA.AdministradorDAOhiberJPA;
 import DAOhiberJPA.FactoryDAO;
 import objetos.Administrador;
 import objetos.Usuario;
 
 
-import com.opensymphony.xwork2.ActionSupport;
 
-public class Login extends ActionSupport implements SessionAware {
+
+
+
+
+
+
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+@Controller
+public class Login extends ActionSupport  {
 
 	/**
 	 * 
@@ -24,6 +38,11 @@ public class Login extends ActionSupport implements SessionAware {
 	private String nombre;
 	private String pass;
 	private SessionMap<String, Object> session;
+	@Autowired
+	private AdministradorDAO administradorDAO;
+	@Autowired
+	private UsuarioDAO usuarioDAO;
+	
 
 	public String getNombre() {
 		return nombre;
@@ -53,7 +72,8 @@ public class Login extends ActionSupport implements SessionAware {
 
 	
 	public String procesarLogin() throws Exception {
-		Usuario us = FactoryDAO.getUsuarioDAO().recuperar(getNombre());
+		Usuario us = this.usuarioDAO.recuperar(getNombre());
+		session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
 		if (us == null) {
 			 System.out.println("es nulo");
 			addFieldError("nombre", "El usuario no existe");
@@ -62,8 +82,7 @@ public class Login extends ActionSupport implements SessionAware {
 		} else {
 			if (us.getContrasenia().equals(pass)) {
 				if (us instanceof Administrador) {
-					Administrador ad = FactoryDAO.getAdministradorDAO()
-							.recuperar(us.getId());
+					Administrador ad = this.administradorDAO.recuperar(us.getId());
 					session.put("esAdmin", true);
 					session.put("usuario", ad);
 				} else {
@@ -91,8 +110,8 @@ public class Login extends ActionSupport implements SessionAware {
 		}
 	}
 
-	@Override
+	/*@Override
 	public void setSession(Map<String, Object> map) {
 		session = (SessionMap<String, Object>) map;
-	}
+	}*/
 }

@@ -12,6 +12,7 @@
 </head>
 <body>
 	<h4>Eventos</h4>
+	<a href="eventoNuevo">Crear evento</a>
 	<table>
 		<tr>
 			<th>Evento</th>
