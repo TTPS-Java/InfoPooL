@@ -83,8 +83,9 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 			 eventoDAO.persistir(evento);
 		  }
 		  else {
+			 lugarDAO.actualizar(evento.getLugar());
 			 eventoDAO.actualizar(evento);
-			 lugarDAO.persistir(evento.getLugar());			  
+						  
 		  }
 			return SUCCESS;
 		}else{
