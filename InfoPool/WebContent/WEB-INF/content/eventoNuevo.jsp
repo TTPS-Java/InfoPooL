@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<sj:head/>
 <title>Publicar Evento</title>
 </head>
 <body>
@@ -25,6 +24,7 @@
 		<s:submit value="Publicar"></s:submit>
 	</s:form>
 	<s:a href="index">Volver</s:a>
+	<%=request.getAttribute("evento") %>
 </body>
 </html>
 	

@@ -11,4 +11,13 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
 default-autowire="byType">
 <context:component-scan base-package="actions,DAOhiberJPA" ></context:component-scan>
+<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<property name="jpaVendorAdapter">
+		<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>
+	</property>
+</bean>
+<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	<property name="entityManagerFactory" ref="entityManagerFactory" />
+</bean>
+<tx:annotation-driven transaction-manager="txManager" />
 </beans>

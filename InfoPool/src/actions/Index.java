@@ -1,6 +1,5 @@
 package actions;
 
-import objetos.Administrador;
 import objetos.Usuario;
 
 import org.apache.struts2.convention.annotation.Action;
@@ -8,21 +7,17 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.stereotype.Controller;
 
-import DAOhiberJPA.FactoryDAO;
-
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-
+@Action(value="Index")
+@Results(value ={@Result(name="success",location="inicio.jsp"),
+			@Result(name="admin",location="indexAdmin.jsp"),
+			@Result(name="login",location="index-login.jsp")})
 @Controller
 public class Index extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 
-	@Override
-	@Action(value="Index",
-  results={@Result(name="success",location="index.jsp"),
-			@Result(name="admin",location="indexAdmin.jsp"),
-			@Result(name="login",location="index-login.jsp")
-  })
+	@Override	
 	public String execute() throws Exception {
 		Usuario u=(Usuario)ActionContext.getContext().getSession().get("usuario");
 		//REVISARRRR!!!

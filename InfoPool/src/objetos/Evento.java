@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
+import org.springframework.stereotype.Component;
+
 @Entity
 public class Evento {
 	@Id
@@ -22,7 +25,7 @@ public class Evento {
 	
 	
 	public Evento() {
-		// TODO Auto-generated constructor stub
+		this.lugar = new Lugar();
 	}
 	public Evento(String nombre, Date fecha, int duracionDias, String hora,
 			String descripcion, Lugar lugar) {
