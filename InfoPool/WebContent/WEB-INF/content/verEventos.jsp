@@ -36,7 +36,7 @@
 				<s:url id="deleteUrl" action="borrarEvento">
 					<s:param name="id" value="%{id}"></s:param>
 				</s:url>
-				<s:a href="%{deleteUrl}">Borrar</s:a>
+				<s:a href="#">Borrar</s:a>
 			</td>
 			<td>
 				<s:url id="updateUrl" action="eventoNuevo">
@@ -44,10 +44,16 @@
 				</s:url>
 				<s:a href="%{updateUrl}">Modificar</s:a>
 			</td>
+			<td>
+				<s:url id="detalleUrl" action="verEvento">
+					<s:param name="id" value="%{id}"></s:param>
+				</s:url>
+				<s:a href="%{detalleUrl}">Detalle</s:a>
+			</td>
 		</tr>
     </s:iterator>
     </table>
     <br>
-    <s:a href="index">Volver</s:a>
+    <s:a href="Index">Volver</s:a>
 </body>
 </html>

@@ -68,6 +68,29 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 		 return "index";
 	 }
 	}
+	
+	@Action(value = "verEvento", results={@Result(name="index", location="Index", type="redirectAction"),
+			@Result(name="success", location="verEvento.jsp")})
+	@SkipValidation
+	public String verEvento() throws Exception {
+	session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+	 if(session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){
+		HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+		if(req.getParameter("id")!=null){
+			  evento = eventoDAO.recuperar(Long.parseLong(req.getParameter("id")));
+			  System.out.println(evento);
+		
+		} 
+		return SUCCESS;
+	 }else
+	 {
+		 return "index";
+	 }
+	}
+	
+	
+	
+	
 
 	@Action(value = "guardarEvento", results = {
 		@Result(name = "success", location = "verEventos", type="redirectAction"),
@@ -75,8 +98,6 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 		@Result(name = "input", location = "eventoNuevo.jsp")})
 	public String guardarEvento() throws Exception {
 		session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
-		Usuario us = (Usuario) session.get("usuario");
-		us = usuarioDAO.recuperar(us.getId());
 		if( session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){
 		  if(evento.getId()==null){
 			 lugarDAO.persistir(evento.getLugar());
@@ -108,6 +129,27 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 		return this.evento;
 	}
 
+	@Override
+	public void validate() {
+		if((evento.getNombre()==null)||(evento.getNombre().equals(""))){
+			addFieldError("nombre", "Debe ingresar un nombre");
+		}
+		if((evento.getDescripcion()==null)||(evento.getDescripcion().equals(""))){
+			addFieldError("descripcion", "Debe ingresar una descripcion");
+		}
+		if((evento.getLugar().getDescripcion()==null)||(evento.getLugar().getDescripcion().equals(""))){
+			addFieldError("lugar.descripcion", "Debe ingresar un lugar");
+		}
+		if((evento.getFecha()==null)||(evento.getFecha().equals(""))){
+			addFieldError("fecha", "Debe ingresar una fecha");
+		}
+		if(evento.getDuracionDias()==0){
+			addFieldError("duracionDias", "Debe ingresar una duracion");
+		} 
+		if((evento.getHora()==null)||(evento.getHora().equals(""))||!evento.getHora().matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")){
+			addFieldError("hora", "Debe ingresar una hora");
+		}
+	}
 
 	
 }

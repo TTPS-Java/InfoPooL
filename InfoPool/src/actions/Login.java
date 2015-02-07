@@ -75,26 +75,19 @@ public class Login extends ActionSupport  {
 		Usuario us = this.usuarioDAO.recuperar(getNombre());
 		session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
 		if (us == null) {
-			 System.out.println("es nulo");
 			addFieldError("nombre", "El usuario no existe");
-		
 			return INPUT;
 		} else {
 			if (us.getContrasenia().equals(pass)) {
 				if (us instanceof Administrador) {
-					Administrador ad = this.administradorDAO.recuperar(us.getId());
 					session.put("esAdmin", true);
-					session.put("usuario", ad);
 				} else {
 					session.put("esAdmin", false);
-					session.put("usuario", us);
 				}
-
-				System.out.println("OK");
+				session.put("usuario", us.getId());
 				return SUCCESS;
 			} else {
-				 System.out.println(pass+":"+us.getContrasenia());
-				 System.out.println("contraseña mal");
+				addFieldError("pass", "Clave incorrecta");
 				return SUCCESS;
 			}
 		}

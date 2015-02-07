@@ -3,10 +3,11 @@
 <html>
 <head>
 <title>InfoPool</title>
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
 </head>
 <body>
-<h2>Bienvenido, <s:property value="#session.usuario.nombreUsuario"/>!</h2>
+<h2>Bienvenido, <s:property value="#request.usuario"/>!</h2>
+    <img src="imagenPerfil" width="100px" height="100px" />
+    <br>
 	<s:a href="#">Mis recorridos</s:a>
 	<br>
 	<s:a href="#">Buscar recorridos</s:a>

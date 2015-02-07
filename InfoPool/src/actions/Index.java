@@ -1,39 +1,61 @@
 package actions;
 
-import objetos.Usuario;
+import javax.servlet.http.HttpServletRequest;
 
+import interfacesDAO.UsuarioDAO;
+import interfacesDAO.ViajeroDAO;
+import objetos.Usuario;
+import objetos.Viajero;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.dispatcher.SessionMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-@Action(value="Index")
-@Results(value ={@Result(name="success",location="inicio.jsp"),
-			@Result(name="admin",location="indexAdmin.jsp"),
-			@Result(name="login",location="index-login.jsp")})
 @Controller
 public class Index extends ActionSupport {
 	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+	private UsuarioDAO usuarioDAO;
+	
+	@Autowired
+	private ViajeroDAO viajeroDAO;
+	
 
+	@Action(value="Index", results ={@Result(name="success",location="inicio.jsp"),
+			@Result(name="admin",location="indexAdmin.jsp"),
+			@Result(name="login",location="index-login.jsp")})
 	@Override	
 	public String execute() throws Exception {
-		Usuario u=(Usuario)ActionContext.getContext().getSession().get("usuario");
-		//REVISARRRR!!!
-		   //u = FactoryDAO.getUsuarioDAO().recuperar(u.getId());
-		if(u!=null){
-			if (true==(Boolean)ActionContext.getContext().getSession().get("esAdmin")){
-				System.out.println("paso aadmin");
+		SessionMap<String, Object> session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
+		Long id = (Long) session.get("usuario");
+	
+		if(id!=null) {
+			Usuario us =usuarioDAO.recuperar(id);
+			HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+			req.setAttribute("usuario",us.getNombreUsuario());
+			
+			if (true==(Boolean)session.get("esAdmin")){
 				return "admin";
 			}
 			else{
-				System.out.println("paso usuario comun");
+				Viajero v =viajeroDAO.recuperar(id);
+				session.put("foto", v.getFoto());
 				return "success";
 			}
 		}
 		else
-			System.out.println("loguon");
 			return LOGIN;
+	}
+	
+	@Action(value = "", results={@Result(name = "success", location = "Index", type="redirectAction")})
+	public String root() {
+		return SUCCESS;
 	}
 }

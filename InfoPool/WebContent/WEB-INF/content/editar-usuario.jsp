@@ -15,10 +15,10 @@ Edicion
  Aceptada</title>
 </head>
 <body>
-<s:property value="#session['usuario'].apellido"/>&nbsp;
-<s:property value="#session.usuario.nombreReal"/>
+<s:property value="#request.usuario.apellido"/>&nbsp;
+<s:property value="#request.usuario.nombre"/>
  se ha guardado exitosamente
  <br>
- <s:a href="index">Index</s:a>
+ <s:a href="Index">Index</s:a>
 </body>
 </html>

@@ -13,7 +13,7 @@
 <s:password label="Contraseña" name="pass"></s:password>
 <s:submit value="Entrar"></s:submit>
 </s:form>
-<s:a href="index">Volver</s:a>
+<s:a href="Index">Volver</s:a>
 
 </body>
 </html>

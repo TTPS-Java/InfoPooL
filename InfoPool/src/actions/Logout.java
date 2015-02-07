@@ -7,7 +7,7 @@ import org.apache.struts2.dispatcher.SessionMap;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 @Action(value = "logout")
-@Result(name = "success", location = "index", type="redirectAction")
+@Result(name = "success", location = "Index", type="redirectAction")
 public class Logout extends ActionSupport {
 	
 	private static final long serialVersionUID = 1L;

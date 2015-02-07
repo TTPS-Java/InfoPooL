@@ -2,23 +2,30 @@ package actions;
 
 import interfacesDAO.UsuarioDAO;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+
+import objetos.Usuario;
 import objetos.Viajero;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.dispatcher.SessionMap;
-import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
-import DAOhiberJPA.FactoryDAO;
-
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 //import objetos.Tema;
-
-public class UsuarioAction extends ActionSupport implements SessionAware, ModelDriven<Viajero>{
+@Controller
+public class UsuarioAction extends ActionSupport implements ModelDriven<Viajero>{
 	/**
 	 * 
 	 */
@@ -26,16 +33,45 @@ public class UsuarioAction extends ActionSupport implements SessionAware, ModelD
 
 	private Viajero user = new Viajero();
 	private String confirmPass;
-	private SessionMap<String, Object> session;
+	@Autowired
+	private UsuarioDAO usuarioDao;
+    private File imagen;
+    private String imagenContentType;
+    public File getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(File imagen) {
+		this.imagen = imagen;
+	}
+
+	public String getImagenContentType() {
+		return imagenContentType;
+	}
+
+	public void setImagenContentType(String imagenContentType) {
+		this.imagenContentType = imagenContentType;
+	}
+
+	public String getImagenFileName() {
+		return imagenFileName;
+	}
+
+	public void setImagenFileName(String imagenFileName) {
+		this.imagenFileName = imagenFileName;
+	}
+
+	private String imagenFileName;
+    private SessionMap<String,Object> session;
 
 	@Override
 	public Viajero getModel() {
 		return user;
 	}
-	@Override
+	/*@Override
 	public void setSession(Map<String, Object> map) {
 		session = (SessionMap<String, Object>) map;
-	}
+	}*/
 	
 	public String getConfirmPass() {
 		return confirmPass;
@@ -55,30 +91,35 @@ public class UsuarioAction extends ActionSupport implements SessionAware, ModelD
 			@Result(name="success", location="editar-usuario.jsp")
 			})
 	public String insertOrUpdate() throws Exception {
-		session.put("nuevo", null);
-		UsuarioDAO dao = FactoryDAO.getUsuarioDAO();
-		if(session.get("usuario")!=null){
-			dao.actualizar(user);
-			session.put("usuario", user);
-			return SUCCESS;
-		} else {
-
+		session= (SessionMap<String, Object>) ActionContext.getContext().getSession();
+	       UsuarioDAO dao= this.usuarioDao;	
 			if(dao.existe(user.getNombreUsuario())) {
 				addFieldError("nombre","El usuario ya existe");
 				return INPUT;
 			} else {
-				dao.persistir(user);
-				session.put("usuario", user);
-				session.put("nuevo", true);
+				BufferedImage bi = ImageIO.read(this.getImagen());
+				HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+				String rutaAlmacenamiento = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/imagenes/");
+				//String h=req.getServletContext().getRealPath("/imagenes/");
+				String nomImagen=imagen.getName();
+				String ni=nomImagen.replace(".tmp",".jpg");
+				user.setFoto(ni);
+				rutaAlmacenamiento="/tmp/";
+				ImageIO.write(bi,"jpg",new File(rutaAlmacenamiento+ni));
+				Usuario u = dao.persistir(user);
+				session.put("foto", user.getFoto());
+				session.put("esAdmin",false);
+				session.put("usuario", u.getId());
+				req.setAttribute("usuario", user);
 				return SUCCESS;
 			}
 		}
-	}
+	
 	
 	@SkipValidation
 	@Action(value="borrarUsuario")
 	public String borrar() {
-		FactoryDAO.getUsuarioDAO().borrar(user.getId());
+		this.usuarioDao.borrar(user.getId());
 		return SUCCESS;
 	}
 	
@@ -87,6 +128,31 @@ public class UsuarioAction extends ActionSupport implements SessionAware, ModelD
 	public String verDatos() {
 		user = (Viajero) session.get("usuario");
 		return SUCCESS;
+	}
+	public  boolean esUnMail(String string) {
+		if (!string.contains("@"))
+			return false;
+		if (!string.contains("."))
+			return false;
+		if (string.indexOf('@') > string.indexOf('.'))
+			return false;
+		if (!Character.isLetter(string.charAt(0)))
+			return false;
+		String[] partes = string.split("@|\\.");
+		if (partes.length != 3)
+			return false;
+		for (String parte : partes) {
+			if (parte.length() == 0)
+				return false;
+			for (int i = 0; i < parte.length(); i++) {
+				if (((Character) parte.charAt(i)).equals('_'))
+					continue;
+				if (Character.isLetterOrDigit(parte.charAt(i)))
+					continue;
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	@Override
@@ -105,11 +171,21 @@ public class UsuarioAction extends ActionSupport implements SessionAware, ModelD
 		if((user.getApellido()==null)||(user.getApellido().equals(""))){
 			addFieldError("apellido", "Debe ingresar un apellido");
 		}
-		if((user.getMail()==null)||(user.getMail().equals(""))){
-			addFieldError("email", "Debe ingresar un email");
+		if((user.getMail()==null)||(user.getMail().equals("") || !this.esUnMail(user.getMail()))){
+			addFieldError("mail", "Debe ingresar un email ejemplo: alejandro@hotmail.com");
 		}
 		if((user.getTelefono()==null)||(user.getTelefono().equals(""))){
 			addFieldError("telefono", "Debe ingresar un telefono");
+		}else{
+			try{
+				Integer.parseInt(user.getTelefono());
+			}catch(Exception e ){
+				addFieldError("telefono", "Debe ingresar un telefono");
+			}
+		}
+		if(this.imagen==null ||(this.imagenContentType!=null && !this.imagenContentType.equals("image/jpeg"))){
+			addFieldError("imagen", "Debe ingresar una imagen en formato jpg");
+			
 		}
 	}
 }
