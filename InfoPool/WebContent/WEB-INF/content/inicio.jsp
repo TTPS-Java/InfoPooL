@@ -8,7 +8,9 @@
 <h2>Bienvenido, <s:property value="#request.usuario"/>!</h2>
     <img src="imagenPerfil" width="100px" height="100px" />
     <br>
-	<s:a href="#">Mis recorridos</s:a>
+	<s:a href="tablaDeRecorridosAction">Ver recorridos</s:a>
+	<br>
+	<s:a href="recorridoNuevoAction">Crear recorrido</s:a>
 	<br>
 	<s:a href="#">Buscar recorridos</s:a>
 	<br>

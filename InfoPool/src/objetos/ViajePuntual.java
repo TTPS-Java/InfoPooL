@@ -12,7 +12,7 @@ public class ViajePuntual extends Viaje {
 
 	}
 
-	public ViajePuntual(LocalTime horaPartida, LocalTime horaVuelta,
+	public ViajePuntual(String horaPartida, String horaVuelta,
 			Date fecha, int asientosLibres, Lugar desde, Lugar hasta,
 			Viajero conductor, Evento eventoAsociado) {
 		// TODO Auto-generated constructor stub

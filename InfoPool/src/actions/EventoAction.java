@@ -3,6 +3,7 @@ package actions;
 import interfacesDAO.EventoDAO;
 import interfacesDAO.LugarDAO;
 import interfacesDAO.UsuarioDAO;
+import interfacesDAO.ViajeroDAO;
 
 import java.util.Collection;
 
@@ -35,6 +36,7 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 	private UsuarioDAO usuarioDAO;
 	@Autowired
 	private LugarDAO lugarDAO;
+	
 	
 	private Collection<Evento> eventos;
 	private SessionMap<String, Object> session;

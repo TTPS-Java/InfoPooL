@@ -5,10 +5,12 @@ import java.io.Serializable;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.springframework.stereotype.Repository;
+
 import dataSource.MiEntityManagerFactory;
 import interfacesDAO.ViajeDAO;
 import objetos.Viaje;
-
+@Repository
 public class ViajeDAOhiberJPA 
 extends GenericDAOhiberJPA<Viaje> implements ViajeDAO {
 	public ViajeDAOhiberJPA() {

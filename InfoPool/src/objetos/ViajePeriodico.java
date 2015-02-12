@@ -19,7 +19,7 @@ public class ViajePeriodico extends Viaje {
 		// TODO Auto-generated constructor stub
 		
 	}
-	public ViajePeriodico(LocalTime horaPartida, LocalTime horaVuelta, Date fecha,
+	public ViajePeriodico(String horaPartida, String horaVuelta, Date fecha,
 			int asientosLibres, Lugar desde, Lugar hasta, Viajero conductor,
 			Evento eventoAsociado) {
 		// TODO Auto-generated constructor stub

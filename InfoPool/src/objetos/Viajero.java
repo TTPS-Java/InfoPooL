@@ -118,7 +118,7 @@ public class Viajero extends Usuario {
 				+ ", getContrasenia()=" + getContrasenia() + "]";
 	}
 	
-	@Override
+	/*@Override
 	public boolean equals(Object object) {
 		if (object == this)
 			return true;
@@ -131,7 +131,7 @@ public class Viajero extends Usuario {
 			return this.getId() == b.getId();
 		}
 		return false;
-	}
+	}*/
 	
 	
 }

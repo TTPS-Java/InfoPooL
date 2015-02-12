@@ -20,8 +20,8 @@ public class Viaje {
 	@Id
 	@GeneratedValue
 	private long id;
-	private LocalTime horaPartida;
-	private LocalTime horaVuelta;
+	private String horaPartida;
+	private String horaVuelta;
 	private Date fecha;
 	private int asientosLibres;
 	@OneToOne
@@ -41,7 +41,7 @@ public class Viaje {
 	// TODO Auto-generated constructor stub
 }
 	
-	public Viaje(LocalTime horaPartida, LocalTime horaVuelta, Date fecha,
+	public Viaje(String horaPartida, String horaVuelta, Date fecha,
 			int asientosLibres, Lugar desde, Lugar hasta, Viajero conductor,
 			Evento eventoAsociado) {
 		super();
@@ -82,15 +82,15 @@ public class Viaje {
 	public void removePasajero (Viajero pasajero) {
 		this.pasajeros.remove(pasajero);
 	}
-	public LocalTime getHoraPartida() {
+	public String getHoraPartida() {
 		return horaPartida;
 	}
 
-	public void setHoraPartida(LocalTime horaPartida) {
+	public void setHoraPartida(String horaPartida) {
 		this.horaPartida = horaPartida;
 	}
 
-	public LocalTime getHoraVuelta() {
+	public String getHoraVuelta() {
 		return horaVuelta;
 	}
 
@@ -150,7 +150,7 @@ public class Viaje {
 		this.fecha = fecha;
 	}
 
-	public void setHoraVuelta(LocalTime horaVuelta) {
+	public void setHoraVuelta(String horaVuelta) {
 		this.horaVuelta = horaVuelta;
 	}
 
@@ -163,7 +163,7 @@ public class Viaje {
 				+ ", eventoAsociado=" + eventoAsociado + "]";
 	}
 	
-	@Override
+	/*@Override
 	public boolean equals(Object object) {
 		if (object == this)
 			return true;
@@ -176,5 +176,5 @@ public class Viaje {
 			return this.getId() == b.getId();
 		}
 		return false;
-	}
+	}*/
 }
