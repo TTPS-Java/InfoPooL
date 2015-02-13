@@ -5,19 +5,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 <title></title>
 </head>
 <body>
-<form action="#">
-Viaje periodico:<input type="radio" name="boton" id="viajePeriodico" checked="checked" />
-Viaje puntual:<input type="radio" name="boton" id="viajePuntual" />
-</form>
 <s:form action="guardarRecorridoAction" method="post">
+<s:radio name="boton"  list="tiposDeViajes" cssClass="bb" value="defaultTipoDeViaje"/>
 <s:checkboxlist list="dias" cssClass="misDias" name="misDias"/>
 <s:textfield id="fecha" name="viaje.fecha" label="Fecha" />
 <s:textfield id="horaPartida" name="viaje.horaPartida" label="horaIda" />
 <s:textfield id="horaVuelta" name="viaje.horaVuelta" label="horaVuelta" />
-<s:textfield id="asientosLibres" name="viaje.asientosLibres" label="asientosLibres" />
+<s:textfield id="asientosLibres" name="viaje.asientosLibres" label="asientosLibres" value="0" />
 <s:textfield name="viaje.desde.descripcion" label="nombre lugar de origen" />
 <s:textfield name="viaje.hasta.descripcion" label="nombre lugar de destino" />
 <s:hidden id="latitudOrigen" name="viaje.desde.latitud" label="desde latitud" />
@@ -185,17 +183,19 @@ $(document).ready(function(){
 		
 	})
 	
-	$("#viajePeriodico").click(function(){
+	$("#guardarRecorridoAction_botonviaje_periodico").click(function(){
 			$(".misDias").show();
 			$(".checkboxLabel").show(); 	
 	})
-	$("#viajePuntual").click(function(){
+	$("#guardarRecorridoAction_botonviaje_puntual").click(function(){
 		$(".misDias").hide();
     	$(".checkboxLabel").hide();
     	$(".misDias").attr('checked', false);
     })
 
-	
+    $("#fecha").datepicker({
+		dateFormat : "dd/mm/yy",
+	});
 	
 });
 

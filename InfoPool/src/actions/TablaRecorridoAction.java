@@ -1,7 +1,6 @@
 package actions;
 
 import interfacesDAO.UsuarioDAO;
-import interfacesDAO.ViajeDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,17 +8,20 @@ import java.util.List;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.json.annotations.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import DAOhiberJPA.UsuarioDAOhiberJPA;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import objetos.Usuario;
-import objetos.Viaje;
 
 
-@Controller
 @ParentPackage("json-default")
+@Action(value = "datosAction",results={ @Result (name="success",type="json")})
+@Controller
 public class TablaRecorridoAction extends ActionSupport {
 	/**
 	 * 
@@ -28,6 +30,7 @@ public class TablaRecorridoAction extends ActionSupport {
 	
 	@Autowired
 	private UsuarioDAO usuario;
+
 	private List<Usuario> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
@@ -37,25 +40,37 @@ public class TablaRecorridoAction extends ActionSupport {
 	private String sidx;
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	
-	@Action(value = "datosAction",results={ @Result (name="success",type="json")})
+	
+
 	public String execute(){
 		int to = (rows * page);
 		int from = to - rows;
-		this.usuarios = (List<Usuario>) usuario.recuperarTodos(1, 5, "id");
+		this.setUsuarios( (List<Usuario>) usuario.recuperarTodos(1, 5, "id"));
 				//listar(from, to, sidx, sord);
 		// Contar filas
-		record = usuario.recuperarTodos("id").size();
+		record = this.getUsuario().recuperarTodos("id").size();
 		// Seteo el gridModel con la lista obtenida
-		gridModel = usuarios;
+		gridModel = this.getUsuarios();
 		// Calcular el número de páginas para la consulta
 		total = (int) Math.ceil((double) record / (double) rows);
 		return "success";
+	}
+	
+	
+	@JSON(serialize=false,deserialize = false)
+	public UsuarioDAO getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioDAO usuario) {
+		this.usuario = usuario;
 	}
 	
 	public String getJSON() {
 		return execute();
 	}
 	
+	@JSON(serialize=false,deserialize = false)
 	public List<Usuario> getUsuarios() {
 		return this.usuarios;
 	}
