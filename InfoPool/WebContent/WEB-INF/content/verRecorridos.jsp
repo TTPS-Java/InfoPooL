@@ -24,8 +24,8 @@
 				rowNum="10"
 				rownumbers="true"
 				autowidth="true">
-				<sjg:gridColumn name="nombreUsuario" index="nombreUsuario" title="nombreUsuario" sortable="true"/>
-				<sjg:gridColumn name="contrasenia" index="contrasenia" title="contrasenia" sortable="true"/>
+				<sjg:gridColumn name="horaPartida" index="horaPartida" title="horaPartida" sortable="true"/>
+				<sjg:gridColumn name="horaVuelta" index="horaVuelta" title="horaVuelta" sortable="true"/>
 				<sjg:gridColumn name="id" index="id" title="id" sortable="true"/>
 			</sjg:grid>
 </body>

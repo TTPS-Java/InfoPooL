@@ -1,6 +1,9 @@
 package actions;
 
+import interfacesDAO.AdministradorDAO;
 import interfacesDAO.UsuarioDAO;
+import interfacesDAO.ViajeDAO;
+import interfacesDAO.ViajePeriodicoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,10 @@ import DAOhiberJPA.UsuarioDAOhiberJPA;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import objetos.Administrador;
 import objetos.Usuario;
+import objetos.Viaje;
+import objetos.ViajePeriodico;
 
 
 @ParentPackage("json-default")
@@ -29,28 +35,28 @@ public class TablaRecorridoAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
-	private UsuarioDAO usuario;
+	private ViajePeriodicoDAO viajePeriodicoDAO;
 
-	private List<Usuario> gridModel;
+	private List<ViajePeriodico> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
 	private Integer total = 0;
 	private Integer record = 0;
 	private String sord;
 	private String sidx;
-	private List<Usuario> usuarios = new ArrayList<Usuario>();
+	private List<ViajePeriodico> viajesPeriodicos = new ArrayList<ViajePeriodico>();
 	
 	
 
 	public String execute(){
 		int to = (rows * page);
 		int from = to - rows;
-		this.setUsuarios( (List<Usuario>) usuario.recuperarTodos(1, 5, "id"));
+		this.setViajesPeriodicos((List<ViajePeriodico>) viajePeriodicoDAO.recuperarTodos(1, 5, "id"));
 				//listar(from, to, sidx, sord);
 		// Contar filas
-		record = this.getUsuario().recuperarTodos("id").size();
+		record = this.getViajeDAO().recuperarTodos("id").size();
 		// Seteo el gridModel con la lista obtenida
-		gridModel = this.getUsuarios();
+		gridModel = this.getViajesPeriodicos();
 		// Calcular el número de páginas para la consulta
 		total = (int) Math.ceil((double) record / (double) rows);
 		return "success";
@@ -58,12 +64,12 @@ public class TablaRecorridoAction extends ActionSupport {
 	
 	
 	@JSON(serialize=false,deserialize = false)
-	public UsuarioDAO getUsuario() {
-		return usuario;
+	public ViajePeriodicoDAO getViajeDAO() {
+		return viajePeriodicoDAO;
 	}
 
-	public void setUsuario(UsuarioDAO usuario) {
-		this.usuario = usuario;
+	public void setViajePeriodicoDAO(ViajePeriodicoDAO usuario) {
+		this.viajePeriodicoDAO = usuario;
 	}
 	
 	public String getJSON() {
@@ -71,20 +77,20 @@ public class TablaRecorridoAction extends ActionSupport {
 	}
 	
 	@JSON(serialize=false,deserialize = false)
-	public List<Usuario> getUsuarios() {
-		return this.usuarios;
+	public List<ViajePeriodico> getViajesPeriodicos() {
+		return this.viajesPeriodicos;
 	}
 
 
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	public void setViajesPeriodicos(List<ViajePeriodico> usuarios) {
+		this.viajesPeriodicos = usuarios;
 	}
 
 
-	public List<Usuario> getGridModel() {
+	public List<ViajePeriodico> getGridModel() {
 		return gridModel;
 	}
-	public void setGridModel(List<Usuario> gridModel) {
+	public void setGridModel(List<ViajePeriodico> gridModel) {
 		this.gridModel = gridModel;
 	}
 	public Integer getRows() {
