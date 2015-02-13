@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import objetos.Solicitud;
+import objetos.Viajero;
 
 public interface SolicitudDAO extends GenericDAO<Solicitud>{
 	public Solicitud borrar(Serializable id);
@@ -13,4 +14,7 @@ public interface SolicitudDAO extends GenericDAO<Solicitud>{
 	public List<Solicitud> recuperarTodos(String columnOrder);
 	public List<Solicitud> recuperarTodos(int page, int maxResult);
 	public List<Solicitud> recuperarTodos(int page, int maxResult, String columnOrder);
+	public List<Solicitud> recuperarPorConductor(String columnOrder, Viajero conductor);
+	public List<Solicitud> recuperarPorConductor(int page, int maxResult, Viajero conductor);
+	public List<Solicitud> recuperarPorConductor(int page, int maxResult, String columnOrder, Viajero conductor);
 }

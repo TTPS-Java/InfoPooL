@@ -14,7 +14,7 @@
 	<br>
 	<s:a href="#">Buscar recorridos</s:a>
 	<br>
-	<s:a href="#">Solicitudes</s:a>
+	<s:a href="verSolicitudes">Solicitudes</s:a>
 	<br>
 	<s:a href="#">Calificaciones</s:a>
 	<br>

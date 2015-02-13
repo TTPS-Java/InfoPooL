@@ -10,6 +10,7 @@ public interface EstadoSolicitudDAO extends GenericDAO<EstadoSolicitud>{
 	public void borrar(EstadoSolicitud u);
 	public EstadoSolicitud persistir(EstadoSolicitud u);
 	public EstadoSolicitud recuperar(Serializable id);
+	public EstadoSolicitud recuperar(String estado);
 	public List<EstadoSolicitud> recuperarTodos(String columnOrder);
 	public List<EstadoSolicitud> recuperarTodos(int page, int maxResult);
 	public List<EstadoSolicitud> recuperarTodos(int page, int maxResult, String columnOrder);

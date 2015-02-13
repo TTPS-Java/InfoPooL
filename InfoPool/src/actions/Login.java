@@ -88,7 +88,7 @@ public class Login extends ActionSupport  {
 				return SUCCESS;
 			} else {
 				addFieldError("pass", "Clave incorrecta");
-				return SUCCESS;
+				return INPUT;
 			}
 		}
 	}
