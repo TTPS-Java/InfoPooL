@@ -8,6 +8,7 @@ import interfacesDAO.ViajeroDAO;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -144,7 +145,7 @@ public class SolicitudAction extends ActionSupport {
 				&& false == (Boolean) session.get("esAdmin")) {
 			Long id = (Long) session.get("usuario");
 			Viajero via = viajeroDAO.recuperar(id);
-			Collection<Solicitud> list = solicitudDAO.recuperarPorConductor(
+			List<Solicitud> list = solicitudDAO.recuperarPorConductor(
 					"id", via);
 			solicitudes = new LinkedList<Solicitud>();
 			for (Solicitud solicitud : list) {
