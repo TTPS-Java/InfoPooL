@@ -12,7 +12,7 @@
 	<br>
 	<s:a href="recorridoNuevoAction">Crear recorrido</s:a>
 	<br>
-	<s:a href="#">Buscar recorridos</s:a>
+	<s:a href="verViajeros">Denunciar un usuario</s:a>
 	<br>
 	<s:a href="verSolicitudes">Solicitudes</s:a>
 	<br>

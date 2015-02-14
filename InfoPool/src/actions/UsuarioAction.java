@@ -1,10 +1,12 @@
 package actions;
 
 import interfacesDAO.UsuarioDAO;
+import interfacesDAO.ViajeroDAO;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +25,10 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-//import objetos.Tema;
+
 @Controller
-public class UsuarioAction extends ActionSupport implements ModelDriven<Viajero>{
+public class UsuarioAction extends ActionSupport implements
+		ModelDriven<Viajero> {
 	/**
 	 * 
 	 */
@@ -35,9 +38,12 @@ public class UsuarioAction extends ActionSupport implements ModelDriven<Viajero>
 	private String confirmPass;
 	@Autowired
 	private UsuarioDAO usuarioDao;
-    private File imagen;
-    private String imagenContentType;
-    public File getImagen() {
+	@Autowired
+	private ViajeroDAO viajeroDAO;
+	private File imagen;
+	private String imagenContentType;
+
+	public File getImagen() {
 		return imagen;
 	}
 
@@ -62,74 +68,84 @@ public class UsuarioAction extends ActionSupport implements ModelDriven<Viajero>
 	}
 
 	private String imagenFileName;
-    private SessionMap<String,Object> session;
+	private SessionMap<String, Object> session;
+
+	private List<Viajero> viajeros;
 
 	@Override
 	public Viajero getModel() {
 		return user;
 	}
-	/*@Override
-	public void setSession(Map<String, Object> map) {
-		session = (SessionMap<String, Object>) map;
-	}*/
-	
+
+	/*
+	 * @Override public void setSession(Map<String, Object> map) { session =
+	 * (SessionMap<String, Object>) map; }
+	 */
+
 	public String getConfirmPass() {
 		return confirmPass;
 	}
+
 	public void setConfirmPass(String confirmPass) {
 		this.confirmPass = confirmPass;
 	}
-	
+
+	public List<Viajero> getViajeros() {
+		return viajeros;
+	}
+
 	@SkipValidation
 	@Action(value = "registro")
 	public String registro() throws Exception {
 		return SUCCESS;
 	}
-	
-	@Action(value="editarUsuario", results={
-			@Result(name="input", location="registro.jsp"),
-			@Result(name="success", location="editar-usuario.jsp")
-			})
+
+	@Action(value = "editarUsuario", results = {
+			@Result(name = "input", location = "registro.jsp"),
+			@Result(name = "success", location = "editar-usuario.jsp") })
 	public String insertOrUpdate() throws Exception {
-		session= (SessionMap<String, Object>) ActionContext.getContext().getSession();
-	       UsuarioDAO dao= this.usuarioDao;	
-			if(dao.existe(user.getNombreUsuario())) {
-				addFieldError("nombre","El usuario ya existe");
-				return INPUT;
-			} else {
-				BufferedImage bi = ImageIO.read(this.getImagen());
-				HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
-				String rutaAlmacenamiento = ServletActionContext.getRequest().getSession().getServletContext().getRealPath("/imagenes/");
-				//String h=req.getServletContext().getRealPath("/imagenes/");
-				String nomImagen=imagen.getName();
-				String ni=nomImagen.replace(".tmp",".jpg");
-				user.setFoto(ni);
-				rutaAlmacenamiento="/tmp/";
-				ImageIO.write(bi,"jpg",new File(rutaAlmacenamiento+ni));
-				Usuario u = dao.persistir(user);
-				session.put("foto", user.getFoto());
-				session.put("esAdmin",false);
-				session.put("usuario", u.getId());
-				req.setAttribute("usuario", user);
-				return SUCCESS;
-			}
+		session = (SessionMap<String, Object>) ActionContext.getContext()
+				.getSession();
+		UsuarioDAO dao = this.usuarioDao;
+		if (dao.existe(user.getNombreUsuario())) {
+			addFieldError("nombre", "El usuario ya existe");
+			return INPUT;
+		} else {
+			BufferedImage bi = ImageIO.read(this.getImagen());
+			HttpServletRequest req = (HttpServletRequest) ActionContext
+					.getContext().get(ServletActionContext.HTTP_REQUEST);
+			String rutaAlmacenamiento = ServletActionContext.getRequest()
+					.getSession().getServletContext().getRealPath("/imagenes/");
+			// String h=req.getServletContext().getRealPath("/imagenes/");
+			String nomImagen = imagen.getName();
+			String ni = nomImagen.replace(".tmp", ".jpg");
+			user.setFoto(ni);
+			rutaAlmacenamiento = "/tmp/";
+			ImageIO.write(bi, "jpg", new File(rutaAlmacenamiento + ni));
+			Usuario u = dao.persistir(user);
+			session.put("foto", user.getFoto());
+			session.put("esAdmin", false);
+			session.put("usuario", u.getId());
+			req.setAttribute("usuario", user);
+			return SUCCESS;
 		}
-	
-	
+	}
+
 	@SkipValidation
-	@Action(value="borrarUsuario")
+	@Action(value = "borrarUsuario")
 	public String borrar() {
 		this.usuarioDao.borrar(user.getId());
 		return SUCCESS;
 	}
-	
+
 	@SkipValidation
-	@Action(value ="verUsuario")
+	@Action(value = "verUsuario")
 	public String verDatos() {
 		user = (Viajero) session.get("usuario");
 		return SUCCESS;
 	}
-	public  boolean esUnMail(String string) {
+
+	public boolean esUnMail(String string) {
 		if (!string.contains("@"))
 			return false;
 		if (!string.contains("."))
@@ -154,38 +170,67 @@ public class UsuarioAction extends ActionSupport implements ModelDriven<Viajero>
 		}
 		return true;
 	}
-	
+
+	@SkipValidation
+	@Action(value = "verViajeros", results = {
+			@Result(location = "verViajeros.jsp"),
+			@Result(name = "index", location = "Index", type = "redirectAction") })
+	public String verSolicitudes() {
+		session = (SessionMap<String, Object>) ActionContext.getContext()
+				.getSession();
+		if (session.get("esAdmin") != null
+				&& false == (Boolean) session.get("esAdmin")) {
+			Long id = (Long) session.get("usuario");
+			List<Viajero> list = viajeroDAO.recuperarTodos("nombre");
+			viajeros = new LinkedList<Viajero>();
+			for (Viajero viajero : list) {
+				if (viajero.getId() != id) {
+					viajeros.add(viajero);
+				}
+			}
+			return SUCCESS;
+		} else {
+			return "index";
+		}
+	}
+
 	@Override
 	public void validate() {
-		if((user.getNombreUsuario()==null)||(user.getNombreUsuario().equals(""))){
+		if ((user.getNombreUsuario() == null)
+				|| (user.getNombreUsuario().equals(""))) {
 			addFieldError("nombreUsuario", "Debe ingresar un nombre de usuario");
 		}
-		if((user.getContrasenia()==null)||(user.getContrasenia().equals(""))){
-			addFieldError("pass", "Debe ingresar una contraseña");
-		} else if(!user.getContrasenia().equals(confirmPass)) {
+		if ((user.getContrasenia() == null)
+				|| (user.getContrasenia().equals(""))) {
+			addFieldError("pass", "Debe ingresar una contraseï¿½a");
+		} else if (!user.getContrasenia().equals(confirmPass)) {
 			addFieldError("confirmPass", "Las contrasenia no coinciden");
 		}
-		if((user.getNombre() ==null)||(user.getNombre().equals(""))){
+		if ((user.getNombre() == null) || (user.getNombre().equals(""))) {
 			addFieldError("nombre", "Debe ingresar un nombre");
 		}
-		if((user.getApellido()==null)||(user.getApellido().equals(""))){
+		if ((user.getApellido() == null) || (user.getApellido().equals(""))) {
 			addFieldError("apellido", "Debe ingresar un apellido");
 		}
-		if((user.getMail()==null)||(user.getMail().equals("") || !this.esUnMail(user.getMail()))){
-			addFieldError("mail", "Debe ingresar un email ejemplo: alejandro@hotmail.com");
+		if ((user.getMail() == null)
+				|| (user.getMail().equals("") || !this.esUnMail(user.getMail()))) {
+			addFieldError("mail",
+					"Debe ingresar un email ejemplo: alejandro@hotmail.com");
 		}
-		if((user.getTelefono()==null)||(user.getTelefono().equals(""))){
+		if ((user.getTelefono() == null) || (user.getTelefono().equals(""))) {
 			addFieldError("telefono", "Debe ingresar un telefono");
-		}else{
-			try{
+		} else {
+			try {
 				Integer.parseInt(user.getTelefono());
-			}catch(Exception e ){
+			} catch (Exception e) {
 				addFieldError("telefono", "Debe ingresar un telefono");
 			}
 		}
-		if(this.imagen==null ||(this.imagenContentType!=null && !this.imagenContentType.equals("image/jpeg"))){
+		if (this.imagen == null
+				|| (this.imagenContentType != null && !this.imagenContentType
+						.equals("image/jpeg"))) {
 			addFieldError("imagen", "Debe ingresar una imagen en formato jpg");
-			
+
 		}
 	}
 }

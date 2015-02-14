@@ -137,7 +137,7 @@ public class SolicitudAction extends ActionSupport {
 
 	@Action(value = "verSolicitudes", results = {
 			@Result(location = "verSolicitudes.jsp"),
-			@Result(name = "index", location = "Index") })
+			@Result(name = "index", location = "Index", type = "redirectAction") })
 	public String verSolicitudes() {
 		session = (SessionMap<String, Object>) ActionContext.getContext()
 				.getSession();

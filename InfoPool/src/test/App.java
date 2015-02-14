@@ -3,10 +3,8 @@ package test;
 import objetos.MailMail;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
@@ -15,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class App {
 
-	@Around("execution(* DAOhiberJPA.SolicitudDAOhiberJPA.recuperarPorConductor(..))")
+	@Around("execution(* interfacesDAO.DenunciaDAO.persistir(..))")
 	public Object mandarMail(ProceedingJoinPoint joinPoint) {
 		Object o = null;
 		try {
@@ -28,8 +26,8 @@ public class App {
 				"Spring-Mail.xml");
 
 		MailMail mm = (MailMail) context.getBean("mailMail");
-		mm.sendMail("from@no-spam.com", "josefine2_94@hotmail.com",
-				"Testing123", "Testing only \n\n Hello Spring Email Sender");
+		mm.sendMail("avisosDenuncia@InfoPool.com", "josefine2_94@hotmail.com",
+				"Denuncia nueva", "Hay denuncias nuevas en InfoPool.");
 		return o;
 	}
 }
