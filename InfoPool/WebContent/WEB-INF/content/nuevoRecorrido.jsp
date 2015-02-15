@@ -24,7 +24,7 @@
 <s:hidden id="longitudDestino" name="viaje.hasta.longitud" label="hastalongitud" />		
 <s:hidden  id="datoJSON" name="coordenadasEventos" />
 <s:select  headerKey="-1" headerValue="Sin evento asociado" id="selectEvento" 
-    label="Asociar a evento"      list="eventos"  listKey="id" listValue="nombre" name="coordenadasEventos"/>
+    label="Asociar a evento"      list="eventos"  listKey="id" listValue="nombre" name="idElegido"/>
 <s:submit value="guardar recorrido"/>	
 </s:form>
 <br />

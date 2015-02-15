@@ -1,9 +1,12 @@
 package interfacesDAO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import objetos.Viaje;
+import objetos.ViajeJSON;
 import objetos.Viajero;
 
 public interface ViajeDAO extends GenericDAO<Viaje>{
@@ -17,6 +20,6 @@ public interface ViajeDAO extends GenericDAO<Viaje>{
 	public List<Viaje> recuperarPorConductor(String columnOrder, Viajero conductor);
 	public List<Viaje> recuperarPorConductor(int page, int maxResult, Viajero conductor);
 	public List<Viaje> recuperarPorConductor(int page, int maxResult, String columnOrder, Viajero Conductor);
-	
 	public Viaje recuperarConPasajeros(Serializable id);
+	public List<ViajeJSON> recuperarViajesCompletosJSON(int from, int to, String criterio, String orden,int idEvento,Date fechaMinima, Date fechaMaxima,String horaMaxima, String horaMinima,String tipoDeViaje,ArrayList<Integer> total);
 }

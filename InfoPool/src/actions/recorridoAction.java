@@ -165,11 +165,7 @@ public class recorridoAction extends ActionSupport {
 		return "success";
 	}
 	
-	@Action(value = "tablaDeRecorridosAction", results={@Result(name="success", location="verRecorridos.jsp")})
-	@SkipValidation
-	public String tablaDeRecorridosAction(){
-		return "success";
-	}
+	
 	
 	
 	@Action(value = "recorridoNuevoAction", results={@Result(name="success", location="nuevoRecorrido.jsp")})
