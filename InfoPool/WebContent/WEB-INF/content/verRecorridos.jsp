@@ -30,10 +30,19 @@ function validarForm(){
 		 return false;}else{return true;}*/
 		 return true;
 }
+
+function formatLink(cellvalue, options, rowObject) {
+	return ("<div style=\"text-align:center\">"
+			+ "<a class='button' title='Ver detalles' href='solicitudNueva?id="
+			+ cellvalue
+			+ "'>Pedir asientos</a>"+ "</div>");
+}
+
+
 </script>
 </head>
 <body>
-
+<s:a href="Index">Volver</s:a>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <h4>Seleccion  de viajes por filtro</h4>
     <s:form action="tablaDeRecorridosAction" method="post" onsubmit="return validarForm()">
@@ -64,7 +73,7 @@ function validarForm(){
 				<sjg:gridColumn name="fecha" index="fecha" title="fecha" sortable="true"/>
 				<sjg:gridColumn name="horaPartida" index="horaPartida" title="horaPartida" sortable="true"/>
 				<sjg:gridColumn name="horaVuelta" index="horaVuelta" title="horaVuelta" sortable="true"/>
-				<sjg:gridColumn name="id" index="id" title="id" sortable="true"/>
+				<sjg:gridColumn name="id" index="acciones" title="Acciones" sortable="false" formatter="formatLink"/>
 			</sjg:grid>
 <script>
 $(document).ready(function(){

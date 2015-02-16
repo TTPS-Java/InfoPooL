@@ -24,6 +24,6 @@
 		<s:submit value="Pedir"></s:submit>
 	</s:form>
 	<br>
-	<s:a href="Index">Volver</s:a>
+	<s:a href="tablaDeRecorridosAction">Volver</s:a>
 </body>
 </html>

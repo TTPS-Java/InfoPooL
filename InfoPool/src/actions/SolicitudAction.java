@@ -74,7 +74,7 @@ public class SolicitudAction extends ActionSupport {
 	@Action(value = "solicitudNueva", results = {
 			@Result(location = "solicitudNueva.jsp"),
 			@Result(name = "index", location = "Index", type = "redirectAction"),
-			@Result(name = "input", location = "verRecorridos", type = "redirectAction") })
+			@Result(name = "input", location = "tablaDeRecorridosAction", type = "redirectAction") })
 	public String solicitudNueva() throws Exception {
 		session = (SessionMap<String, Object>) ActionContext.getContext()
 				.getSession();

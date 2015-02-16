@@ -9,6 +9,7 @@
 <title></title>
 </head>
 <body>
+<s:a href="Index">Volver</s:a>
 <s:form action="guardarRecorridoAction" method="post">
 <s:radio name="boton"  list="tiposDeViajes" cssClass="bb" value="defaultTipoDeViaje"/>
 <s:checkboxlist list="dias" cssClass="misDias" name="misDias"/>

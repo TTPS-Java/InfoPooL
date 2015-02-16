@@ -18,6 +18,7 @@ import interfacesDAO.ViajeroDAO;
 
 
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -131,11 +132,12 @@ public class recorridoAction extends ActionSupport {
 	
 	
 	
-	@Action(value = "guardarRecorridoAction", results={@Result(name="success", location="recorridoNuevoAction",type="redirectAction"),
-			                                           @Result(name = "input", location = "nuevoRecorrido.jsp")})
+	@Action(value = "guardarRecorridoAction", results={@Result(name="success", location="recorridoGuardado.jsp"),
+			                                           @Result(name = "input", location = "nuevoRecorrido.jsp"),
+			                                           @Result(name="index", location="Index", type="redirectAction")})
 	public String recorridoNuevo(){
-		System.out.println("dias:"+misDias+"id elegido"+idElegido);
-		
+	session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+	if(session.get("esAdmin")!=null && false==(Boolean)session.get("esAdmin")){
 		lugarDAO.persistir(viaje.getDesde());
 		lugarDAO.persistir(viaje.getHasta());
 		if(this.getIdElegido()!=-1){
@@ -163,17 +165,29 @@ public class recorridoAction extends ActionSupport {
             viajePuntualDAO.persistir(vp);	
 		}
 		return "success";
+	 }else
+	 {
+		 return "index";
+	 }
 	}
 	
 	
 	
 	
-	@Action(value = "recorridoNuevoAction", results={@Result(name="success", location="nuevoRecorrido.jsp")})
+	@Action(value = "recorridoNuevoAction", results={@Result(name="success", location="nuevoRecorrido.jsp"),
+			@Result(name="index", location="Index", type="redirectAction")})
 	@SkipValidation
 	public String formRecorrido(){
-		this.inicializar();
-		return "success";
+		session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+		if(session.get("esAdmin")!=null && false==(Boolean)session.get("esAdmin")){
+		  this.inicializar();
+		  return "success";
+		}else{
+			return "index";
+		}
 	}
+	
+	
 	public void inicializar(){
 		dias= new ArrayList<String>();
 		eventos= new ArrayList<Evento>();
@@ -289,6 +303,14 @@ public class recorridoAction extends ActionSupport {
 	   
 	   if((boton.equals("viaje_periodico")) && ((misDias==null) || misDias.equals(""))){
 		   addFieldError("misDias", "en un viaje periodico debe seleccionar al menos un dia");
+		   error=true;
+	   }
+	   if((viaje.getHasta().getLatitud()==0)){
+		   addFieldError("idElegido", "debe ingresar el lugar de destino");
+		   error=true;
+	   }
+	   if((viaje.getDesde().getLatitud()==0)){
+		   addFieldError("idElegido", "debe ingresar el lugar de origen");
 		   error=true;
 	   }
 	   if(error){this.inicializar();}

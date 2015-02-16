@@ -37,15 +37,6 @@ public class TablaRecorridoAction extends ActionSupport {
 	@Autowired
 	private EventoDAO eventoDAO; 
 	
-	private List<Evento> eventos;
-	private static int idEvento;
-	private static Date fechaMinima;
-	private static Date fechaMaxima;
-	private static String horaMaxima;
-	private static String horaMinima;
-	private static String viajeSeleccionado;
-	private List<String> tiposDeViajes;
-	
 	private List<ViajeJSON> gridModel;
 	private Integer rows = 0;
 	private Integer page = 0;
@@ -55,6 +46,18 @@ public class TablaRecorridoAction extends ActionSupport {
 	private String sidx;
 	private List<ViajeJSON> viajes = new ArrayList<ViajeJSON>();
 	private SessionMap<String, Object> session;
+	
+	
+	
+	
+	private List<Evento> eventos;
+	private static int idEvento;
+	private static Date fechaMinima;
+	private static Date fechaMaxima;
+	private static String horaMaxima;
+	private static String horaMinima;
+	private static String viajeSeleccionado;
+	private List<String> tiposDeViajes;
 	
 	public void inicializar(){
 		eventos = new ArrayList<Evento>();
