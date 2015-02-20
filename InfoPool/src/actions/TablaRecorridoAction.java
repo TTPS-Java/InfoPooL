@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -51,12 +54,12 @@ public class TablaRecorridoAction extends ActionSupport {
 	
 	
 	private List<Evento> eventos;
-	private static int idEvento;
-	private static Date fechaMinima;
-	private static Date fechaMaxima;
-	private static String horaMaxima;
-	private static String horaMinima;
-	private static String viajeSeleccionado;
+	private  int idEvento;
+	private  Date fechaMinima;
+	private  Date fechaMaxima;
+	private  String horaMaxima;
+	private  String horaMinima;
+	private  String viajeSeleccionado;
 	private List<String> tiposDeViajes;
 	
 	public void inicializar(){
@@ -71,18 +74,8 @@ public class TablaRecorridoAction extends ActionSupport {
 	public String getDefaultTipoDeViaje(){
 		return this.getViajeSeleccionado();
 	}
-	
-	public String getViajeSeleccionado() {
-		if((viajeSeleccionado==null) ||(viajeSeleccionado.equals(""))){
-			return "ambos";
-		}else{
-		   return viajeSeleccionado;
-		}
-	}
-
-
 	public  void setViajeSeleccionado(String viajeSeleccionado) {
-		TablaRecorridoAction.viajeSeleccionado = viajeSeleccionado;
+		this.viajeSeleccionado = viajeSeleccionado;
 	}
 
 
@@ -104,56 +97,43 @@ public class TablaRecorridoAction extends ActionSupport {
 	public void setEventos(List<Evento> eventos) {
 		this.eventos = eventos;
 	}
-
-
+/* DATOS QUE PUEDEN MODIFICAR */
 	public int getIdEvento() {
-		return idEvento;
+		return (int) session.get("idEvento");
 	}
-
-
-	public void setIdEvento(int idEvento) {
-		TablaRecorridoAction.idEvento = idEvento;
-	}
-
-
 	public  Date getFechaMinima() {
-		return fechaMinima;
+		return (Date) session.get("fechaMinima");
 	}
-
-
-	public  void setFechaMinima(Date fechaMinima) {
-		TablaRecorridoAction.fechaMinima = fechaMinima;
-	}
-
-
 	public  Date getFechaMaxima() {
-		return fechaMaxima;
+		return (Date) session.get("fechaMaxima");
+		
 	}
-
-
-	public  void setFechaMaxima(Date fechaMaxima) {
-		TablaRecorridoAction.fechaMaxima = fechaMaxima;
-	}
-
-
 	public String getHoraMaxima() {
-		return horaMaxima;
+		return (String) session.get("horaMaxima");
 	}
-
-
-	public void setHoraMaxima(String horaMaxima) {
-		TablaRecorridoAction.horaMaxima = horaMaxima;
+    public  String getHoraMinima() {
+		return (String) session.get("horaMaxima");
 	}
-
-
-	public  String getHoraMinima() {
-		return horaMinima;
+    public String getViajeSeleccionado() {
+		return (String) session.get("viajeSeleccionado");
 	}
-
-
+   
+    public void setHoraMaxima(String horaMaxima) {
+    	this.horaMaxima = horaMaxima;}
+	public  void setFechaMinima(Date fechaMinima) {
+		this.fechaMinima = fechaMinima;}
 	public  void setHoraMinima(String horaMinima) {
-		TablaRecorridoAction.horaMinima = horaMinima;
+		this.horaMinima = horaMinima;
 	}
+	public void setIdEvento(int idEvento) {
+		this.idEvento = idEvento;}
+	public  void setFechaMaxima(Date fechaMaxima) {
+		this.fechaMaxima = fechaMaxima;}
+	
+	
+/*FIN DATOS QUE PUEDEN CAMBIAR*/	
+	
+	
 	
 	@JSON(serialize=false,deserialize = false)
 	public EventoDAO getEventoDAO() {
@@ -163,9 +143,27 @@ public class TablaRecorridoAction extends ActionSupport {
 	public void setEventoDAO(EventoDAO eventoDAO) {
 		this.eventoDAO = eventoDAO;
 	}
+@Action(value = "cambioDatosTablaDeRecorridosAction", results={@Result(name="success", location="verRecorridos.jsp")
+,@Result(name="index", location="Index", type="redirectAction"),
+@Result(name="input", location="verRecorridos.jsp")})
+public String cambioDatosTablaDeRecorridosAction(){
+	session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+ if(session.get("esAdmin")!=null && false==(Boolean)session.get("esAdmin")){
+   this.inicializar();
+   session.put("horaMinima",this.horaMinima);
+   session.put("horaMaxima",this.horaMaxima);
+   session.put("fechaMinima",this.fechaMinima);
+   session.put("fechaMaxima",this.fechaMaxima);
+   session.put("idEvento",this.idEvento);
+   session.put("viajeSeleccionado",this.viajeSeleccionado);
+   return "success";
+ }else{
+    return "index";
+}
+}
 	
 	
-	
+		
 	@Action(value = "tablaDeRecorridosAction", results={@Result(name="success", location="verRecorridos.jsp")
 	                                           ,@Result(name="index", location="Index", type="redirectAction"),
                                                 @Result(name="input", location="verRecorridos.jsp")}
@@ -173,7 +171,13 @@ public class TablaRecorridoAction extends ActionSupport {
 	public String tablaDeRecorridosAction(){
 		session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
 		if(session.get("esAdmin")!=null && false==(Boolean)session.get("esAdmin")){
-		   this.inicializar();
+		  this.inicializar();
+		  session.put("horaMinima",null);
+		  session.put("horaMaxima",null);
+		  session.put("fechaMinima",null);
+		  session.put("fechaMaxima",null);
+		  session.put("idEvento",-1);
+		  session.put("viajeSeleccionado","ambos");
 		   return "success";
 		}else{
 			return "index";
@@ -182,12 +186,13 @@ public class TablaRecorridoAction extends ActionSupport {
 	@Action(value = "datosAction",results={ @Result (name="success",type="json")})
 	@SkipValidation
 	public String execute(){
+	   session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
 	   int to = (rows * page);
 	   int from = to - rows;
 	   ArrayList<Integer> t = new ArrayList<Integer>();
 	   this.setViajes((List<ViajeJSON>)
-         viajeDAO.recuperarViajesCompletosJSON(from,to,sidx,sord,idEvento,fechaMinima,fechaMaxima
-		,horaMaxima,horaMinima,this.getViajeSeleccionado(),t));
+       viajeDAO.recuperarViajesCompletosJSON(from,to,sidx,sord,this.getIdEvento(),this.getFechaMinima(),
+       this.getFechaMaxima(),this.getHoraMaxima(),this.getHoraMinima(),this.getViajeSeleccionado(),t));
 	   this.inicializar();
 	   //la lista t trae el tamaño total de la consulta sin cortar por el from ni to
 	   record = t.get(0);
@@ -278,7 +283,8 @@ public class TablaRecorridoAction extends ActionSupport {
 	}
 	
 	public void validate (){
-	boolean pasoValidacion=true;
+	 session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+	 boolean pasoValidacion=true;
 	if((this.getHoraMinima()!=null) && !(this.getHoraMinima().equals("")) && !(this.getHoraMinima().matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"))){
 	    this.setHoraMinima(null);pasoValidacion=false;
 		this.addFieldError("horaMinima", "no se filtro por hora minima ingrese hora valida hh:mm");
@@ -287,13 +293,6 @@ public class TablaRecorridoAction extends ActionSupport {
 		this.setHoraMaxima(null);pasoValidacion=false;
 		this.addFieldError("horaMaxima", "no se filtro por hora maxima ingrese hora valida hh:mm");
     }	
-	if(this.getFechaMinima()!=null){
-	   try{	
-	     String f = new SimpleDateFormat("yyyy-MM-dd").format(this.getFechaMinima());
-	   }catch(Exception e){
-		     System.out.println("mal fecha");
-	   }
-	}
 	if(!pasoValidacion){
 	  this.inicializar();
 	}

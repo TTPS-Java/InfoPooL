@@ -45,7 +45,7 @@ function formatLink(cellvalue, options, rowObject) {
 <s:a href="Index">Volver</s:a>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <h4>Seleccion  de viajes por filtro</h4>
-    <s:form action="tablaDeRecorridosAction" method="post" onsubmit="return validarForm()">
+    <s:form action="cambioDatosTablaDeRecorridosAction" method="post" onsubmit="return validarForm()">
     <s:radio name="viajeSeleccionado"  list="tiposDeViajes" value="defaultTipoDeViaje" label="Tipo de viaje"/>
     <s:select  headerKey="-1" headerValue="Sin evento asociado" id="selectEvento" 
     label="con evento asociado" list="eventos"  listKey="id" listValue="nombre" name="idEvento" />
@@ -53,7 +53,7 @@ function formatLink(cellvalue, options, rowObject) {
        <s:textfield name="fechaMaxima" id="fechaMaxima" label="Fecha maxima dd/mm/aaaa " /> 
        <s:textfield name="horaMinima"  label="hora de inicio (hh:mm)"/>
        <s:textfield name="horaMaxima" label="hora maxima (hh:mm)" />          
-    <s:submit value="mandar cambio" />
+    <s:submit value="Aplicar filtro" />
   </s:form>
             <s:url id="remoteurl" action="datosAction"/>
 			<sjg:grid	
