@@ -13,19 +13,19 @@
 <s:form action="guardarRecorridoAction" method="post">
 <s:radio name="boton"  list="tiposDeViajes" cssClass="bb" value="defaultTipoDeViaje"/>
 <s:checkboxlist list="dias" cssClass="misDias" name="misDias"/>
-<s:textfield id="fecha" name="viaje.fecha" label="Fecha" />
-<s:textfield id="horaPartida" name="viaje.horaPartida" label="horaIda" />
-<s:textfield id="horaVuelta" name="viaje.horaVuelta" label="horaVuelta" />
-<s:textfield id="asientosLibres" name="viaje.asientosLibres" label="asientosLibres" value="0" />
-<s:textfield name="viaje.desde.descripcion" label="nombre lugar de origen" />
-<s:textfield name="viaje.hasta.descripcion" label="nombre lugar de destino" />
+<s:textfield id="fecha" name="viaje.fecha" key="nuevorecorrido.fecha" />
+<s:textfield id="horaPartida" name="viaje.horaPartida" key="nuevorecorrido.horaida" />
+<s:textfield id="horaVuelta" name="viaje.horaVuelta" key="nuevorrecorrido.horavuelta" />
+<s:textfield id="asientosLibres" name="viaje.asientosLibres" key="nuevorecorrido.asientoslibres" value="0" />
+<s:textfield name="viaje.desde.descripcion" key="nuevorecorrido.nombrelugarorigen" />
+<s:textfield name="viaje.hasta.descripcion" key="nuevorecorrido.nombrelugardestino" />
 <s:hidden id="latitudOrigen" name="viaje.desde.latitud" label="desde latitud" />
 <s:hidden id="longitudOrigen" name="viaje.desde.longitud" label="desde longitud" /> 
 <s:hidden id="latitudDestino" name="viaje.hasta.latitud" label="hastalatitud"/>
 <s:hidden id="longitudDestino" name="viaje.hasta.longitud" label="hastalongitud" />		
 <s:hidden  id="datoJSON" name="coordenadasEventos" />
 <s:select  headerKey="-1" headerValue="Sin evento asociado" id="selectEvento" 
-    label="Asociar a evento"      list="eventos"  listKey="id" listValue="nombre" name="idElegido"/>
+   key="nuevorecorrido.eventoasociado"      list="eventos"  listKey="id" listValue="nombre" name="idElegido"/>
 <s:submit value="guardar recorrido"/>	
 </s:form>
 <br />
@@ -193,6 +193,18 @@ $(document).ready(function(){
     	$(".checkboxLabel").hide();
     	$(".misDias").attr('checked', false);
     })
+    
+    $("#guardarRecorridoAction_botontrip_newspaper").click(function(){
+			$(".misDias").show();
+			$(".checkboxLabel").show(); 	
+	})
+	$("#guardarRecorridoAction_botontimely_trip").click(function(){
+		$(".misDias").hide();
+    	$(".checkboxLabel").hide();
+    	$(".misDias").attr('checked', false);
+    })
+    
+    
 
     $("#fecha").datepicker({
 		dateFormat : "dd/mm/yy",

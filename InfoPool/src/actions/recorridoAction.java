@@ -108,7 +108,7 @@ public class recorridoAction extends ActionSupport {
 		
 	}
 	public String getDefaultTipoDeViaje(){
-		return "viaje_periodico";
+		return this.getText("nuevorecorrido.viaje_periodico");
 	}
 	public String[] getDefaultDia(){
 		return new String [] {"lunes", "martes"};
@@ -192,9 +192,9 @@ public class recorridoAction extends ActionSupport {
 		dias= new ArrayList<String>();
 		eventos= new ArrayList<Evento>();
 		tiposDeViajes = new ArrayList<String>();
-		tiposDeViajes.add("viaje_periodico");
-		tiposDeViajes.add("viaje_puntual");
-		dias.add("lunes");dias.add("martes");dias.add("miercoles");dias.add("jueves");dias.add("viernes");dias.add("sabado");dias.add("domingo");
+		tiposDeViajes.add(this.getText("nuevorecorrido.viaje_periodico"));
+		tiposDeViajes.add(this.getText("nuevorecorrido.viaje_puntual"));
+		dias.add(this.getText("dias.lunes"));dias.add(this.getText("dias.martes"));dias.add(this.getText("dias.miercoles"));dias.add(this.getText("dias.jueves"));dias.add(this.getText("dias.viernes"));dias.add(this.getText("dias.sabado"));dias.add(this.getText("dias.domingo"));
 		eventos=eventoDAO.recuperarTodos("id");
 		int num = eventos.size();
 		this.coordenadasEventos="{\"eventos\":[";
@@ -222,11 +222,14 @@ public class recorridoAction extends ActionSupport {
 		String[] diasElegidos= misDias.split(",");
 		ArrayList<DiaSemana> diasSemana= (ArrayList<DiaSemana>) diaSemanaDAO.recuperarTodos("id");
 		for(int i=0;i<diasElegidos.length;i++){
-			String dia=diasElegidos[i].toUpperCase();
+			String dia=diasElegidos[i].toLowerCase();
 			dia=dia.trim();
+			dia="db."+dia;
+			String diaPropertie=this.getText(dia);
+			diaPropertie=diaPropertie.toUpperCase();
 			for (DiaSemana ds:diasSemana){
 				String diaSemana =ds.getNombre().toUpperCase();
-				if(dia.equals(diaSemana)){
+				if(diaPropertie.equals(diaSemana)){
 					vp.addDia(ds);
 				}
 			}

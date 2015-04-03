@@ -21,6 +21,10 @@
 			<param-name>actionPackages</param-name>
 			<param-value>actions</param-value>
 		</init-param>
+		<init-param >
+		 <param-name>struts.custom.i18n.resources</param-name>
+		 <param-value>i18n.i18n,i18n.datosBase</param-value>
+		</init-param>
 	</filter>
 	<filter>
 		<filter-name>org.apache.struts2.dispatcher.FilterDispatcher</filter-name>
