@@ -177,9 +177,15 @@ public class SolicitudAction extends ActionSupport {
 					viaje = viajeDAO.recuperarConPasajeros(solicitud.getViaje()
 							.getId());
 					viaje.addPasajero(solicitud.getSolicitante());
-					viajeDAO.actualizar(solicitud.getViaje());
+					viajeDAO.actualizar(viaje);
 					solicitud.setEstado(estadoSolicitudDAO
 							.recuperar("Aceptada"));
+					/* Le agrega al viajero solicitante el viaje que solicito
+					   añadiedolo a su coleccion de viajesEstoy* */
+					Viajero v=this.viajeroDAO.recuperarConViajesEstoy(solicitud.getSolicitante().getId());
+					v.addViajeEstoy(viaje);
+					this.viajeroDAO.actualizar(v);
+					/* ** */
 					solicitudDAO.actualizar(solicitud);
 					return SUCCESS;
 				} else

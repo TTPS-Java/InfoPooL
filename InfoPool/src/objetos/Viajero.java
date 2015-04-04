@@ -1,6 +1,7 @@
 package objetos;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -40,6 +41,50 @@ public class Viajero extends Usuario {
 		this.calificaciones= new ArrayList<Calificacion>();
 	}
 
+	public List<Viaje>recuperarViajesEstoyFinalizados(Date fechaRecibida){
+		ArrayList<Viaje> viajesFinalizadosViajero = new ArrayList<Viaje>();
+		System.out.println("recuperando viajes finalizados");
+		for (Viaje ve:this.getViajesEstoy())
+		{
+			System.out.println("recuperando viajes finalizados");
+			System.out.println(ve.getFecha());
+			System.out.println(fechaRecibida);
+			if(ve.getFecha().before(fechaRecibida)){
+				viajesFinalizadosViajero.add(ve);
+			}
+		}
+		return viajesFinalizadosViajero;
+	}
+	
+	public List<CalificacionPendiente> recuperarCalificionesPendientes(){
+		System.out.println("paso a ver calificaciones");
+		ArrayList<Viaje> viajesFinalizados = (ArrayList<Viaje>) this.recuperarViajesEstoyFinalizados(new Date());
+		ArrayList<CalificacionPendiente> calificacionesPendientes= new ArrayList<CalificacionPendiente>();
+		System.out.println("tamanio lista viajes finalizados: "+viajesFinalizados.size());
+			for (Viaje v:viajesFinalizados){
+			  boolean Secalifico = false;
+			  for (Calificacion c:this.getCalificaciones()){
+				  if(v.getId()==c.getViaje().getId()){
+					Secalifico=true;
+					break;
+			       }
+			  }
+			  if(!Secalifico){
+				    CalificacionPendiente cp = new CalificacionPendiente(v.getConductor().getId(),v.getFecha(),v.getId(),v.getConductor().getNombreUsuario()
+				    		,v.getHasta().getDescripcion()); 
+					calificacionesPendientes.add(cp);
+			  }
+		}
+		return calificacionesPendientes;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	public String getNombre() {
 		return Nombre;
 	}

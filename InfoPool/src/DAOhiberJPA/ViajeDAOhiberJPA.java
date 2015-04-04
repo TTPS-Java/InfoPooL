@@ -128,4 +128,6 @@ extends GenericDAOhiberJPA<Viaje> implements ViajeDAO {
 		em.close();
 		return viajesJSON;
  }
+	
+	
 }
