@@ -21,6 +21,7 @@ public class App {
 		} catch (Throwable e) {
 
 		}
+	/*
 		System.out.println("aspect");
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				"Spring-Mail.xml");
@@ -28,6 +29,7 @@ public class App {
 		MailMail mm = (MailMail) context.getBean("mailMail");
 		mm.sendMail("avisosDenuncia@InfoPool.com", "josefine2_94@hotmail.com",
 				"Denuncia nueva", "Hay denuncias nuevas en InfoPool.");
+	*/
 		return o;
 	}
 }

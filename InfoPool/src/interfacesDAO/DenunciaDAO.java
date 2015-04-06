@@ -13,4 +13,5 @@ public interface DenunciaDAO extends GenericDAO<Denuncia>{
 	public List<Denuncia> recuperarTodos(String columnOrder);
 	public List<Denuncia> recuperarTodos(int page, int maxResult);
 	public List<Denuncia> recuperarTodos(int page, int maxResult, String columnOrder);
+	public List<Denuncia> denunciasAViajero(Serializable idViajero);
 }

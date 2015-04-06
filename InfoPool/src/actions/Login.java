@@ -26,6 +26,8 @@ import objetos.Usuario;
 
 
 
+import objetos.Viajero;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 @Controller
@@ -74,22 +76,35 @@ public class Login extends ActionSupport  {
 	public String procesarLogin() throws Exception {
 		Usuario us = this.usuarioDAO.recuperar(getNombre());
 		session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
+		boolean viajeroBloqueado = false;
 		if (us == null) {
 			addFieldError("nombre", "El usuario no existe");
 			return INPUT;
 		} else {
-			if (us.getContrasenia().equals(pass)) {
-				if (us instanceof Administrador) {
-					session.put("esAdmin", true);
-				} else {
-					session.put("esAdmin", false);
+			
+			if(us instanceof Viajero){
+				Viajero v = (Viajero)us;
+				if(v.isEstaActivo()==false){
+					viajeroBloqueado=true;
 				}
-				session.put("usuario", us.getId());
-				return SUCCESS;
-			} else {
+			}
+		 if(viajeroBloqueado==true){
+			 addFieldError("nombre", "Usted se encuentra bloqueado");
+			 return INPUT;
+		 }else{	
+			   if (us.getContrasenia().equals(pass)) {
+				  if (us instanceof Administrador) {
+					  session.put("esAdmin", true);
+				   } else {
+					  session.put("esAdmin", false);
+			   	     }
+				     session.put("usuario", us.getId());
+				    return SUCCESS;
+			   } else {
 				addFieldError("pass", "Clave incorrecta");
 				return INPUT;
-			}
+			   }
+		  }
 		}
 	}
 

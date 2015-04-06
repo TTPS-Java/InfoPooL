@@ -78,7 +78,7 @@ public class Viajero extends Usuario {
 		return calificacionesPendientes;
 	}
 	
-	
+
 	
 	
 	

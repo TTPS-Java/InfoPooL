@@ -120,6 +120,7 @@ public class UsuarioAction extends ActionSupport implements
 			String nomImagen = imagen.getName();
 			String ni = nomImagen.replace(".tmp", ".jpg");
 			user.setFoto(ni);
+			user.setEstaActivo(true);
 			rutaAlmacenamiento = "/tmp/";
 			ImageIO.write(bi, "jpg", new File(rutaAlmacenamiento + ni));
 			Usuario u = dao.persistir(user);
@@ -174,23 +175,25 @@ public class UsuarioAction extends ActionSupport implements
 	@SkipValidation
 	@Action(value = "verViajeros", results = {
 			@Result(location = "verViajeros.jsp"),
-			@Result(name = "index", location = "Index", type = "redirectAction") })
+			@Result(name = "administrar", location = "administrarViajeros.jsp"),
+			@Result(name = "index", location = "Index",type="redirectAction")})
 	public String verSolicitudes() {
-		session = (SessionMap<String, Object>) ActionContext.getContext()
-				.getSession();
-		if (session.get("esAdmin") != null
-				&& false == (Boolean) session.get("esAdmin")) {
-			Long id = (Long) session.get("usuario");
-			List<Viajero> list = viajeroDAO.recuperarTodos("nombre");
-			viajeros = new LinkedList<Viajero>();
-			for (Viajero viajero : list) {
-				if (viajero.getId() != id) {
+		session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
+		if (session.get("esAdmin") == null){
+			return "index";
+		}
+		Long id = (Long) session.get("usuario");
+		List<Viajero> list = viajeroDAO.recuperarTodos("nombre");
+		viajeros = new LinkedList<Viajero>();
+		for (Viajero viajero : list) {
+		  if (viajero.getId() != id) {
 					viajeros.add(viajero);
-				}
-			}
+		   }
+		}
+		if (false == (Boolean) session.get("esAdmin")) {
 			return SUCCESS;
 		} else {
-			return "index";
+			return "administrar";
 		}
 	}
 

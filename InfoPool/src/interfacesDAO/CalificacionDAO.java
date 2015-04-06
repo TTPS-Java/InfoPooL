@@ -1,6 +1,7 @@
 package interfacesDAO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import objetos.Calificacion;
@@ -13,4 +14,5 @@ public interface CalificacionDAO extends GenericDAO<Calificacion>{
 	public List<Calificacion> recuperarTodos(String columnOrder);
 	public List<Calificacion> recuperarTodos(int page, int maxResult);
 	public List<Calificacion> recuperarTodos(int page, int maxResult, String columnOrder);
+	public ArrayList<Calificacion> recuperarCalificacionesPorViaje(Serializable idViaje);
 }

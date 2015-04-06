@@ -1,19 +1,11 @@
 package DAOhiberJPA;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
-
 import org.springframework.stereotype.Repository;
-
 import dataSource.MiEntityManagerFactory;
 import interfacesDAO.ViajeroDAO;
-import objetos.Viaje;
 import objetos.Viajero;
 @Repository
 public class ViajeroDAOhiberJPA  extends GenericDAOhiberJPA<Viajero> implements ViajeroDAO

@@ -12,7 +12,7 @@
 	<br>
 	<s:a href="verEventos">ABM eventos</s:a>
 	<br>
-	<s:a href="#">Administracion viajeros</s:a>
+	<s:a href="verViajeros">Administracion viajeros</s:a>
 	<br>
 	<s:a href="logout">Salir</s:a>
 </body>

@@ -44,7 +44,8 @@ public class GenericDAOhiberJPA<T> implements GenericDAO<T> {
 
 	@Override
 	public void borrar(T entity) {
-		em.remove(entity);
+		T entity2=em.merge(entity);
+		em.remove(entity2);
 	}
 
 	@Override

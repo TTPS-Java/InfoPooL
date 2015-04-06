@@ -1,6 +1,14 @@
 package DAOhiberJPA;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+
 import org.springframework.stereotype.Repository;
 
+import dataSource.MiEntityManagerFactory;
 import interfacesDAO.CalificacionDAO;
 import objetos.Calificacion;
 
@@ -11,6 +19,21 @@ extends GenericDAOhiberJPA<Calificacion> implements CalificacionDAO {
 	public CalificacionDAOhiberJPA() {
 		super(Calificacion.class);
 	}
+	
+	@Override
+	public ArrayList<Calificacion> recuperarCalificacionesPorViaje(Serializable idViaje){
+		EntityManager em = MiEntityManagerFactory.getEMF().createEntityManager();
+		EntityTransaction etx = em.getTransaction();
+		etx.begin();
+		TypedQuery<Calificacion> consulta = em.createQuery("Select c from Calificacion c where c.viaje.id="+idViaje,Calificacion.class);
+		ArrayList<Calificacion> calificaciones = (ArrayList<Calificacion>) consulta.getResultList();
+		em.flush();
+		etx.commit();
+		em.close();
+		return calificaciones;		
+	}
+	
+	
 	
 	/*public ArrayList<CalificacionPendiente> calficacionesPendientes(Viajero viajero){
 		EntityManager em = MiEntityManagerFactory.getEMF().createEntityManager();

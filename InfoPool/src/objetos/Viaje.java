@@ -163,7 +163,7 @@ public class Viaje {
 				+ ", eventoAsociado=" + eventoAsociado + "]";
 	}
 	
-	/*@Override
+	@Override
 	public boolean equals(Object object) {
 		if (object == this)
 			return true;
@@ -176,5 +176,5 @@ public class Viaje {
 			return this.getId() == b.getId();
 		}
 		return false;
-	}*/
+	}
 }

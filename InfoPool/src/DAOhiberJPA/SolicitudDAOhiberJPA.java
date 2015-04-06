@@ -43,7 +43,6 @@ extends GenericDAOhiberJPA<Solicitud> implements SolicitudDAO {
 		List<Solicitud> list = new LinkedList<Solicitud>();
 		for (Viaje viaje : viajes) {
 			TypedQuery<Solicitud> consulta = em.createQuery("select e from Solicitud e where viaje = :via "
-					//+ "exists ( select * from Viajero v where v.id = e.id and v.id = :id)
 					+ "order by "+columnOrder, Solicitud.class);
 			consulta.setParameter("via", viaje);
 			if(page!=-1){
@@ -54,5 +53,4 @@ extends GenericDAOhiberJPA<Solicitud> implements SolicitudDAO {
 		}
 		return list;
 	}
-
 }
