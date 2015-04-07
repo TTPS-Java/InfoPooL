@@ -12,20 +12,23 @@
 <s:a href="Index">Volver</s:a>
 <s:form action="guardarRecorridoAction" method="post">
 <s:radio name="boton"  list="tiposDeViajes" cssClass="bb" value="defaultTipoDeViaje"/>
-<s:checkboxlist list="dias" cssClass="misDias" name="misDias"/>
-<s:textfield id="fecha" name="viaje.fecha" key="nuevorecorrido.fecha" />
-<s:textfield id="horaPartida" name="viaje.horaPartida" key="nuevorecorrido.horaida" />
-<s:textfield id="horaVuelta" name="viaje.horaVuelta" key="nuevorrecorrido.horavuelta" />
-<s:textfield id="asientosLibres" name="viaje.asientosLibres" key="nuevorecorrido.asientoslibres" value="0" />
-<s:textfield name="viaje.desde.descripcion" key="nuevorecorrido.nombrelugarorigen" />
-<s:textfield name="viaje.hasta.descripcion" key="nuevorecorrido.nombrelugardestino" />
-<s:hidden id="latitudOrigen" name="viaje.desde.latitud" label="desde latitud" />
-<s:hidden id="longitudOrigen" name="viaje.desde.longitud" label="desde longitud" /> 
-<s:hidden id="latitudDestino" name="viaje.hasta.latitud" label="hastalatitud"/>
-<s:hidden id="longitudDestino" name="viaje.hasta.longitud" label="hastalongitud" />		
-<s:hidden  id="datoJSON" name="coordenadasEventos" />
+<s:checkboxlist list="dias" cssClass="misDias" name="misDias" value="defaultDia"/>
+<s:textfield id="fecha" name="viaje.fecha"  value="%{viaje.fecha}" key="nuevorecorrido.fecha" />
+<s:textfield id="horaPartida" name="viaje.horaPartida"  value="%{viaje.horaPartida}" key="nuevorecorrido.horaida" />
+<s:textfield id="horaVuelta" name="viaje.horaVuelta" value="%{viaje.horaVuelta}" key="nuevorrecorrido.horavuelta" />
+<s:textfield id="asientosLibres" name="viaje.asientosLibres" value="%{viaje.asientosLibres}" key="nuevorecorrido.asientoslibres"  />
+<s:textfield name="viaje.desde.descripcion" value="%{viaje.desde.descripcion}" key="nuevorecorrido.nombrelugarorigen" />
+<s:textfield name="viaje.hasta.descripcion" value="%{viaje.hasta.descripcion}" key="nuevorecorrido.nombrelugardestino" />
+<s:hidden name="viaje.id" value="%{viaje.id}" />
+<s:hidden name="viaje.desde.id" value="%{viaje.desde.id}" />
+<s:hidden name="viaje.hasta.id" value="%{viaje.hasta.id}" />
+<s:hidden id="latitudOrigen" name="viaje.desde.latitud" value="%{viaje.desde.latitud}"  />
+<s:hidden id="longitudOrigen" name="viaje.desde.longitud" value="%{viaje.desde.longitud}" /> 
+<s:hidden id="latitudDestino" name="viaje.hasta.latitud" value="%{viaje.hasta.latitud}"/>
+<s:hidden id="longitudDestino" name="viaje.hasta.longitud" value="%{viaje.hasta.longitud}" />		
+<s:hidden  id="datoJSON" name="coordenadasEventos"  />
 <s:select  headerKey="-1" headerValue="Sin evento asociado" id="selectEvento" 
-   key="nuevorecorrido.eventoasociado"      list="eventos"  listKey="id" listValue="nombre" name="idElegido"/>
+   key="nuevorecorrido.eventoasociado" value="%{idElegido}"   list="eventos"  listKey="id" listValue="nombre" name="idElegido"/>
 <s:submit value="guardar recorrido"/>	
 </s:form>
 <br />
@@ -128,8 +131,11 @@ $(document).ready(function(){
 		  markerEvento.setMap(null);
 		  initialize()
 	  }
-	}
 	
+	  if(cuentaClick == 2){
+			calcularRuta();
+		}
+	}
 	function pinchar(pos, map) {
 		switch(cuentaClick) {
 	    case 0:
@@ -142,7 +148,6 @@ $(document).ready(function(){
 		cuentaClick++
 	}
 	initialize();
-	////
 	var directionsService = new google.maps.DirectionsService();
 	var directionsDisplay;
 	function calcularRuta(waypts) {
@@ -151,8 +156,7 @@ $(document).ready(function(){
 			puntos.push({
 				location: markerEvento.getPosition(),
 				stopover:true})
-		}
-		
+		}	
 		var start = markerOrigen.getPosition();
 		var end = markerDestino.getPosition();
 		var request = {
@@ -170,45 +174,71 @@ $(document).ready(function(){
 			}
 		});
 	}
-	
-	////
-	$("#reset").click(function(){initialize()});
+	$("#reset").click(function(){
+		$("#latitudOrigen").val("0.0"); 
+		$("#longitudOrigen").val("0.0" );
+		$("#latitudDestino").val("0.0");
+		$("#longitudDestino").val("0.0");
+		$("#selectEvento").val("-1");
+		evento=false;
+		initialize()});
 	$("#btnEvento").click(function(){
 		});
 	$("#selectEvento").change(function(){
 		evento=true;
+		var idEventoElegido= document.getElementById("selectEvento").value;
 		pincharEvento(map);
-		if(cuentaClick == 2){
-			calcularRuta();
-		}
-		
-	})
+	});
+	
+	if($('#guardarRecorridoAction_botonviaje_puntual').is(':checked')){
+		$(".misDias").hide();
+    	$(".checkboxLabel").hide();
+    	$(".misDias").attr('checked', false);
+	}
+	if($('#guardarRecorridoAction_botontimely_trip').is(':checked')){
+		$(".misDias").hide();
+    	$(".checkboxLabel").hide();
+    	$(".misDias").attr('checked', false);
+	}
 	
 	$("#guardarRecorridoAction_botonviaje_periodico").click(function(){
 			$(".misDias").show();
 			$(".checkboxLabel").show(); 	
-	})
+	});
 	$("#guardarRecorridoAction_botonviaje_puntual").click(function(){
 		$(".misDias").hide();
     	$(".checkboxLabel").hide();
     	$(".misDias").attr('checked', false);
-    })
-    
+    });
     $("#guardarRecorridoAction_botontrip_newspaper").click(function(){
 			$(".misDias").show();
 			$(".checkboxLabel").show(); 	
-	})
+	});
 	$("#guardarRecorridoAction_botontimely_trip").click(function(){
 		$(".misDias").hide();
     	$(".checkboxLabel").hide();
     	$(".misDias").attr('checked', false);
-    })
-    
-    
-
+    });
     $("#fecha").datepicker({
 		dateFormat : "dd/mm/yy",
 	});
+  function dibujar(){	
+	 if(!($("#latitudOrigen").val()==0) && !($("#longitudOrigen").val()==0) ){
+		 var position = new google.maps.LatLng($("#latitudOrigen").val(),$("#longitudOrigen").val());
+		 pinchar(position, map);
+	 }
+     if(!($("#latitudDestino").val()==0)  && !($("#longitudDestino").val()==0)){
+    	var position = new google.maps.LatLng($("#latitudDestino").val(),$("#longitudDestino").val());
+    	pinchar(position, map);
+	 }   
+     if($("#selectEvento").val()!="-1"){  	
+    	evento=true;
+    	pincharEvento(map);
+     }
+   }
+  
+dibujar();
+	
 	
 });
 

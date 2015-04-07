@@ -23,7 +23,9 @@ extends GenericDAOhiberJPA<ViajePeriodico> implements ViajePeriodicoDAO {
 		EntityTransaction etx = em.getTransaction();
 		etx.begin();
 		ViajePeriodico entity = em.find(ViajePeriodico.class, id);
+	if(entity!=null){
 		entity.getDias().size();
+	}
 		em.flush();
 		etx.commit();
 		em.close();

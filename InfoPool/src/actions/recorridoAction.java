@@ -1,11 +1,21 @@
 package actions;
 
+import interfacesDAO.CalificacionDAO;
 import interfacesDAO.DiaSemanaDAO;
 import interfacesDAO.EventoDAO;
 import interfacesDAO.LugarDAO;
+import interfacesDAO.SolicitudDAO;
+import interfacesDAO.ViajeDAO;
 import interfacesDAO.ViajePeriodicoDAO;
 import interfacesDAO.ViajePuntualDAO;
 import interfacesDAO.ViajeroDAO;
+
+
+
+
+
+
+
 
 
 
@@ -23,6 +33,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.dispatcher.SessionMap;
@@ -33,8 +46,11 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import objetos.Calificacion;
 import objetos.DiaSemana;
 import objetos.Evento;
+import objetos.Lugar;
+import objetos.Solicitud;
 import objetos.Viaje;
 import objetos.ViajePeriodico;
 import objetos.ViajePuntual;
@@ -59,16 +75,27 @@ public class recorridoAction extends ActionSupport {
 	private LugarDAO lugarDAO;
 	@Autowired
 	private DiaSemanaDAO diaSemanaDAO;
+	@Autowired
+	private ViajeDAO viajeDao;
+	@Autowired
+	private SolicitudDAO solicitudDao;
+	@Autowired
+	private ViajeroDAO viajeroDao;
+	@Autowired
+	private CalificacionDAO calificacionDao;
 	
 	private List<String> tiposDeViajes;
-	private Viaje viaje;
+	private Viaje viaje = new Viaje();
 	private List<Evento> eventos;
 	private List<String> dias;
 	private String misDias;
-	private int idElegido;
+	private Long idElegido;
 	private SessionMap<String,Object> session;
-	private String boton;
+	private String boton="";
 	private String coordenadasEventos;
+	private String[] defaultDias = new String[7];
+	private String mensajeError;
+	
 	
 	public List<String> getTiposDeViajes() {
 		return tiposDeViajes;
@@ -91,10 +118,10 @@ public class recorridoAction extends ActionSupport {
 	public void setcoordenadasEventos(String dato) {
 		this.coordenadasEventos = dato;
 	}
-	public int getIdElegido() {
+	public Long getIdElegido() {
 		return idElegido;
 	}
-	public void setIdElegido(int idElegido) {
+	public void setIdElegido(Long idElegido) {
 		this.idElegido = idElegido;
 	}
 	public String getMisDias() {
@@ -108,10 +135,24 @@ public class recorridoAction extends ActionSupport {
 		
 	}
 	public String getDefaultTipoDeViaje(){
-		return this.getText("nuevorecorrido.viaje_periodico");
+		if(this.boton.equals("")){
+			return this.getText("nuevorecorrido.viaje_periodico");
+		}else{
+			return this.boton;
+		}
 	}
 	public String[] getDefaultDia(){
-		return new String [] {"lunes", "martes"};
+		return this.defaultDias ;
+				/*new String [] {"lunes", "martes"};*/
+	}
+	public void setDefautDia(String[] dias){
+		this.defaultDias=dias;
+	}
+	public String getMensajeError() {
+		return mensajeError;
+	}
+	public void setMensajeError(String mensajeError) {
+		this.mensajeError = mensajeError;
 	}
 	
 	public DiaSemanaDAO getDiaSemanaDAO() {
@@ -134,10 +175,69 @@ public class recorridoAction extends ActionSupport {
 	
 	@Action(value = "guardarRecorridoAction", results={@Result(name="success", location="recorridoGuardado.jsp"),
 			                                           @Result(name = "input", location = "nuevoRecorrido.jsp"),
-			                                           @Result(name="index", location="Index", type="redirectAction")})
+			                                           @Result(name="index", location="Index", type="redirectAction"),
+			                                           @Result(name="cambioTipoViaje", location="nuevoRecorrido.jsp")
+	})
 	public String recorridoNuevo(){
 	session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
 	if(session.get("esAdmin")!=null && false==(Boolean)session.get("esAdmin")){
+		
+		
+	  if(viaje.getId()!=null){
+		  Lugar ld =this.lugarDAO.recuperar(this.viaje.getDesde().getId());
+		  ld.setDescripcion(this.viaje.getDesde().getDescripcion());
+		  ld.setLatitud(this.viaje.getDesde().getLatitud());
+		  ld.setLongitud(this.viaje.getDesde().getLongitud());
+		  
+		  Lugar lh =this.lugarDAO.recuperar(this.viaje.getHasta().getId());
+		  lh.setDescripcion(this.viaje.getHasta().getDescripcion());
+		  lh.setLatitud(this.viaje.getHasta().getLatitud());
+		  lh.setLongitud(this.viaje.getHasta().getLongitud());
+		  this.lugarDAO.actualizar(ld);
+		  this.lugarDAO.actualizar(lh);
+		  ViajePeriodico vp = this.viajePeriodicoDAO.recuperarConDias(viaje.getId());
+		  if(vp!=null && !misDias.equals("") && misDias!=null){
+			 ArrayList<DiaSemana> ds= new ArrayList<DiaSemana>();
+			 ds.addAll(vp.getDias());
+			 ArrayList<DiaSemana> ds2= new ArrayList<DiaSemana>();
+		    for(DiaSemana d:ds){
+		    	ds2.add(d);
+		    }
+		    for (DiaSemana di:ds2){
+		    	vp.removeDia(di);
+		    }
+		    this.agregarDiasAViajePeridico(vp);
+		    vp.setAsientosLibres(this.viaje.getAsientosLibres());
+		    vp.setFecha(this.viaje.getFecha());
+		    vp.setHoraPartida(this.viaje.getHoraPartida());
+		    vp.setHoraVuelta(this.viaje.getHoraVuelta());
+		    if(this.getIdElegido()!=-1){
+				Long id= (long)this.getIdElegido();
+				Evento eventoElegido = eventoDAO.recuperar(id);
+				vp.setEventoAsociado(eventoElegido);
+			}
+		    this.viajePeriodicoDAO.actualizar(vp);
+		  }else if (vp==null && (misDias.equals("") || misDias==null)){
+			  ViajePuntual vpun = this.viajePuntualDAO.recuperar(viaje.getId());
+			  vpun.setAsientosLibres(this.viaje.getAsientosLibres());
+			  vpun.setFecha(this.viaje.getFecha());
+			  vpun.setHoraPartida(this.viaje.getHoraPartida());
+			  vpun.setHoraVuelta(this.viaje.getHoraVuelta());
+			    if(this.getIdElegido()!=-1){
+					Long id= (long)this.getIdElegido();
+					Evento eventoElegido = eventoDAO.recuperar(id);
+					vpun.setEventoAsociado(eventoElegido);
+				}
+			    this.viajePuntualDAO.actualizar(vpun);
+		  
+		  }else{
+				   addFieldError("boton", "No se puede cambiar el tipo de viaje");
+				   this.modificarViaje(this.viaje.getId());
+		           return "cambioTipoViaje";
+		  }
+		  return "success";
+	  }else{
+		System.out.println("paso a crear viaje");
 		lugarDAO.persistir(viaje.getDesde());
 		lugarDAO.persistir(viaje.getHasta());
 		if(this.getIdElegido()!=-1){
@@ -153,6 +253,7 @@ public class recorridoAction extends ActionSupport {
                     viaje.getHoraVuelta(),viaje.getFecha(),
                     viaje.getAsientosLibres(),viaje.getDesde(), 
                     viaje.getHasta(),v,viaje.getEventoAsociado());
+			
 			        viajePeriodicoDAO.persistir(vp);
 			        this.agregarDiasAViajePeridico(vp);
 				    viajePeriodicoDAO.actualizar(vp);
@@ -162,13 +263,16 @@ public class recorridoAction extends ActionSupport {
                      viaje.getHoraVuelta(),viaje.getFecha(),
                      viaje.getAsientosLibres(),viaje.getDesde(), 
                      viaje.getHasta(),v,viaje.getEventoAsociado());
+			 
             viajePuntualDAO.persistir(vp);	
 		}
 		return "success";
+	   }
 	 }else
 	 {
 		 return "index";
 	 }
+	 
 	}
 	
 	
@@ -185,6 +289,89 @@ public class recorridoAction extends ActionSupport {
 		}else{
 			return "index";
 		}
+	}
+	
+	
+	public String modificarViaje(Long idV){
+		session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+		if(session.get("esAdmin")!=null && false==(Boolean)session.get("esAdmin")){
+		  this.inicializar();
+		  ViajePeriodico vp = this.viajePeriodicoDAO.recuperarConDias(idV);
+		  if(vp!=null){
+			  int i=0;
+			  for(DiaSemana ds:vp.getDias()){
+				  String nombreDia = "dias."+ds.getNombre().toLowerCase();
+				  this.defaultDias[i]=this.getText(nombreDia);
+				  i++;	   
+			  }
+			  Evento e=vp.getEventoAsociado();
+			  idElegido=(long)-1;
+			  if(e!=null){
+				 this.idElegido=e.getId();
+			  } 
+			  this.viaje = this.viajeDao.recuperar(vp.getId());	
+			  this.boton= this.getText("nuevorecorrido.viaje_periodico");
+		  }else{
+			  ViajePuntual vpu = this.viajePuntualDAO.recuperar(idV);
+			  Evento e=vpu.getEventoAsociado();
+			  idElegido=(long)-1;
+			  if(e!=null){
+				 this.idElegido=e.getId();
+			  } 
+			  this.viaje=this.viajeDao.recuperar(vpu.getId());
+			  this.boton= this.getText("nuevorecorrido.viaje_puntual");
+		  }  
+		  return "success";
+		  
+		}else{
+			return "index";
+		}
+	}
+	
+	
+	
+	@Action(value = "modificarViaje", results={@Result(name="success", location="nuevoRecorrido.jsp"),
+			@Result(name="index", location="Index", type="redirectAction")})
+	@SkipValidation
+	public String mViaje(){
+		 HttpServletRequest req = (HttpServletRequest) ActionContext
+					.getContext().get(ServletActionContext.HTTP_REQUEST);
+		return this.modificarViaje(Long.parseLong(req.getParameter("idViaje")));
+	}
+	
+	
+	@Action(value = "borrarViaje", results={@Result(name="success", location="verMisViajes",type="redirectAction"),
+			@Result(name="index", location="Index", type="redirectAction")})
+	@SkipValidation
+	public String borrarViaje(){
+		HttpServletRequest req = (HttpServletRequest) ActionContext
+   				.getContext().get(ServletActionContext.HTTP_REQUEST);
+		session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+        
+        Viaje viajeABorrar = this.viajeDao.recuperarConPasajeros(Long.parseLong(req.getParameter("idViaje")));
+    	ArrayList<Viajero> viajerosDelSistema =(ArrayList<Viajero>)viajeroDao.recuperarTodos("id");
+         //Borrando todas las solicitudes al viaje
+    	ArrayList<Solicitud> solicitudesAViaje = (ArrayList<Solicitud>) this.solicitudDao.recuperarPorViaje("id", viajeABorrar);
+    	for(Solicitud s:solicitudesAViaje){
+    		   this.solicitudDao.borrar(s);
+    	}
+    	//sacarle a los viajeros el viaje a borrar
+    	for(Viajero vi:viajerosDelSistema){
+    			   Viajero viaj = this.viajeroDao.recuperarConViajesEstoy(vi.getId());
+    			   viaj.removeViajeEstoy(viaje);
+    			   this.viajeroDao.actualizar(viaj);
+    	}
+    	//borrar sus calificaciones si es que tiene
+    	ArrayList<Calificacion> calificaciones=calificacionDao.recuperarCalificacionesPorViaje(viajeABorrar.getId());
+		   for (Calificacion c:calificaciones){
+			   Viajero v=viajeroDao.recuperarConCalificaciones(c.getAutor().getId());
+			   v.removeCalificacion(c);
+			   viajeroDao.actualizar(v);
+			   this.calificacionDao.borrar(c.getId());
+		   }
+    	
+        this.viajeDao.borrar(viajeABorrar.getId());   
+    	return "success";
 	}
 	
 	
@@ -236,6 +423,8 @@ public class recorridoAction extends ActionSupport {
 		}
 		
 	}
+	
+
 	
 	public void setViajeroDAO(ViajeroDAO viajeroDAO) {
 		this.viajeroDAO = viajeroDAO;
@@ -291,6 +480,7 @@ public class recorridoAction extends ActionSupport {
 		   addFieldError("viaje.horaPartida", "Debe ingresar una hora de partida");
 		   error=true;
 	   }
+	   
 	   if((viaje.getAsientosLibres()==0)){
 		   addFieldError("viaje.asientosLibres", "Debe ingresar la cantidad de asientos libres");
 		   error=true;

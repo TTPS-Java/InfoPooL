@@ -1,5 +1,6 @@
 package DAOhiberJPA;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,4 +54,31 @@ extends GenericDAOhiberJPA<Solicitud> implements SolicitudDAO {
 		}
 		return list;
 	}
+	
+	
+	
+	@Override
+	public List<Solicitud> recuperarPorViaje(int page, int maxResult,
+			String columnOrder, Viaje viaje) {
+		List<Solicitud> list = new ArrayList<Solicitud>();
+			TypedQuery<Solicitud> consulta = em.createQuery("select e from Solicitud e where viaje = :via "
+					+ "order by "+columnOrder, Solicitud.class);
+			consulta.setParameter("via", viaje);
+			if(page!=-1){
+				consulta.setFirstResult((page-1)* maxResult)
+						.setMaxResults(maxResult);
+			}
+			list.addAll(consulta.getResultList());
+		
+		return list;
+	}
+	@Override
+	public List<Solicitud> recuperarPorViaje(String columnOrder,
+			 Viaje viaje) {
+		return recuperarPorViaje(-1, -1, columnOrder, viaje);
+	}
+	
+	
+	
+	
 }
