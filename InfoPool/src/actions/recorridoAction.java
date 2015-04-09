@@ -29,6 +29,9 @@ import interfacesDAO.ViajeroDAO;
 
 
 
+
+
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -95,6 +98,8 @@ public class recorridoAction extends ActionSupport {
 	private String coordenadasEventos;
 	private String[] defaultDias = new String[7];
 	private String mensajeError;
+	private ArrayList<Viaje> misViajes;
+	private SessionMap<String, Object> sesion;
 	
 	
 	public List<String> getTiposDeViajes() {
@@ -181,8 +186,6 @@ public class recorridoAction extends ActionSupport {
 	public String recorridoNuevo(){
 	session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
 	if(session.get("esAdmin")!=null && false==(Boolean)session.get("esAdmin")){
-		
-		
 	  if(viaje.getId()!=null){
 		  Lugar ld =this.lugarDAO.recuperar(this.viaje.getDesde().getId());
 		  ld.setDescripcion(this.viaje.getDesde().getDescripcion());
@@ -237,7 +240,6 @@ public class recorridoAction extends ActionSupport {
 		  }
 		  return "success";
 	  }else{
-		System.out.println("paso a crear viaje");
 		lugarDAO.persistir(viaje.getDesde());
 		lugarDAO.persistir(viaje.getHasta());
 		if(this.getIdElegido()!=-1){
@@ -336,19 +338,77 @@ public class recorridoAction extends ActionSupport {
 	public String mViaje(){
 		 HttpServletRequest req = (HttpServletRequest) ActionContext
 					.getContext().get(ServletActionContext.HTTP_REQUEST);
-		return this.modificarViaje(Long.parseLong(req.getParameter("idViaje")));
+		    Long idu =(Long)this.getSesionUsuario().get("usuario");
+			Viajero vs=null;
+			if(idu!=null){
+			   vs= this.viajeroDao.recuperar((Long)this.getSesionUsuario().get("usuario"));
+			}
+			if(vs!=null && req.getParameter("idViaje")!=null){ 
+		       return this.modificarViaje(Long.parseLong(req.getParameter("idViaje")));
+			}else{
+				return "index";
+			}
 	}
 	
 	
+	
+	
+	@Action(value="verMisViajes",results={
+			@Result(name="succes",location="verMisRecorridos.jsp"),	
+			@Result(name="index", location="Index", type="redirectAction")})
+	@SkipValidation
+	public String verMisViajes(){
+		Long idu =(Long)this.getSesionUsuario().get("usuario");
+		Viajero vs=null;
+		if(idu!=null){
+		   vs= this.viajeroDao.recuperar((Long)this.getSesionUsuario().get("usuario"));
+		}
+		if(vs!=null){
+			Long idViajero = (Long) this.getSesionUsuario().get("usuario");
+			Viajero v=this.viajeroDao.recuperar(idViajero);
+			this.misViajes=(ArrayList<Viaje>)viajeDao.recuperarPorConductor("id",v);
+			return "succes";
+		}else{
+			return  "index";
+		}
+		}
+	public ArrayList<Viaje> getMisViajes() {
+		return misViajes;
+	}
+	public void setMisViajes(ArrayList<Viaje> misViajes) {
+		this.misViajes = misViajes;
+	}
+	public SessionMap<String,Object> getSesionUsuario(){
+	     if(this.sesion == null) {
+		    this.sesion=
+		    (SessionMap<String, Object>) ActionContext.getContext().getSession();
+	     }
+	     return this.sesion;
+	 }
 	@Action(value = "borrarViaje", results={@Result(name="success", location="verMisViajes",type="redirectAction"),
 			@Result(name="index", location="Index", type="redirectAction")})
 	@SkipValidation
 	public String borrarViaje(){
-		HttpServletRequest req = (HttpServletRequest) ActionContext
-   				.getContext().get(ServletActionContext.HTTP_REQUEST);
+		 HttpServletRequest req = (HttpServletRequest) ActionContext
+					.getContext().get(ServletActionContext.HTTP_REQUEST);
+	 Long idu =(Long)this.getSesionUsuario().get("usuario");
+	Viajero vs=null;
+	if(idu!=null){
+			   vs= this.viajeroDao.recuperar((Long)this.getSesionUsuario().get("usuario"));
+	}
+	if(vs!=null && req.getParameter("idViaje")!=null){	
+		
+		
 		session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
-        
+		
+		Viajero via = this.viajeroDao.recuperar((Long)session.get("usuario"));
         Viaje viajeABorrar = this.viajeDao.recuperarConPasajeros(Long.parseLong(req.getParameter("idViaje")));
+       if(viajeABorrar==null || via==null){ 
+    	  return "Index";
+    }else{	
+      /*if(viajeABorrar.getPasajeros().size()> 0){
+    	  return "verMisViajes";
+      }else{*/
     	ArrayList<Viajero> viajerosDelSistema =(ArrayList<Viajero>)viajeroDao.recuperarTodos("id");
          //Borrando todas las solicitudes al viaje
     	ArrayList<Solicitud> solicitudesAViaje = (ArrayList<Solicitud>) this.solicitudDao.recuperarPorViaje("id", viajeABorrar);
@@ -358,23 +418,26 @@ public class recorridoAction extends ActionSupport {
     	//sacarle a los viajeros el viaje a borrar
     	for(Viajero vi:viajerosDelSistema){
     			   Viajero viaj = this.viajeroDao.recuperarConViajesEstoy(vi.getId());
-    			   viaj.removeViajeEstoy(viaje);
+    			   viaj.getViajesEstoy().remove(viajeABorrar);
     			   this.viajeroDao.actualizar(viaj);
     	}
     	//borrar sus calificaciones si es que tiene
     	ArrayList<Calificacion> calificaciones=calificacionDao.recuperarCalificacionesPorViaje(viajeABorrar.getId());
 		   for (Calificacion c:calificaciones){
 			   Viajero v=viajeroDao.recuperarConCalificaciones(c.getAutor().getId());
-			   v.removeCalificacion(c);
+			   v.getCalificaciones().remove(c);;
 			   viajeroDao.actualizar(v);
 			   this.calificacionDao.borrar(c.getId());
 		   }
     	
         this.viajeDao.borrar(viajeABorrar.getId());   
     	return "success";
+     // }
+    }     
+	}else{
+		return "index";
 	}
-	
-	
+}
 	public void inicializar(){
 		dias= new ArrayList<String>();
 		eventos= new ArrayList<Evento>();

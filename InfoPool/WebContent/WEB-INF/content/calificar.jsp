@@ -8,6 +8,8 @@
 <title>Calificar a un usuario</title>
 </head>
 <body>
+    <s:a href="Index">Volver</s:a>
+    <h3>Calificar usuario</h3>
     <s:form action="guardarCalificacionAction" method="post">
         <s:hidden name="idCalificado" value="%{idCalificado}" />
         <s:hidden name="idViaje" value="%{idViaje}" />

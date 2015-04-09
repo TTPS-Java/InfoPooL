@@ -8,6 +8,9 @@
 <title>Denuncias a viajero</title>
 </head>
 <body>
+   <s:a href="Index">Volver</s:a>
+  <h3>Denuncias de viajero</h3>
+  <br />
   <s:url id="bloquear" action="bloquearViajero">
 		<s:param name="id" value="%{viajero.id}"></s:param>
   </s:url> 

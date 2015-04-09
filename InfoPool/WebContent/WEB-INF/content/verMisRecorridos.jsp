@@ -8,6 +8,8 @@
 <title>Mis recorridos</title>
 </head>
 <body>
+   <s:a href="Index">Volver</s:a>
+   <h3>Mis recorridos</h3>
    <table>
      <tr>
       <th>fecha</th><th>hora partida</th><th>hora vuelta</th><th>asientos libres</th><th>desde</th><th>hasta</th><th></th><th></th>

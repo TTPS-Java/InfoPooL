@@ -11,7 +11,7 @@ public class ViajeJSON {
 	private Evento eventoAsociado;
 	private Lugar desde;
 	private Lugar hasta;
-	
+	private  long idConductor;
 	
 	public ViajeJSON(){
 		
@@ -23,7 +23,7 @@ public class ViajeJSON {
 	
 	public ViajeJSON(long id, String horaPartida,
 			String horaVuelta, Date fecha, int asientosLibres,
-			Evento eventoAsociado, Lugar desde, Lugar hasta) {
+			Evento eventoAsociado, Lugar desde, Lugar hasta,long idConductor) {
 		super();
 		this.id = id;
 		this.horaPartida = horaPartida;
@@ -33,6 +33,7 @@ public class ViajeJSON {
 		this.eventoAsociado = eventoAsociado;
 		this.desde = desde;
 		this.hasta = hasta;
+		this.idConductor=idConductor;
 	}
 	public Evento getEventoAsociado() {
 		return eventoAsociado;
@@ -82,7 +83,13 @@ public class ViajeJSON {
 	public void setAsientosLibres(int viajeAsientosLibres) {
 		this.asientosLibres = viajeAsientosLibres;
 	}
-	
+	public Long getIdConductor() {
+		return idConductor;
+	}
+
+	public void setIdConductor(Long idConductor) {
+		this.idConductor = idConductor;
+	}
 	
 	
 

@@ -33,6 +33,26 @@ extends GenericDAOhiberJPA<Calificacion> implements CalificacionDAO {
 		return calificaciones;		
 	}
 	
+	@Override
+	public ArrayList<Calificacion> recuperarPorCalificado(Serializable idViajeroCalificado){
+		EntityManager em = MiEntityManagerFactory.getEMF().createEntityManager();
+		EntityTransaction etx = em.getTransaction();
+		etx.begin();
+		TypedQuery<Calificacion> consulta = em.createQuery("Select c from Calificacion c where c.calificado.id="+idViajeroCalificado,Calificacion.class);
+		ArrayList<Calificacion> calificaciones = (ArrayList<Calificacion>) consulta.getResultList();
+		em.flush();
+		etx.commit();
+		em.close();
+		return calificaciones;		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/*public ArrayList<CalificacionPendiente> calficacionesPendientes(Viajero viajero){

@@ -31,6 +31,7 @@
 	</s:a>
 	<br>
 	<s:a href="verMisViajes" >mis recorridos</s:a>
+	<br />
 	<s:a href="verCalificacionesPendientes"><s:text name="menuviajero.calificaciones" /></s:a>
 	<br>
 	<s:a href="#"><s:text name="menuviajero.mensajes" /></s:a>

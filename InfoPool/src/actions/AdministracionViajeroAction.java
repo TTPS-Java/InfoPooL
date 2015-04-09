@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
+import org.apache.struts2.dispatcher.SessionMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -41,7 +42,8 @@ public class AdministracionViajeroAction {
 	private SolicitudDAO solicitudDao;
 	
    @Action(value="detalleViajero",results={
-		   @Result(name="succes",location="denunciasAViajero.jsp")
+		   @Result(name="succes",location="denunciasAViajero.jsp"),
+		   @Result(name="index", location="Index", type="redirectAction")
    })
     public String detalleViajero(){
     	/* crear jsp detalle viajero que muestra sus denuncias y la opcion
@@ -49,9 +51,15 @@ public class AdministracionViajeroAction {
     	 */
     	HttpServletRequest req = (HttpServletRequest) ActionContext
 				.getContext().get(ServletActionContext.HTTP_REQUEST);
+    	SessionMap<String, Object> session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+  	
+      if(req.getParameter("id")!=null && session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){	
         this.viajero=this.viajeroDao.recuperar(Long.parseLong(req.getParameter("id")));
     	this.denunciasDeUsuario=(ArrayList<Denuncia>) this.denunciaDao.denunciasAViajero(viajero.getId());
     	return"succes";
+      }else{
+    	  return "index";
+         }
     }
 	
  
@@ -65,24 +73,44 @@ public class AdministracionViajeroAction {
    }
 	
    @Action(value="bloquearViajero",results={
-		   @Result(name="succes",location="denunciasAViajero.jsp")})
+		   @Result(name="succes",location="denunciasAViajero.jsp"),
+		   @Result(name="index", location="Index", type="redirectAction")})
 	  public String bloquearViajero(){
+	   HttpServletRequest req = (HttpServletRequest) ActionContext
+				.getContext().get(ServletActionContext.HTTP_REQUEST);
+   	   SessionMap<String, Object> session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+       if(req.getParameter("id")!=null && session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){
 	     this.setearEstadoViajero(false);
 	     return "succes";
-      }
+       }else{
+    	   return "index";
+       }
+   }
    
        @Action(value="desbloquearViajero",results={
-		   @Result(name="succes",location="denunciasAViajero.jsp")})
+		   @Result(name="succes",location="denunciasAViajero.jsp"),
+		   @Result(name="index", location="Index", type="redirectAction")
+		   })
 	   public String desbloquearViajero(){
-	     this.setearEstadoViajero(true);
-	     return "succes";
+    	   HttpServletRequest req = (HttpServletRequest) ActionContext
+   				.getContext().get(ServletActionContext.HTTP_REQUEST);
+      	   SessionMap<String, Object> session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+          if(req.getParameter("id")!=null && session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){   
+    	   this.setearEstadoViajero(true);
+	       return "succes";
+          }else{
+        	  return "index";
+          }
         }
 	
        @Action(value="borrarViajesDeViajero",results={
-    		   @Result(name="succes",location="denunciasAViajero.jsp")})
+    		   @Result(name="succes",location="denunciasAViajero.jsp"),
+    		   @Result(name="index", location="Index", type="redirectAction")})
        public String borarViajesViajero(){
     	   HttpServletRequest req = (HttpServletRequest) ActionContext
    				.getContext().get(ServletActionContext.HTTP_REQUEST);
+          SessionMap<String, Object> session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+       if(req.getParameter("id")!=null && session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){   
           this.viajero=this.viajeroDao.recuperar(Long.parseLong(req.getParameter("id")));
     	   ArrayList<Viaje> viajes=(ArrayList<Viaje>) this.viajeDao.recuperarPorConductor("id",this.viajero);
     	   ArrayList<Viajero> viajerosDelSistema =(ArrayList<Viajero>)viajeroDao.recuperarTodos("id");
@@ -96,13 +124,13 @@ public class AdministracionViajeroAction {
     	   for(Viaje viaje:viajes){
     		   for(Viajero vi:viajerosDelSistema){
     			   Viajero viaj = this.viajeroDao.recuperarConViajesEstoy(vi.getId());
-    			   viaj.removeViajeEstoy(viaje);
+    			   viaj.getViajesEstoy().remove(viaje);
     			   this.viajeroDao.actualizar(viaj);
     		   }
     		   ArrayList<Calificacion> calificaciones=calificacionDao.recuperarCalificacionesPorViaje(viaje.getId());
     		   for (Calificacion c:calificaciones){
     			   Viajero v=viajeroDao.recuperarConCalificaciones(c.getAutor().getId());
-    			   v.removeCalificacion(c);
+    			   v.getCalificaciones().remove(c);
     			   viajeroDao.actualizar(v);
     			   this.calificacionDao.borrar(c.getId());
     		   }
@@ -111,6 +139,11 @@ public class AdministracionViajeroAction {
     	   }
     	   
     	   return "succes";
+    	   
+       }else
+       {
+    	   return "index";
+       }
        }
 	
 	

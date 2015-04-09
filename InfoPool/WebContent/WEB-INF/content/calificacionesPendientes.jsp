@@ -8,6 +8,8 @@
 <title>Calificaciones pendientes</title>
 </head>
 <body>
+<s:a href="Index">Volver</s:a>
+<h3>Calificaciones pendientes</h3>
  <table><tr><th>Usuario</th><th>Fecha</th><th>Lugar de llegada</th><th>Calificar</th><th>Denunciar</th></tr>
 <s:iterator  value="calificacionesPendientes">
     <tr>

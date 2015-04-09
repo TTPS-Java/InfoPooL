@@ -162,16 +162,18 @@ public class Viaje {
 	
 	@Override
 	public boolean equals(Object object) {
-		if (object == this)
+		if (object == this){
 			return true;
-		if (object == null)
+		}else{
+		if (object == null){
 			return false;
-
-		final Viaje b = (Viaje) object;
-
-		if (this.getId() != 0 && b.getId() != 0) {
+		}else{
+		  final Viaje b = (Viaje) object;
+		  if (this.getId() != 0 && b.getId() != 0) {
 			return this.getId() == b.getId();
+		  }
+		  return false;
+		 }
 		}
-		return false;
 	}
 }

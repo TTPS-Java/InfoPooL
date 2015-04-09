@@ -15,4 +15,5 @@ public interface CalificacionDAO extends GenericDAO<Calificacion>{
 	public List<Calificacion> recuperarTodos(int page, int maxResult);
 	public List<Calificacion> recuperarTodos(int page, int maxResult, String columnOrder);
 	public ArrayList<Calificacion> recuperarCalificacionesPorViaje(Serializable idViaje);
+	public ArrayList<Calificacion> recuperarPorCalificado(Serializable idViajeroCalificado);
 }

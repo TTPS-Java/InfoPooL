@@ -37,7 +37,12 @@ function formatLink(cellvalue, options, rowObject) {
 			+ cellvalue
 			+ "'>Pedir asientos</a>"+ "</div>");
 }
-
+function formatLinkViajero(cellvalue, options, rowObject) {
+	return ("<div style=\"text-align:center\">"
+			+ "<a class='button' title='Ver detalles' href='calificacionesViajero?id="
+			+ cellvalue
+			+ "'>Ver usuario</a>"+ "</div>");
+}
 
 </script>
 </head>
@@ -74,6 +79,7 @@ function formatLink(cellvalue, options, rowObject) {
 				<sjg:gridColumn name="horaPartida" index="horaPartida" title="horaPartida" sortable="true"/>
 				<sjg:gridColumn name="horaVuelta" index="horaVuelta" title="horaVuelta" sortable="true"/>
 				<sjg:gridColumn name="id" index="acciones" title="Acciones" sortable="false" formatter="formatLink"/>
+				<sjg:gridColumn name="idConductor" index="detalle" title="Detalle" sortable="false" formatter="formatLinkViajero"/>
 			</sjg:grid>
 <script>
 $(document).ready(function(){

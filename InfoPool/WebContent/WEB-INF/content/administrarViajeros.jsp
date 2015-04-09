@@ -8,6 +8,8 @@
 <title>Administrar viajeros</title>
 </head>
 <body>
+<s:a href="Index">Volver</s:a>
+  <h3>Viajeros registrados en el sistema</h3>
 <table>
 		<tr>
 			<th>Nombre</th>

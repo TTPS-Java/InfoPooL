@@ -43,13 +43,10 @@ public class Viajero extends Usuario {
 
 	public List<Viaje>recuperarViajesEstoyFinalizados(Date fechaRecibida){
 		ArrayList<Viaje> viajesFinalizadosViajero = new ArrayList<Viaje>();
-		System.out.println("recuperando viajes finalizados");
 		for (Viaje ve:this.getViajesEstoy())
 		{
-			System.out.println("recuperando viajes finalizados");
-			System.out.println(ve.getFecha());
-			System.out.println(fechaRecibida);
 			if(ve.getFecha().before(fechaRecibida)){
+				System.out.println("fecha vieja");
 				viajesFinalizadosViajero.add(ve);
 			}
 		}
@@ -57,10 +54,8 @@ public class Viajero extends Usuario {
 	}
 	
 	public List<CalificacionPendiente> recuperarCalificionesPendientes(){
-		System.out.println("paso a ver calificaciones");
 		ArrayList<Viaje> viajesFinalizados = (ArrayList<Viaje>) this.recuperarViajesEstoyFinalizados(new Date());
 		ArrayList<CalificacionPendiente> calificacionesPendientes= new ArrayList<CalificacionPendiente>();
-		System.out.println("tamanio lista viajes finalizados: "+viajesFinalizados.size());
 			for (Viaje v:viajesFinalizados){
 			  boolean Secalifico = false;
 			  for (Calificacion c:this.getCalificaciones()){
@@ -138,7 +133,8 @@ public class Viajero extends Usuario {
 		this.viajesEstoy.add(viajeEstoy);
 	}
 	
-	public void removeViajeEstoy(Viaje viajeEstoy) {
+	public void removeViajeEstoy(Viaje viajeEstoy) {	
+	  if(viajeEstoy==null){System.out.println("viaje es nulo");}	
 		this.viajesEstoy.remove(viajeEstoy);
 	}
 	public List<Calificacion> getCalificaciones() {
@@ -163,7 +159,7 @@ public class Viajero extends Usuario {
 				+ ", getContrasenia()=" + getContrasenia() + "]";
 	}
 	
-	/*@Override
+	@Override
 	public boolean equals(Object object) {
 		if (object == this)
 			return true;
@@ -176,7 +172,7 @@ public class Viajero extends Usuario {
 			return this.getId() == b.getId();
 		}
 		return false;
-	}*/
+	}
 	
 	
 }

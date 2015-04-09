@@ -31,7 +31,11 @@ public class CalificacionesAction {
 	private Long idViaje;
 	private String opcionSeleccionada;
 	private List<CalificacionPendiente> calificacionesPendientes;
+	private Long votosPositivos;
+	private Long votosNegativos;
 	private  SessionMap<String,Object> sesion;
+	private List<Calificacion> calificaciones;
+	private Viajero viajero=null;
 	@Autowired
 	private ViajeroDAO viajeroDao ;
 	@Autowired 
@@ -40,7 +44,34 @@ public class CalificacionesAction {
 	private ViajeDAO viajeDao;
 	
 	
-
+	
+	@Action(value="calificacionesViajero",results={
+	@Result(name="succes",location = "calificacionesViajero.jsp"),
+	@Result(name="index", location="Index", type="redirectAction")})
+	public String verUsuario(){		
+		HttpServletRequest req = (HttpServletRequest) ActionContext
+				.getContext().get(ServletActionContext.HTTP_REQUEST);
+		if(req.getParameter("id")!=null ){
+			 this.viajero=this.viajeroDao.recuperar(Long.parseLong(req.getParameter("id")));
+		}
+		if(this.viajero!=null && this.getSesionUsuario().get("esAdmin")!=null && false==(Boolean)this.getSesionUsuario().get("esAdmin")){
+			this.calificaciones=(ArrayList<Calificacion>)this.calificacionDao.recuperarPorCalificado(viajero.getId());
+			System.out.println(this.calificaciones.size());
+			this.votosNegativos=(long) 0;
+			this.votosPositivos=(long) 0;
+			for (Calificacion c:this.calificaciones){
+				System.out.println("calificaion"+c.getEsPositiva());
+				if(c.getEsPositiva()==true){
+					this.votosPositivos++;
+				}else{
+					this.votosNegativos++;
+				}
+			}
+			return "succes";
+		}else{
+			return "index";
+		}
+	}
 	public boolean tipoDeCalificacion() {
 		//se va obtener con getText
 		if(this.getOpcionSeleccionada().equals("positivo")){
@@ -59,32 +90,47 @@ public class CalificacionesAction {
 	
 
 	@Action(value="verCalificacionesPendientes",results={
-	@Result(name="succes",location = "calificacionesPendientes.jsp")})
+	@Result(name="succes",location = "calificacionesPendientes.jsp"),
+	@Result(name="index", location="Index", type="redirectAction")})
 	public String verCalificacionesPendientes(){	
-	   Viajero viajero=this.viajeroDao.recuperarConViajesEstoyYCalificaciones(
+    if( this.getSesionUsuario().get("esAdmin")!=null && false==(Boolean)this.getSesionUsuario().get("esAdmin")){
+	   this.viajero=this.viajeroDao.recuperarConViajesEstoyYCalificaciones(
 		    	(Long)this.getSesionUsuario().get("usuario"));
-       this.calificacionesPendientes=viajero.recuperarCalificionesPendientes();
+       this.calificacionesPendientes=this.viajero.recuperarCalificionesPendientes();
+       System.out.println("calificaciones pendientes"+this.calificacionesPendientes.size());
        return "succes";
+    }else{
+    	return "index";
+    }
     }
 	
 	@Action(value="calificarUsuario",
 		 results={
-		 @Result(name="succes",location="calificar.jsp")})
+		 @Result(name="succes",location="calificar.jsp"),
+		 @Result(name="index", location="Index", type="redirectAction")})
 	public String calificarUsuario(){
 	   HttpServletRequest req = (HttpServletRequest) ActionContext
 				.getContext().get(ServletActionContext.HTTP_REQUEST);
-	   this.setIdCalificado(Long.parseLong(req.getParameter("idCalificado")));
-	   this.setIdViaje(Long.parseLong(req.getParameter("idViaje")));
-	   this.getOpciones().add("positivo");
-	   this.getOpciones().add("negativo");
-	   return "succes";
+	   if(req.getParameter("idViaje")!=null && req.getParameter("idCalificado")!=null && this.getSesionUsuario().get("esAdmin")!=null && false==(Boolean)this.getSesionUsuario().get("esAdmin"))
+	   {	   
+	     this.setIdCalificado(Long.parseLong(req.getParameter("idCalificado")));
+	     this.setIdViaje(Long.parseLong(req.getParameter("idViaje")));
+	     this.getOpciones().add("positivo");
+	     this.getOpciones().add("negativo");
+	     return "succes";
+	   }else{
+		   return "index";
+	   }
 	}
 	
 	@Action(value="guardarCalificacionAction",
 			results={
-			@Result(name="succes" ,location="verCalificacionesPendientes",type="redirect")
+			@Result(name="succes" ,location="verCalificacionesPendientes",type="redirect"),
+			@Result(name="index", location="Index", type="redirectAction")
 	        })
 	public String guardarCalificacion(){
+		
+	 if( this.getSesionUsuario().get("esAdmin")!=null && false==(Boolean)this.getSesionUsuario().get("esAdmin")){
 		Long idCalificador =(Long)this.getSesionUsuario().get("usuario");
 		Viaje v= this.viajeDao.recuperar(this.getIdViaje());
 		Viajero viajeroCalificado = this.viajeroDao.recuperar(this.getIdCalificado());
@@ -94,17 +140,10 @@ public class CalificacionesAction {
 		viajerCalificador.addCalificacion(c);
 		this.viajeroDao.actualizar(viajerCalificador);
 		return "succes";
+	 }else{
+		 return "index";
+	 }
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public SessionMap<String,Object> getSesionUsuario(){
 	     if(this.sesion == null) {
 		    this.sesion=
@@ -112,26 +151,6 @@ public class CalificacionesAction {
 	     }
 	     return this.sesion;
 	 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public String getComentario() {
 		return comentario;
 	}
@@ -157,20 +176,40 @@ public class CalificacionesAction {
 			List<CalificacionPendiente> calificacionesPendientes) {
 		this.calificacionesPendientes = calificacionesPendientes;
 	}
-	
 	public Long getIdViaje() {
 		return idViaje;
 	}
-
 	public void setIdViaje(Long idViaje) {
 		this.idViaje = idViaje;
 	}
 	public String getOpcionSeleccionada() {
 		return this.opcionSeleccionada;
 	}
-	
 	public void setOpcionSeleccionada(String opcionSeleccionada) {
 		this.opcionSeleccionada = opcionSeleccionada;
 	}
-
+	public List<Calificacion> getCalificaciones() {
+		return calificaciones;
+	}
+	public void setCalificaciones(List<Calificacion> calificaciones) {
+		this.calificaciones = calificaciones;
+	}
+	public Long getVotosPositivos() {
+		return votosPositivos;
+	}
+	public void setVotosPositivos(Long votosPositivos) {
+		this.votosPositivos = votosPositivos;
+	}
+	public Long getVotosNegativos() {
+		return votosNegativos;
+	}
+	public void setVotosNegativos(Long votosNegativos) {
+		this.votosNegativos = votosNegativos;
+	}
+	public Viajero getViajero() {
+		return viajero;
+	}
+	public void setViajero(Viajero viajero) {
+		this.viajero = viajero;
+	}
 }

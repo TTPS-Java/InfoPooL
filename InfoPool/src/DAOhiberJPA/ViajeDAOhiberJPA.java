@@ -122,7 +122,7 @@ extends GenericDAOhiberJPA<Viaje> implements ViajeDAO {
 		viajes = (List<Viaje>)consulta.getResultList();
 		    for (Viaje v:viajes){
 		    	ViajeJSON vj = new ViajeJSON(v.getId(),v.getHoraPartida(),v.getHoraVuelta(),v.getFecha()
-		    			,v.getAsientosLibres(),v.getEventoAsociado(),v.getDesde(),v.getHasta());
+		    			,v.getAsientosLibres(),v.getEventoAsociado(),v.getDesde(),v.getHasta(),v.getConductor().getId());
 		    	viajesJSON.add(vj);
 		    }
 		em.close();
