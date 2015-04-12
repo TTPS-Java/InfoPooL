@@ -13,4 +13,5 @@ public interface EventoDAO extends GenericDAO<Evento>{
 	public List<Evento> recuperarTodos(String columnOrder);
 	public List<Evento> recuperarTodos(int page, int maxResult);
 	public List<Evento> recuperarTodos(int page, int maxResult, String columnOrder);
+	public boolean estaEnUnViaje(Serializable id);
 }

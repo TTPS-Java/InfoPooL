@@ -3,15 +3,12 @@ package actions;
 import interfacesDAO.EventoDAO;
 import interfacesDAO.LugarDAO;
 import interfacesDAO.UsuarioDAO;
-import interfacesDAO.ViajeroDAO;
 
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 
-import objetos.Administrador;
 import objetos.Evento;
-import objetos.Usuario;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -37,7 +34,6 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 	@Autowired
 	private LugarDAO lugarDAO;
 	
-	
 	private Collection<Evento> eventos;
 	private SessionMap<String, Object> session;
 	public Collection<Evento> getEventos() {
@@ -53,44 +49,105 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 		this.evento = evento;
 	}
 	@Action(value = "eventoNuevo", results={@Result(name="index", location="Index", type="redirectAction"),
-			@Result(name="success", location="eventoNuevo.jsp")})
+			@Result(name="success", location="eventoNuevo.jsp"),
+			@Result(name="error", location="verEventos.jsp")})
 	@SkipValidation
 	public String eventoNuevo() throws Exception {
 	session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
 	 if(session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){
 		HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
-		if(req.getParameter("id")!=null){
-			  evento = eventoDAO.recuperar(Long.parseLong(req.getParameter("id")));
-			  System.out.println(evento);
-		
+		if(req.getParameter("idEvento")!=null){
+			Long id;
+			try {
+				id = Long.parseLong(req.getParameter("idEvento"));
+			} catch (NumberFormatException e) {
+				addActionError("Debe elegir un elemento valido para modificar"); //XXX this.getText("evento.error_modificar")
+				verEventos();
+				return ERROR;
+			}
+			if(!eventoDAO.existe(id)) {
+				addActionError("El evento no existe"); //XXX this.getText("evento.evento_no_existe")
+				verEventos();
+				return ERROR;
+			};
+			evento = eventoDAO.recuperar(id);
 		} 
 		return SUCCESS;
-	 }else
-	 {
+		} else {
 		 return "index";
-	 }
+		}
 	}
 	
 	@Action(value = "verEvento", results={@Result(name="index", location="Index", type="redirectAction"),
-			@Result(name="success", location="verEvento.jsp")})
+			@Result(name="success", location="verEvento.jsp"),
+			@Result(name="error", location="verEventos.jsp")})
 	@SkipValidation
 	public String verEvento() throws Exception {
 	session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
 	 if(session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){
 		HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
-		if(req.getParameter("id")!=null){
-			  evento = eventoDAO.recuperar(Long.parseLong(req.getParameter("id")));
-			  System.out.println(evento);
-		
-		} 
+		if(req.getParameter("idEvento")!=null){
+			Long id;
+			try {
+				id = Long.parseLong(req.getParameter("idEvento"));
+			} catch (NumberFormatException e) {
+				addActionError("Debe elegir un elemento valido para mostrar"); //XXX this.getText("evento.error_mostrar")
+				verEventos();
+				return ERROR;
+			}
+			if(!eventoDAO.existe(id)) {
+				addActionError("El evento no existe"); //XXX this.getText("evento.evento_no_existe")
+				verEventos();
+				return ERROR;
+			};
+			evento = eventoDAO.recuperar(id);
+		}
 		return SUCCESS;
-	 }else
-	 {
-		 return "index";
-	 }
+		} else {
+			return "index";
+		}
 	}
 	
-	
+	@Action(value = "borrarEvento", results = {
+			@Result(name = "success", location = "verEventos.jsp"),
+			@Result(name = "index", location = "Index", type = "redirectAction"),
+			@Result(name = "error", location = "verEventos.jsp")
+	})
+	@SkipValidation
+	public String borrarEvento() throws Exception {
+		session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+		if( session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){
+			HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
+			if(req.getParameter("idEvento")==null){
+				addActionError("Debe elegir un elemento valido para borrar"); //XXX this.getText("evento.error_borrar")
+				verEventos();
+				return ERROR;
+			}
+			Long id;
+			try {
+				id = Long.parseLong(req.getParameter("idEvento"));
+			} catch (NumberFormatException e) {
+				addActionError("Debe elegir un elemento valido para borrar"); //XXX this.getText("evento.error_borrar")
+				verEventos();
+				return ERROR;
+			}
+			if(!eventoDAO.existe(id)) {
+				addActionError("El evento no existe"); //XXX this.getText("evento.evento_no_existe")
+				verEventos();
+				return ERROR;
+			};
+			if(eventoDAO.estaEnUnViaje(id)) {
+				addActionError("El evento esta en un viaje y no se puede borrar"); //XXX this.getText("evento.evento_con_viajes")
+				verEventos();
+				return ERROR;
+			};
+			eventoDAO.borrar(id);
+			verEventos();
+			return SUCCESS;
+		}else{
+			return "index";
+		}
+	}
 	
 	
 
@@ -118,38 +175,44 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 
 	}
 	
-	@Action(value = "verEventos")
+	@Action(value = "verEventos", results = {
+			@Result(name = "success", location = "verEventos.jsp"),
+			@Result(name = "index", location = "Index", type="redirectAction")})
 	@SkipValidation
 	public String verEventos() throws Exception {
-		eventos =  eventoDAO.recuperarTodos("id");
-		return SUCCESS;
+		session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+		if( session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){
+			eventos =  eventoDAO.recuperarTodos("id");
+			return SUCCESS;
+		} else {
+			return "index";
+		}
 	}
 
 	@Override
 	public Evento getModel() {
-		// TODO Auto-generated method stub
 		return this.evento;
 	}
 
 	@Override
 	public void validate() {
 		if((evento.getNombre()==null)||(evento.getNombre().equals(""))){
-			addFieldError("nombre", "Debe ingresar un nombre");
+			addFieldError("nombre","Debe ingresar un nombre" ); //XXX this.getText("evento.falta_nombre")
 		}
 		if((evento.getDescripcion()==null)||(evento.getDescripcion().equals(""))){
-			addFieldError("descripcion", "Debe ingresar una descripcion");
+			addFieldError("descripcion", "Debe ingresar una descripcion"); //XXX this.getText("evento.falta_descr")
 		}
 		if((evento.getLugar().getDescripcion()==null)||(evento.getLugar().getDescripcion().equals(""))){
-			addFieldError("lugar.descripcion", "Debe ingresar un lugar");
+			addFieldError("lugar.descripcion", "Debe ingresar un lugar"); //XXX this.getText("evento.falta_lugar")
 		}
 		if((evento.getFecha()==null)||(evento.getFecha().equals(""))){
-			addFieldError("fecha", "Debe ingresar una fecha");
+			addFieldError("fecha", "Debe ingresar una fecha"); //XXX this.getText("evento.falta_fecha")
 		}
 		if(evento.getDuracionDias()==0){
-			addFieldError("duracionDias", "Debe ingresar una duracion");
+			addFieldError("duracionDias", "Debe ingresar una duracion"); //XXX this.getText("evento.falta_duracion")
 		} 
 		if((evento.getHora()==null)||(evento.getHora().equals(""))||!evento.getHora().matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")){
-			addFieldError("hora", "Debe ingresar una hora");
+			addFieldError("hora", "Debe ingresar una hora"); //XXX this.getText("evento.falta_hora")
 		}
 	}
 
