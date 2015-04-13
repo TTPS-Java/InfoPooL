@@ -100,8 +100,15 @@ public class recorridoAction extends ActionSupport {
 	private String mensajeError;
 	private ArrayList<Viaje> misViajes;
 	private SessionMap<String, Object> sesion;
+	private List<Viajero> viajerosEnViaje;
 	
 	
+	public List<Viajero> getViajerosEnViaje() {
+		return viajerosEnViaje;
+	}
+	public void setViajerosEnViaje(List<Viajero> viajerosEnViaje) {
+		this.viajerosEnViaje = viajerosEnViaje;
+	}
 	public List<String> getTiposDeViajes() {
 		return tiposDeViajes;
 	}
@@ -440,6 +447,31 @@ public class recorridoAction extends ActionSupport {
 		return "index";
 	}
 }
+	
+	
+	
+	@Action(value = "usuariosEnViaje", results={@Result(name="success", location="viajerosEnViaje.jsp"),
+			@Result(name="index", location="Index", type="redirectAction")})
+	@SkipValidation
+	public String usuariosEnViaje(){
+		 HttpServletRequest req = (HttpServletRequest) ActionContext
+					.getContext().get(ServletActionContext.HTTP_REQUEST);
+	 Long idu =(Long)this.getSesionUsuario().get("usuario");
+	Viajero vs=null;
+	if(idu!=null){
+			   vs= this.viajeroDao.recuperar((Long)this.getSesionUsuario().get("usuario"));
+	}
+	if(vs!=null && req.getParameter("idViaje")!=null && !req.getParameter("idViaje").equals("")){
+		
+		Viaje v=this.viajeDao.recuperarConPasajeros(Long.parseLong(req.getParameter("idViaje")));
+		this.setViajerosEnViaje(v.getPasajeros());
+		return"success";
+	 }else
+	 {
+		 return "index";
+	 }
+	}
+	
 	public void inicializar(){
 		dias= new ArrayList<String>();
 		eventos= new ArrayList<Evento>();

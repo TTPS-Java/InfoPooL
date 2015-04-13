@@ -55,7 +55,7 @@ extends GenericDAOhiberJPA<Viaje> implements ViajeDAO {
 	@Override
 	public List<Viaje> recuperarPorConductor(int page, int maxResult,
 			String columnOrder, Viajero Conductor) {
-		TypedQuery<Viaje> consulta = em.createQuery("select e from Viaje e where e.visible = true and conductor = :cond "
+		TypedQuery<Viaje> consulta = em.createQuery("select e from Viaje e where conductor = :cond "
 				//+ "exists ( select * from Viajero v where v.id = e.id and v.id = :id)
 				+ "order by id", Viaje.class);
 		consulta.setParameter("cond", Conductor);

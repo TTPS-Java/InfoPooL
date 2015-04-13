@@ -60,7 +60,7 @@ public Viaje() {
 
 	}
 	
-	  public boolean getVisible() {
+	  public boolean isVisible() {
 			return visible;
 		}
 
