@@ -73,7 +73,7 @@ public class AdministracionViajeroAction {
    }
 	
    @Action(value="bloquearViajero",results={
-		   @Result(name="succes",location="denunciasAViajero.jsp"),
+		   @Result(name="succes",location="Mensajebloquear", type="redirectAction"),
 		   @Result(name="index", location="Index", type="redirectAction")})
 	  public String bloquearViajero(){
 	   HttpServletRequest req = (HttpServletRequest) ActionContext
@@ -88,7 +88,7 @@ public class AdministracionViajeroAction {
    }
    
        @Action(value="desbloquearViajero",results={
-		   @Result(name="succes",location="denunciasAViajero.jsp"),
+    	   @Result(name="succes",location="MensajeDesbloquear", type="redirectAction"),
 		   @Result(name="index", location="Index", type="redirectAction")
 		   })
 	   public String desbloquearViajero(){
@@ -104,8 +104,9 @@ public class AdministracionViajeroAction {
         }
 	
        @Action(value="borrarViajesDeViajero",results={
-    		   @Result(name="succes",location="denunciasAViajero.jsp"),
-    		   @Result(name="index", location="Index", type="redirectAction")})
+    		   @Result(name="succes",location="MensajeBorrarViajes", type="redirectAction"),
+    		   @Result(name="index", location="Index", type="redirectAction")
+    		   })
        public String borarViajesViajero(){
     	   HttpServletRequest req = (HttpServletRequest) ActionContext
    				.getContext().get(ServletActionContext.HTTP_REQUEST);

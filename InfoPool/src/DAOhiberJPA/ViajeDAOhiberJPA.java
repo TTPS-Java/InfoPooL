@@ -55,7 +55,7 @@ extends GenericDAOhiberJPA<Viaje> implements ViajeDAO {
 	@Override
 	public List<Viaje> recuperarPorConductor(int page, int maxResult,
 			String columnOrder, Viajero Conductor) {
-		TypedQuery<Viaje> consulta = em.createQuery("select e from Viaje e where conductor = :cond "
+		TypedQuery<Viaje> consulta = em.createQuery("select e from Viaje e where e.visible = true and conductor = :cond "
 				//+ "exists ( select * from Viajero v where v.id = e.id and v.id = :id)
 				+ "order by id", Viaje.class);
 		consulta.setParameter("cond", Conductor);
@@ -68,33 +68,24 @@ extends GenericDAOhiberJPA<Viaje> implements ViajeDAO {
 }
 	public List<ViajeJSON> recuperarViajesCompletosJSON(int from, int to, String criterio, String orden,
 		int idEvento,Date fechaMinima, Date fechaMaxima,String horaMaxima, String horaMinima,String tipoDeViaje
-		,ArrayList<Integer> total){
-	 boolean primeraClausula=false;
-	 String condiciones=" ";
+		,ArrayList<Integer> total,Long idConductor){
+	  String condiciones = " where v.visible= true and (v.conductor.id < "+idConductor+" or v.conductor.id >"+idConductor+") ";
 	 if((idEvento!=-1) && (idEvento!=0)){
-		 condiciones=condiciones+" where v.eventoAsociado.id = "+idEvento;
-		 primeraClausula=true;
+		 condiciones=condiciones+" and v.eventoAsociado.id = "+idEvento;
 	 }
 	 if((!(horaMaxima== null)) && (!horaMaxima.equals(""))){
-		 if(primeraClausula==true){condiciones=condiciones+" and";}else{condiciones=" where ";}
-		 condiciones=condiciones+" horaPartida <= "+"'"+horaMaxima+"'";
-		 primeraClausula=true;
+		 condiciones=condiciones+" and horaPartida <= "+"'"+horaMaxima+"'";
 	 }
 	 if((!(horaMinima== null)) && (!horaMinima.equals(""))){
-		 if(primeraClausula==true){condiciones=condiciones+" and";}else{condiciones=" where ";}
-		 condiciones =condiciones+" horaPartida >= " +"'"+horaMinima+"'";
-		 primeraClausula=true;
+		 condiciones =condiciones+" and horaPartida >= " +"'"+horaMinima+"'";
 	 }
 	 if(!(fechaMinima== null)){
 		 String f = new SimpleDateFormat("yyyy-MM-dd").format(fechaMinima);
-		 if(primeraClausula==true){condiciones=condiciones+" and";}else{condiciones=" where ";}
-		 condiciones=condiciones+ " fecha >= "+ "'"+f +"'";
-		 primeraClausula=true;
+		 condiciones=condiciones+ "and fecha >= "+ "'"+f +"'";
 	 }
 	 if(!(fechaMaxima== null)){
 		 String f = new SimpleDateFormat("yyyy-MM-dd").format(fechaMaxima);
-		 if(primeraClausula==true){condiciones=condiciones+" and";}else{condiciones=" where ";}
-		 condiciones= condiciones+" fecha <= "+ "'"+f+"'";
+		 condiciones= condiciones+" and fecha <= "+ "'"+f+"'";
 	 }
 	 
 		EntityManager em = MiEntityManagerFactory.getEMF().createEntityManager();
@@ -106,12 +97,16 @@ extends GenericDAOhiberJPA<Viaje> implements ViajeDAO {
 		if(criterio !=null && !criterio.equals("")){stringOrderBy=criterio+" "+sord+", "+stringOrderBy;}
 		
 		
+		
 		TypedQuery<Viaje> consulta;
 		if(tipoDeViaje.equals("viaje_periodico")){
 			consulta = em.createQuery("select v from ViajePeriodico v "+condiciones+" order by "+ stringOrderBy, Viaje.class);
+			System.out.println("select v from ViajePeriodico v "+condiciones+" order by "+ stringOrderBy);
 		}else if(tipoDeViaje.equals("viaje_puntual")){
 			consulta = em.createQuery("select v from ViajePuntual v "+condiciones+" order by "+ stringOrderBy, Viaje.class);
+			System.out.println("select v from ViajePuntual v "+condiciones+" order by "+ stringOrderBy);
 		}else{
+			System.out.println("select v from Viaje v "+condiciones+" order by "+ stringOrderBy);
 			consulta = em.createQuery("select v from Viaje v "+condiciones+" order by "+ stringOrderBy, Viaje.class);
 		}
 		//me llevo el total de registros que da la consulta

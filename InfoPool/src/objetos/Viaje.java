@@ -21,6 +21,7 @@ public class Viaje {
 	private String horaVuelta;
 	private Date fecha;
 	private int asientosLibres;
+	private boolean visible;
 	@OneToOne
 	private Lugar desde;
 	@OneToOne
@@ -33,8 +34,11 @@ public class Viaje {
 	private List<Viajero> pasajeros;
 	@OneToMany
 	private List<Solicitud> solicitudes;
+	
 
-  public Viaje() {
+
+
+public Viaje() {
 	// TODO Auto-generated constructor stub
 }
 	
@@ -52,8 +56,17 @@ public class Viaje {
 		this.eventoAsociado = eventoAsociado;
 		this.pasajeros = new ArrayList<Viajero>();
 		this.solicitudes = new ArrayList<Solicitud>();
+		this.visible=true;
 
 	}
+	
+	  public boolean getVisible() {
+			return visible;
+		}
+
+		public void setVisible(boolean visible) {
+			this.visible = visible;
+		}
 
 	public Long getId() {
 		return id;

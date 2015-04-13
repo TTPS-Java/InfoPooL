@@ -21,5 +21,5 @@ public interface ViajeDAO extends GenericDAO<Viaje>{
 	public List<Viaje> recuperarPorConductor(int page, int maxResult, Viajero conductor);
 	public List<Viaje> recuperarPorConductor(int page, int maxResult, String columnOrder, Viajero Conductor);
 	public Viaje recuperarConPasajeros(Serializable id);
-	public List<ViajeJSON> recuperarViajesCompletosJSON(int from, int to, String criterio, String orden,int idEvento,Date fechaMinima, Date fechaMaxima,String horaMaxima, String horaMinima,String tipoDeViaje,ArrayList<Integer> total);
+	public List<ViajeJSON> recuperarViajesCompletosJSON(int from, int to, String criterio, String orden,int idEvento,Date fechaMinima, Date fechaMaxima,String horaMaxima, String horaMinima,String tipoDeViaje,ArrayList<Integer> total,Long idConductor);
 }

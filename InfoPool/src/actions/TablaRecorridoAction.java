@@ -187,12 +187,13 @@ public String cambioDatosTablaDeRecorridosAction(){
 	@SkipValidation
 	public String execute(){
 	   session=(SessionMap<String, Object>) ActionContext.getContext().getSession();
+	   Long idConductor = (Long) session.get("usuario");
 	   int to = (rows * page);
 	   int from = to - rows;
 	   ArrayList<Integer> t = new ArrayList<Integer>();
 	   this.setViajes((List<ViajeJSON>)
        viajeDAO.recuperarViajesCompletosJSON(from,to,sidx,sord,this.getIdEvento(),this.getFechaMinima(),
-       this.getFechaMaxima(),this.getHoraMaxima(),this.getHoraMinima(),this.getViajeSeleccionado(),t));
+       this.getFechaMaxima(),this.getHoraMaxima(),this.getHoraMinima(),this.getViajeSeleccionado(),t,idConductor));
 	   this.inicializar();
 	   //la lista t trae el tamaño total de la consulta sin cortar por el from ni to
 	   record = t.get(0);

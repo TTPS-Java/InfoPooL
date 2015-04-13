@@ -14,7 +14,15 @@
   <s:url id="bloquear" action="bloquearViajero">
 		<s:param name="id" value="%{viajero.id}"></s:param>
   </s:url> 
-  <s:a href="%{bloquear}">|Bloquear usuario |</s:a>
+  <s:url id="desbloquear" action="desbloquearViajero">
+		<s:param name="id" value="%{viajero.id}"></s:param>
+  </s:url>
+  <s:if  test="viajero.estaActivo==1">
+    <s:a href="%{bloquear}">|Bloquear usuario |</s:a>
+  </s:if>
+  <s:else>
+     <s:a href="%{desbloquear}">|Desbloquear usuario |</s:a>
+  </s:else>
   
   
    <s:url id="borrar" action="borrarViajesDeViajero">
@@ -25,6 +33,13 @@
   
    <h3>Usuario : <s:property value="viajero.nombreUsuario" /></h3>
    <h3>Nombre y apellido: <s:property value="viajero.Nombre"/> <s:property value="viajero.apellido"/></h3>
+    <s:if  test="viajero.estaActivo==1">
+      <h3>Estado: activo</h3>
+     </s:if>
+    <s:else>
+     <h3>Estado: bloqueado</h3>
+    </s:else>
+   
    <h3>Denuncias recibidas:</h3>
    <table>
       <tr><th>Usuario</th><th>Contenido</th></tr>

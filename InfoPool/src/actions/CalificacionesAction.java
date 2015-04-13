@@ -125,7 +125,7 @@ public class CalificacionesAction {
 	
 	@Action(value="guardarCalificacionAction",
 			results={
-			@Result(name="succes" ,location="verCalificacionesPendientes",type="redirect"),
+			@Result(name="succes" ,location="MensajeCalificar",type="redirect"),
 			@Result(name="index", location="Index", type="redirectAction")
 	        })
 	public String guardarCalificacion(){

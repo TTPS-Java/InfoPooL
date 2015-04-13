@@ -179,6 +179,7 @@ public class recorridoAction extends ActionSupport {
 	
 	
 	@Action(value = "guardarRecorridoAction", results={@Result(name="success", location="recorridoGuardado.jsp"),
+			                                           @Result(name="viajeModificado", location="mensajeModificarViaje",type="redirectAction"),
 			                                           @Result(name = "input", location = "nuevoRecorrido.jsp"),
 			                                           @Result(name="index", location="Index", type="redirectAction"),
 			                                           @Result(name="cambioTipoViaje", location="nuevoRecorrido.jsp")
@@ -238,7 +239,7 @@ public class recorridoAction extends ActionSupport {
 				   this.modificarViaje(this.viaje.getId());
 		           return "cambioTipoViaje";
 		  }
-		  return "success";
+		  return "viajeModificado";
 	  }else{
 		lugarDAO.persistir(viaje.getDesde());
 		lugarDAO.persistir(viaje.getHasta());
@@ -385,7 +386,7 @@ public class recorridoAction extends ActionSupport {
 	     }
 	     return this.sesion;
 	 }
-	@Action(value = "borrarViaje", results={@Result(name="success", location="verMisViajes",type="redirectAction"),
+	@Action(value = "borrarViaje", results={@Result(name="success", location="mensajeBorrarViaje",type="redirectAction"),
 			@Result(name="index", location="Index", type="redirectAction")})
 	@SkipValidation
 	public String borrarViaje(){
@@ -405,10 +406,11 @@ public class recorridoAction extends ActionSupport {
         Viaje viajeABorrar = this.viajeDao.recuperarConPasajeros(Long.parseLong(req.getParameter("idViaje")));
        if(viajeABorrar==null || via==null){ 
     	  return "Index";
-    }else{	
-      /*if(viajeABorrar.getPasajeros().size()> 0){
-    	  return "verMisViajes";
-      }else{*/
+       }else{	
+    	   viajeABorrar.setVisible(false);
+    	   this.viajeDao.actualizar(viajeABorrar);
+    	   return "success";
+    	/*   
     	ArrayList<Viajero> viajerosDelSistema =(ArrayList<Viajero>)viajeroDao.recuperarTodos("id");
          //Borrando todas las solicitudes al viaje
     	ArrayList<Solicitud> solicitudesAViaje = (ArrayList<Solicitud>) this.solicitudDao.recuperarPorViaje("id", viajeABorrar);
@@ -430,9 +432,9 @@ public class recorridoAction extends ActionSupport {
 			   this.calificacionDao.borrar(c.getId());
 		   }
     	
-        this.viajeDao.borrar(viajeABorrar.getId());   
-    	return "success";
-     // }
+        this.viajeDao.borrar(viajeABorrar.getId()); */  
+    	
+     // } 
     }     
 	}else{
 		return "index";
