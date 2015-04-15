@@ -30,7 +30,7 @@
 	<s:text name="menuviajero.solicitudes" />
 	</s:a>
 	<br>
-	<s:a href="verMisViajes" >mis recorridos</s:a>
+	<s:a href="verMisViajes" ><s:text name="menuviajero.misrecorridos" /></s:a>
 	<br />
 	<s:a href="verCalificacionesPendientes"><s:text name="menuviajero.calificaciones" /></s:a>
 	<br>

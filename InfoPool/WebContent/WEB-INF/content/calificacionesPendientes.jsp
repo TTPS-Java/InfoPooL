@@ -5,12 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Calificaciones pendientes</title>
+<title><s:text name="calificacionespendietes.titulo" /></title>
 </head>
 <body>
 <s:a href="Index">Volver</s:a>
-<h3>Calificaciones pendientes</h3>
- <table><tr><th>Usuario</th><th>Fecha</th><th>Lugar de llegada</th><th>Calificar</th><th>Denunciar</th></tr>
+<h3><s:text name="calificacionespendietes.titulo" /></h3>
+ <table><tr><th><s:text name="calificacionespendietes.usuario" /></th>
+ <th><s:text name="calificacionespendietes.fecha" /></th>
+ <th><s:text name="calificacionespendietes.lugarllegada" /></th>
+ <th><s:text name="calificacionespendietes.calificar" /></th>
+ <th><s:text name="calificacionespendietes.denunciar" /></th></tr>
 <s:iterator  value="calificacionesPendientes">
     <tr>
        <td>
@@ -27,12 +31,12 @@
              <s:param name="idCalificado" value="%{idCalificado}"></s:param>
              <s:param name="idViaje" value="%{idViaje}"></s:param>
            </s:url>
-           <s:a href="%{calificacionUrl}">Calificar</s:a>
+           <s:a href="%{calificacionUrl}"><s:text name="calificacionespendietes.calificar" /></s:a>
       </td>
       <td>
          <s:url id="denunciarUrl" action="denunciar">
 						<s:param name="id" value="%{idCalificado}"></s:param>
-		 </s:url> <s:a href="%{denunciarUrl}">Denunciar</s:a>
+		 </s:url> <s:a href="%{denunciarUrl}"><s:text name="calificacionespendietes.denunciar" /></s:a>
       </td>
       
     </tr>

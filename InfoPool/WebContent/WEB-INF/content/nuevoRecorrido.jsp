@@ -29,7 +29,7 @@
 <s:hidden  id="datoJSON" name="coordenadasEventos"  />
 <s:select  headerKey="-1" headerValue="Sin evento asociado" id="selectEvento" 
    key="nuevorecorrido.eventoasociado" value="%{idElegido}"   list="eventos"  listKey="id" listValue="nombre" name="idElegido"/>
-<s:submit value="guardar recorrido"/>	
+<s:submit key="nuevorecorrido.guardarrecorrido"/>	
 </s:form>
 <br />
 <input id="reset" type="button" value="Reset" />

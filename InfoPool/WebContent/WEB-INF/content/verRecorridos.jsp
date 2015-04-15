@@ -49,21 +49,21 @@ function formatLinkViajero(cellvalue, options, rowObject) {
 <body>
 <s:a href="Index">Volver</s:a>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-    <h4>Seleccion  de viajes por filtro</h4>
+    <h4><s:text name="verrecorridos.seleccion" /></h4>
     <s:form action="cambioDatosTablaDeRecorridosAction" method="post" onsubmit="return validarForm()">
-    <s:radio name="viajeSeleccionado"  list="tiposDeViajes" value="defaultTipoDeViaje" label="Tipo de viaje"/>
+    <s:radio name="viajeSeleccionado"  list="tiposDeViajes" value="defaultTipoDeViaje" key="verrecorridos.tipodeviaje"/>
     <s:select  headerKey="-1" headerValue="Sin evento asociado" id="selectEvento" 
-    label="con evento asociado" list="eventos"  listKey="id" listValue="nombre" name="idEvento" />
-       <s:textfield name="fechaMinima" id="fechaMinima" label="Fecha de inicio dd/mm/aaaa " />
-       <s:textfield name="fechaMaxima" id="fechaMaxima" label="Fecha maxima dd/mm/aaaa " /> 
-       <s:textfield name="horaMinima"  label="hora de inicio (hh:mm)"/>
-       <s:textfield name="horaMaxima" label="hora maxima (hh:mm)" />          
-    <s:submit value="Aplicar filtro" />
+    key="verrecorridos.coneventoasociado" list="eventos"  listKey="id" listValue="nombre" name="idEvento" />
+       <s:textfield name="fechaMinima" id="fechaMinima" key="verrecorridos.fechainicio" />
+       <s:textfield name="fechaMaxima" id="fechaMaxima" key="verrecorridos.fechamaxima" /> 
+       <s:textfield name="horaMinima"  key="verrecorridos.horainicio"/>
+       <s:textfield name="horaMaxima" key="verrecorridos.horamaxima" />          
+    <s:submit key="verrecorridos.aplicarfiltro" />
   </s:form>
             <s:url id="remoteurl" action="datosAction"/>
 			<sjg:grid	
 				id="gridtable"
-				caption="Usuarios"
+				caption="Viajes"
 				dataType="json"
 				href="%{remoteurl}"
 				pager="true"
@@ -72,7 +72,7 @@ function formatLinkViajero(cellvalue, options, rowObject) {
 				rowNum="10"
 				rownumbers="true"
 				autowidth="true">
-				<sjg:gridColumn name="hasta.descripcion" index="hasta.descripcion" title="Nombre lugar de inicio" sortable="true"/>
+				<sjg:gridColumn name="hasta.descripcion" index="hasta.descripcion" title="Nombre lugar de inicio"  sortable="true"/>
 				<sjg:gridColumn name="desde.descripcion" index="desde.descripcion" title="Nombre lugar de llegada" sortable="true"/>
 				<sjg:gridColumn name="asientosLibres" index="asientosLibres" title="asientosLibres" sortable="true"/>
 				<sjg:gridColumn name="fecha" index="fecha" title="fecha" sortable="true"/>

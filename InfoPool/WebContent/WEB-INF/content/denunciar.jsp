@@ -6,15 +6,15 @@
 <head>
 <s:head></s:head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Nueva denuncia</title>
+<title><s:text name="denunciar.titulo"/></title>
 </head>
 <body>
-	<h4>Denuncia nueva</h4>
-	Usuario: ${denunciado.getNombre()} ${denunciado.getApellido()}
+	<h4><s:text name="denunciar.titulo" /></h4>
+	<s:text name="denunciar.usuario"/>: ${denunciado.getNombre()} ${denunciado.getApellido()}
 	<s:form action="guardarDenuncia">
-		<s:textarea label="Contenido" name="texto"></s:textarea>
+		<s:textarea key="denunciar.contenido" name="texto"></s:textarea>
 		<s:hidden name="id" value="%{denunciado.id}"></s:hidden>
-		<s:submit value="Enviar"></s:submit>
+		<s:submit key="denunciar.enviar"/>
 	</s:form>
 	<br>
 	<s:a href="Index">Volver</s:a>

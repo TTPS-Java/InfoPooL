@@ -9,12 +9,12 @@
 <s:head />
 </head>
 <body>
-	<h4>Todos los viajeros</h4>
+	<h4><s:text name="verviajeros.titulo" /></h4>
 	<s:actionerror/>
 	<table>
 		<tr>
-			<th>Nombre</th>
-			<th>Usuario</th>
+			<th><s:text name="verviajeros.nombre" /></th>
+			<th><s:text name="verviajeros.usuario" /></th>
 			<th></th>
 		</tr>
 		<s:iterator value="viajeros" status="viajeroStatus">
@@ -23,7 +23,7 @@
 				<td><s:property value="nombreUsuario" />
 				<td><s:url id="denunciarUrl" action="denunciar">
 						<s:param name="id" value="%{id}"></s:param>
-					</s:url> <s:a href="%{denunciarUrl}">Denunciar</s:a></td>
+					</s:url> <s:a href="%{denunciarUrl}"><s:text name="verviajeros.denunciar" /></s:a></td>
 			</tr>
 		</s:iterator>
 	</table>

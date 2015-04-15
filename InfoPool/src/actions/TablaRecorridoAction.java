@@ -66,13 +66,13 @@ public class TablaRecorridoAction extends ActionSupport {
 		eventos = new ArrayList<Evento>();
 		eventos=eventoDAO.recuperarTodos("id");
 		tiposDeViajes = new ArrayList<String>();
-		tiposDeViajes.add("viaje_periodico");
-		tiposDeViajes.add("viaje_puntual");
-		tiposDeViajes.add("ambos");
+		tiposDeViajes.add(this.getText("verrecorridos.viaje_periodico"));
+		tiposDeViajes.add(this.getText("verrecorridos.viaje_puntual"));
+		tiposDeViajes.add(this.getText("verrecorridos.ambos"));
 	}
 	
 	public String getDefaultTipoDeViaje(){
-		return this.getViajeSeleccionado();
+		return (String)session.get("viajeSeleccionado");
 	}
 	public  void setViajeSeleccionado(String viajeSeleccionado) {
 		this.viajeSeleccionado = viajeSeleccionado;
@@ -115,7 +115,7 @@ public class TablaRecorridoAction extends ActionSupport {
 		return (String) session.get("horaMaxima");
 	}
     public String getViajeSeleccionado() {
-		return (String) session.get("viajeSeleccionado");
+		return this.getText("db."+(String) session.get("viajeSeleccionado"));
 	}
    
     public void setHoraMaxima(String horaMaxima) {
@@ -155,7 +155,9 @@ public String cambioDatosTablaDeRecorridosAction(){
    session.put("fechaMinima",this.fechaMinima);
    session.put("fechaMaxima",this.fechaMaxima);
    session.put("idEvento",this.idEvento);
-   session.put("viajeSeleccionado",this.viajeSeleccionado);
+   System.out.println(this.viajeSeleccionado);
+   System.out.println("tipo de viaje modificado:"+this.getText("verrecorridos."+this.getText("db."+this.viajeSeleccionado)));
+   session.put("viajeSeleccionado",this.getText("verrecorridos."+this.getText("db."+this.viajeSeleccionado)));
    return "success";
  }else{
     return "index";
@@ -177,7 +179,7 @@ public String cambioDatosTablaDeRecorridosAction(){
 		  session.put("fechaMinima",null);
 		  session.put("fechaMaxima",null);
 		  session.put("idEvento",-1);
-		  session.put("viajeSeleccionado","ambos");
+		  session.put("viajeSeleccionado",this.getText("verrecorridos.ambos"));
 		   return "success";
 		}else{
 			return "index";
@@ -191,6 +193,7 @@ public String cambioDatosTablaDeRecorridosAction(){
 	   int to = (rows * page);
 	   int from = to - rows;
 	   ArrayList<Integer> t = new ArrayList<Integer>();
+	   System.out.println("viaje seleccionado:" + this.getText(this.getViajeSeleccionado()));
 	   this.setViajes((List<ViajeJSON>)
        viajeDAO.recuperarViajesCompletosJSON(from,to,sidx,sord,this.getIdEvento(),this.getFechaMinima(),
        this.getFechaMaxima(),this.getHoraMaxima(),this.getHoraMinima(),this.getViajeSeleccionado(),t,idConductor));
@@ -280,7 +283,7 @@ public String cambioDatosTablaDeRecorridosAction(){
 		this.setHoraMaxima(null);
 		this.setHoraMinima(null);
 		this.setIdEvento(-1);
-		this.setViajeSeleccionado("ambos");
+		this.setViajeSeleccionado(this.getText("verrecorridos.ambos"));
 	}
 	
 	public void validate (){

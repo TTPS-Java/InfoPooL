@@ -9,15 +9,16 @@
 <s:head/>
 </head>
 <body>
-<h4>Solicitudes pendientes: ${solicitudes.size() }</h4>
+<h4><s:text name="versolicitudes.solicitudespendientes" />: ${solicitudes.size() }</h4>
 <table>
 		<tr>
-			<th>Solicitante</th>
-			<th>Asientos</th>
-			<th>Fecha</th>
-			<th>Desde</th>
-			<th>Hasta</th>
-			<th>Evento</th>
+
+			<th><s:text name="versolicitudes.solicitante" /></th>
+			<th><s:text name="versolicitudes.asientos" /></th>
+			<th><s:text name="versolicitudes.fecha" /></th>
+			<th><s:text name="versolicitudes.desde" /></th>
+			<th><s:text name="versolicitudes.hasta" /></th>
+			<th><s:text name="versolicitudes.evento" /></th>
 			<th></th>
 			<th></th>
 		</tr>
@@ -33,13 +34,13 @@
 				<s:url id="aceptarUrl" action="aceptarSolicitud">
 					<s:param name="id" value="%{id}"></s:param>
 				</s:url>
-				<s:a href="%{aceptarUrl}">Aceptar</s:a>
+				<s:a href="%{aceptarUrl}"><s:text name="versolicitudes.aceptar" /></s:a>
 			</td>
 			<td>
 				<s:url id="rechazarUrl" action="rechazarSolicitud">
 					<s:param name="id" value="%{id}"></s:param>
 				</s:url>
-				<s:a href="%{rechazarUrl}">Rechazar</s:a>
+				<s:a href="%{rechazarUrl}"><s:text name="versolicitudes.rechazar" /></s:a>
 			</td>
 		</tr>
     </s:iterator>
