@@ -9,11 +9,11 @@
 </head>
 <body>
 <s:a href="Index">Volver</s:a>
-  <h3>Viajeros registrados en el sistema</h3>
+  <h3><s:text name="verviajeros.titulo"/></h3>
 <table>
 		<tr>
-			<th>Nombre</th>
-			<th>Usuario</th>
+			<th><s:text name="verviajeros.nombre"/></th>
+			<th><s:text name="verviajeros.usuario"/></th>
 			<th></th>
 		</tr>
 		<s:iterator value="viajeros" status="viajeroStatus">
@@ -22,7 +22,8 @@
 				<td><s:property value="nombreUsuario" />
 				<td><s:url id="detalleUsuario" action="detalleViajero">
 						<s:param name="id" value="%{id}"></s:param>
-					</s:url> <s:a href="%{detalleUsuario}">DetalleUsuario</s:a>
+						
+					</s:url> <s:a href="%{detalleUsuario}"><s:text name="verviajeros.detalleusuario"/></s:a>
 			    </td>
 			</tr>
 		</s:iterator>

@@ -40,8 +40,13 @@ public class AdministracionViajeroAction {
 	private CalificacionDAO calificacionDao;
 	@Autowired
 	private SolicitudDAO solicitudDao;
+	private int cantidadViajesViajero;
 	
-   @Action(value="detalleViajero",results={
+	
+  
+
+
+@Action(value="detalleViajero",results={
 		   @Result(name="succes",location="denunciasAViajero.jsp"),
 		   @Result(name="index", location="Index", type="redirectAction")
    })
@@ -56,6 +61,8 @@ public class AdministracionViajeroAction {
       if(req.getParameter("id")!=null && session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){	
         this.viajero=this.viajeroDao.recuperar(Long.parseLong(req.getParameter("id")));
     	this.denunciasDeUsuario=(ArrayList<Denuncia>) this.denunciaDao.denunciasAViajero(viajero.getId());
+    	this.cantidadViajesViajero=this.viajeDao.recuperarPorConductor("id", this.viajero).size();
+    	
     	return"succes";
       }else{
     	  return "index";
@@ -171,7 +178,14 @@ public class AdministracionViajeroAction {
 	}
 	
 	
-	
+	 public int getCantidadViajesViajero() {
+			return cantidadViajesViajero;
+		}
+
+
+		public void setCantidadViajesViajero(int cantidadViajesViajero) {
+			this.cantidadViajesViajero = cantidadViajesViajero;
+		}
 	
 
 }

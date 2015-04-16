@@ -9,7 +9,7 @@
 </head>
 <body>
    <s:a href="Index">Volver</s:a>
-  <h3>Denuncias de viajero</h3>
+  <h3><s:text name="detalleviajero.titulo" /></h3>
   <br />
   <s:url id="bloquear" action="bloquearViajero">
 		<s:param name="id" value="%{viajero.id}"></s:param>
@@ -18,31 +18,32 @@
 		<s:param name="id" value="%{viajero.id}"></s:param>
   </s:url>
   <s:if  test="viajero.estaActivo==1">
-    <s:a href="%{bloquear}">|Bloquear usuario |</s:a>
+    <s:a href="%{bloquear}">|<s:text name="detalleviajero.bloquearusuario" />|</s:a>
   </s:if>
   <s:else>
-     <s:a href="%{desbloquear}">|Desbloquear usuario |</s:a>
+     <s:a href="%{desbloquear}">|<s:text name="detalleviajero.desbloquear" />|</s:a>
   </s:else>
   
   
    <s:url id="borrar" action="borrarViajesDeViajero">
 		<s:param name="id" value="%{viajero.id}"></s:param>
   </s:url> 
-  <s:a href="%{borrar}">Borrar viajes de <s:property value="viajero.nombreUsuario" /> |</s:a>
+  <s:a href="%{borrar}"><s:text name="detalleviajero.borrarviajes" /> <s:property value="viajero.nombreUsuario" /> |</s:a>
   
   
-   <h3>Usuario : <s:property value="viajero.nombreUsuario" /></h3>
-   <h3>Nombre y apellido: <s:property value="viajero.Nombre"/> <s:property value="viajero.apellido"/></h3>
-    <s:if  test="viajero.estaActivo==1">
-      <h3>Estado: activo</h3>
+   <h3><s:text name="detalleviajero.usuario" />:<s:property value="viajero.nombreUsuario" /></h3>
+   <h3><s:text name="detalleviajero.nombreyapellido" />:<s:property value="viajero.Nombre"/> ,<s:property value="viajero.apellido"/></h3>
+   <h3><s:text name="detalleviajero.cantidaddeviajes" />:<s:property value="cantidadViajesViajero"/> </h3>
+    <s:if  test="viajero.estaActivo==1"> 
+      <h3><s:text name="detalleviajero.estado" />:<s:text name="detalleviajero.activo" /></h3>
      </s:if>
     <s:else>
-     <h3>Estado: bloqueado</h3>
+     <h3><s:text name="detalleviajero.estado" />:<s:text name="detalleviajero.bloqueado" /></h3>
     </s:else>
    
-   <h3>Denuncias recibidas:</h3>
+   <h3><s:text name="detalleviajero.denunciasrecibidas" />: ${denunciasDeUsuario.size() }</h3>
    <table>
-      <tr><th>Usuario</th><th>Contenido</th></tr>
+      <tr><th><s:text name="detalleviajero.usuario" /></th><th><s:text name="detalleviajero.contenido" /></th></tr>
       <s:iterator value="denunciasDeUsuario">
       <tr>
         <td><s:property value="autor.nombreUsuario"/></td>
