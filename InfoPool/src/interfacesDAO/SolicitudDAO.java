@@ -20,4 +20,5 @@ public interface SolicitudDAO extends GenericDAO<Solicitud>{
 	public List<Solicitud> recuperarPorConductor(int page, int maxResult, String columnOrder, Viajero conductor);
 	public List<Solicitud> recuperarPorViaje(String columnOrder,Viaje viaje);
 	public List<Solicitud> recuperarPorViaje(int page, int maxResult,String columnOrder, Viaje viaje);
+	public List<Solicitud> recuperarPorSolicitante(Viajero solicitante);
 }

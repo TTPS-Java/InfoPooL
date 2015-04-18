@@ -72,6 +72,26 @@ extends GenericDAOhiberJPA<Solicitud> implements SolicitudDAO {
 		
 		return list;
 	}
+	
+	@Override
+	public List<Solicitud> recuperarPorSolicitante( Viajero solicitante) {
+	TypedQuery<Solicitud> consulta = em.createQuery("select e from Solicitud e where  solicitante = :soli", Solicitud.class);
+	consulta.setParameter("soli",solicitante);
+	return consulta.getResultList();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public List<Solicitud> recuperarPorViaje(String columnOrder,
 			 Viaje viaje) {

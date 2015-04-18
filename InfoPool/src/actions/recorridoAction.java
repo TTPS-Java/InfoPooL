@@ -1,5 +1,4 @@
 package actions;
-
 import interfacesDAO.CalificacionDAO;
 import interfacesDAO.DiaSemanaDAO;
 import interfacesDAO.EventoDAO;
@@ -9,28 +8,6 @@ import interfacesDAO.ViajeDAO;
 import interfacesDAO.ViajePeriodicoDAO;
 import interfacesDAO.ViajePuntualDAO;
 import interfacesDAO.ViajeroDAO;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,7 +26,6 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-import objetos.Calificacion;
 import objetos.DiaSemana;
 import objetos.Evento;
 import objetos.Lugar;
@@ -88,6 +64,7 @@ public class recorridoAction extends ActionSupport {
 	private CalificacionDAO calificacionDao;
 	
 	private List<String> tiposDeViajes;
+	private List<Solicitud> solicitudes;
 	private Viaje viaje = new Viaje();
 	private List<Evento> eventos;
 	private List<String> dias;
@@ -103,6 +80,14 @@ public class recorridoAction extends ActionSupport {
 	private List<Viajero> viajerosEnViaje;
 	
 	
+	
+	
+	public List<Solicitud> getSolicitudes() {
+		return solicitudes;
+	}
+	public void setSolicitudes(List<Solicitud> solicitudes) {
+		this.solicitudes = solicitudes;
+	}
 	public List<Viajero> getViajerosEnViaje() {
 		return viajerosEnViaje;
 	}
@@ -379,7 +364,71 @@ public class recorridoAction extends ActionSupport {
 		}else{
 			return  "index";
 		}
+	}
+	
+	
+	@Action(value="verViajesEstoy",results={
+			@Result(name="succes",location="verViajesEstoy.jsp"),	
+			@Result(name="index", location="Index", type="redirectAction")})
+	@SkipValidation
+	public String verViajesEstoy(){
+		Long idu =(Long)this.getSesionUsuario().get("usuario");
+		Viajero vs=null;
+		if(idu!=null){
+		   vs= this.viajeroDao.recuperar((Long)this.getSesionUsuario().get("usuario"));
 		}
+		if(vs!=null){
+	     ArrayList<Solicitud> solicit=(ArrayList<Solicitud>) this.solicitudDao.recuperarPorSolicitante(vs);
+	     System.out.println("tamaño solicitudes:"+solicit.size());
+	     this.solicitudes = new ArrayList<Solicitud>();
+	     for(Solicitud s:solicit){
+	    	if(s.getEstado().getNombre().equals("Aceptada")) 
+	    	 this.solicitudes.add(s);
+	     }
+			return "succes";
+		}else{
+			return  "index";
+		}
+	}
+	
+	
+	@Action(value = "borrarViajeEstoy", results={@Result(name="success", location="mensajeSalirViajeEstoy",type="redirectAction"),
+			@Result(name="index", location="Index", type="redirectAction")})
+	@SkipValidation
+	public String borrarViajeEstoy(){
+	   HttpServletRequest req = (HttpServletRequest) ActionContext
+					.getContext().get(ServletActionContext.HTTP_REQUEST);
+	   Long idu =(Long)this.getSesionUsuario().get("usuario");
+	   Viajero vs=null;
+	   if(idu!=null){
+			   vs= this.viajeroDao.recuperarConViajesEstoy((Long)this.getSesionUsuario().get("usuario"));
+	   }
+	   if(vs!=null && req.getParameter("idSolicitud")!=null){
+		   Long ids =Long.parseLong(req.getParameter("idSolicitud"));
+		   System.out.println("numero de solicitud : "+ids);
+         Solicitud solicitudABorrar = this.solicitudDao.recuperar(ids);
+         if(solicitudABorrar==null || vs==null){ 
+    	   return "index";
+         }else{	
+        	Viaje v = this.viajeDao.recuperarConPasajeros(solicitudABorrar.getViaje().getId());
+        	v.getPasajeros().remove(vs);
+        	v.setAsientosLibres(v.getAsientosLibres()+solicitudABorrar.getCantidadAsientos());
+        	this.viajeDao.actualizar(v);
+        	vs = this.viajeroDAO.recuperarConViajesEstoy(vs.getId());
+     	    vs.getViajesEstoy().remove(v);
+     	    this.viajeroDao.actualizar(vs);
+    	    this.solicitudDao.borrar(solicitudABorrar);
+    	    return "success";
+          }
+	   }else{
+		   return "index";
+	   }
+   }
+	
+	
+	
+	
+	
 	public ArrayList<Viaje> getMisViajes() {
 		return misViajes;
 	}
