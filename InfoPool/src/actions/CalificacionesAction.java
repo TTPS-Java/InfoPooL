@@ -56,11 +56,9 @@ public class CalificacionesAction {
 		}
 		if(this.viajero!=null && this.getSesionUsuario().get("esAdmin")!=null && false==(Boolean)this.getSesionUsuario().get("esAdmin")){
 			this.calificaciones=(ArrayList<Calificacion>)this.calificacionDao.recuperarPorCalificado(viajero.getId());
-			System.out.println(this.calificaciones.size());
 			this.votosNegativos=(long) 0;
 			this.votosPositivos=(long) 0;
 			for (Calificacion c:this.calificaciones){
-				System.out.println("calificaion"+c.getEsPositiva());
 				if(c.getEsPositiva()==true){
 					this.votosPositivos++;
 				}else{
@@ -97,7 +95,6 @@ public class CalificacionesAction {
 	   this.viajero=this.viajeroDao.recuperarConViajesEstoyYCalificaciones(
 		    	(Long)this.getSesionUsuario().get("usuario"));
        this.calificacionesPendientes=this.viajero.recuperarCalificionesPendientes();
-       System.out.println("calificaciones pendientes"+this.calificacionesPendientes.size());
        return "succes";
     }else{
     	return "index";

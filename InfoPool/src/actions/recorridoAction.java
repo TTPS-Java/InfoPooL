@@ -227,7 +227,7 @@ public class recorridoAction extends ActionSupport {
 			    this.viajePuntualDAO.actualizar(vpun);
 		  
 		  }else{
-				   addFieldError("boton", "No se puede cambiar el tipo de viaje");
+				   addFieldError("boton",this.getText("recorridoaction.cambiotipoviaje"));
 				   this.modificarViaje(this.viaje.getId());
 		           return "cambioTipoViaje";
 		  }
@@ -405,7 +405,6 @@ public class recorridoAction extends ActionSupport {
 	   }
 	   if(vs!=null && req.getParameter("idSolicitud")!=null){
 		   Long ids =Long.parseLong(req.getParameter("idSolicitud"));
-		   System.out.println("numero de solicitud : "+ids);
          Solicitud solicitudABorrar = this.solicitudDao.recuperar(ids);
          if(solicitudABorrar==null || vs==null){ 
     	   return "index";
@@ -619,37 +618,37 @@ public class recorridoAction extends ActionSupport {
 	public void validate() {
 	boolean error=false;
 	   if( (viaje.getFecha()==null) || (viaje.getFecha().equals(""))){
-		   addFieldError("viaje.fecha", "Debe ingresar una fecha");
+		   addFieldError("viaje.fecha", this.getText("recorridoaction.fechaerror"));
 		   error=true;
 	   }
 	   if((viaje.getHoraPartida()==null) || viaje.getHoraPartida().equals("") || !viaje.getHoraPartida().matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")){
-		   addFieldError("viaje.horaPartida", "Debe ingresar una hora de partida");
+		   addFieldError("viaje.horaPartida", this.getText("recorridoaction.horaerror"));
 		   error=true;
 	   }
 	   
 	   if((viaje.getAsientosLibres()==0)){
-		   addFieldError("viaje.asientosLibres", "Debe ingresar la cantidad de asientos libres");
+		   addFieldError("viaje.asientosLibres", this.getText("recorridoaction.asientoslibreserror"));
 		   error=true;
 	   }
 	   if((viaje.getDesde().getDescripcion()==null) || viaje.getDesde().getDescripcion().equals("")){
-		   addFieldError("viaje.desde.descripcion", "Debe ingresar el nombre del lugar de origen");
+		   addFieldError("viaje.desde.descripcion",this.getText("recorridoaction.lugarorigenerror"));
 		   error=true;
 	   }
 	   if((viaje.getHasta().getDescripcion()==null) || viaje.getHasta().getDescripcion().equals("")){
-		   addFieldError("viaje.hasta.descripcion", "Debe ingresar el nombre del lugar de destino");
+		   addFieldError("viaje.hasta.descripcion",this.getText("recorridoaction.lugardestinoerror"));
 		   error=true;
 	   }
 	   
-	   if((boton.equals("viaje_periodico")) && ((misDias==null) || misDias.equals(""))){
-		   addFieldError("misDias", "en un viaje periodico debe seleccionar al menos un dia");
+	   if((boton.equals("viaje_periodico") || boton.equals("trip_newspaper") ) && ((misDias==null) || misDias.equals(""))){
+		   addFieldError("misDias",this.getText("recorridoaction.diasviajeperiodicoerror"));
 		   error=true;
 	   }
 	   if((viaje.getHasta().getLatitud()==0)){
-		   addFieldError("idElegido", "debe ingresar el lugar de destino");
+		   addFieldError("idElegido",this.getText("recorridoaction.pinchelugardestinoerror"));
 		   error=true;
 	   }
 	   if((viaje.getDesde().getLatitud()==0)){
-		   addFieldError("idElegido", "debe ingresar el lugar de origen");
+		   addFieldError("idElegido",this.getText("recorridoaction.pinchelugarorigenerror"));
 		   error=true;
 	   }
 	   if(error){this.inicializar();}

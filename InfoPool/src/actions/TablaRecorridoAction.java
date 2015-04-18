@@ -291,11 +291,11 @@ public String cambioDatosTablaDeRecorridosAction(){
 	 boolean pasoValidacion=true;
 	if((this.getHoraMinima()!=null) && !(this.getHoraMinima().equals("")) && !(this.getHoraMinima().matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"))){
 	    this.setHoraMinima(null);pasoValidacion=false;
-		this.addFieldError("horaMinima", "no se filtro por hora minima ingrese hora valida hh:mm");
+		this.addFieldError("horaMinima",this.getText("tablarecorridoaction.horaminimaerror"));
 	 }
 	if((this.getHoraMaxima()!=null) && !(this.getHoraMaxima().equals("")) && !(this.getHoraMaxima().matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$"))){
 		this.setHoraMaxima(null);pasoValidacion=false;
-		this.addFieldError("horaMaxima", "no se filtro por hora maxima ingrese hora valida hh:mm");
+		this.addFieldError("horaMaxima",this.getText("tablarecorridoaction.horamaximaerror") );
     }	
 	if(!pasoValidacion){
 	  this.inicializar();

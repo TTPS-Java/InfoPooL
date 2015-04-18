@@ -15,12 +15,12 @@
     <s:a href="%{es}"><s:text name="idioma.espaniol" /></s:a>
 <h2><s:text name="inicio.saludo" />, <s:property value="#request.usuario"/>!</h2>
 	<br>
-	<s:a href="#">ABM sistema</s:a> <!-- <s:text name="menuadmin.abm_sistema"/> -->
+	<s:a href="#"><s:text name="menuadmin.abm_sistema"/></s:a> 
 	<br>
-	<s:a href="verEventos">ABM eventos</s:a> <!-- <s:text name="menuadmin.abm_eventos"/> -->
+	<s:a href="verEventos"><s:text name="menuadmin.abm_eventos"/></s:a> 
 	<br>
-	<s:a href="verViajeros">Administracion viajeros</s:a> <!-- <s:text name="menuadmin.admin_viajeros"/> -->
+	<s:a href="verViajeros"><s:text name="menuadmin.admin_viajeros"/></s:a> 
 	<br>
-	<s:a href="logout">Salir</s:a> <!-- <s:text name="menuadmin.salir"/> -->
+	<s:a href="logout"><s:text name="menuadmin.salir"/></s:a>  
 </body>
 </html>
