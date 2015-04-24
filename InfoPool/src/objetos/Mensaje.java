@@ -12,8 +12,6 @@ public class Mensaje {
 	private String asunto;
 	private String contenido;
 	@OneToOne
-	private Evento evento;
-	@OneToOne
 	private Viajero para;
 	@OneToOne
 	private Viajero de;
@@ -22,12 +20,10 @@ public class Mensaje {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Mensaje(String asunto, String contenido, Evento evento,
-			Viajero para, Viajero de) {
+	public Mensaje(String asunto, String contenido, Viajero para, Viajero de) {
 		super();
 		this.asunto = asunto;
 		this.contenido = contenido;
-		this.evento = evento;
 		this.para = para;
 		this.de = de;
 	}
@@ -35,7 +31,7 @@ public class Mensaje {
 		return id;
 	}
 	private void setId(long id) {
-		id = id;
+		this.id = id;
 	}
 	
 	public Viajero getPara() {
@@ -61,12 +57,6 @@ public class Mensaje {
 	}
 	public void setContenido(String contenido) {
 		this.contenido = contenido;
-	}
-	public Evento getEvento() {
-		return evento;
-	}
-	public void setEvento(Evento evento) {
-		this.evento = evento;
 	}
 
 	@Override
