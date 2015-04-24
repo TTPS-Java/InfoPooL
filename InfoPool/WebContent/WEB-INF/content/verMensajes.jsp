@@ -49,7 +49,7 @@
 			</td>
 			<td>
 				<s:url id="deleteUrl" action="borrarMensaje">
-					<s:param name="idEvento" value="%{id}"></s:param>
+					<s:param name="idMensaje" value="%{id}"></s:param>
 				</s:url>
 				<s:a href="%{deleteUrl}">Borrar</s:a> <%-- <s:text name="evento.borrar"/> --%>
 			</td>

@@ -117,6 +117,38 @@ public class MensajeAction extends ActionSupport implements
 		}
 	}
 
+	@Action(value = "borrarMensaje", results = {
+			@Result(location = "mensajeBorrado.jsp"),
+			@Result(name = "index", location = "Index", type = "redirectAction"),
+			@Result(name = "input", location = "verMensajes.jsp") })
+	@SkipValidation
+	public String borrarMensaje() {
+		session = (SessionMap<String, Object>) ActionContext.getContext()
+				.getSession();
+		if (session.get("esAdmin") != null && false == (Boolean) session.get("esAdmin")) {
+			HttpServletRequest req = (HttpServletRequest) ActionContext
+					.getContext().get(ServletActionContext.HTTP_REQUEST);
+			if (req.getParameter("idMensaje") != null) {
+				Long id;
+				try {
+					id = Long.parseLong(req.getParameter("idMensaje"));
+				} catch (NumberFormatException e) {
+					addActionError("Debe elegir un mensaje valido"); // XXX this.getText("mensaje.error_mensaje")
+					verMensajes();
+					return INPUT;
+				}
+				mensajeDAO.borrar(id);
+				return SUCCESS;
+			} else {
+				addActionError("Debe elegir un mensaje valido"); // XXX this.getText("mensaje.error_mensaje")
+				verMensajes();
+				return INPUT;
+			}
+		} else {
+			return "index";
+		}
+	}
+
 	@Action(value = "guardarMensaje", results = {
 			@Result(location = "mensajeEnviado.jsp"),
 			@Result(name = "index", location = "Index", type = "redirectAction"),
