@@ -6,11 +6,11 @@
 </head>
 <body>
     <s:url id="en" action="Index">
-            <s:param name="request_locale">en_CA</s:param>
+            <s:param name="request_locale">en</s:param>
     </s:url>
     <s:a href="%{en}"><s:text name="idioma.ingles" /></s:a>
     <s:url id="es" action="Index">
-            <s:param name="request_locale">es_ES</s:param>
+            <s:param name="request_locale">es</s:param>
     </s:url>
     <s:a href="%{es}"><s:text name="idioma.espaniol" /></s:a>
 <h2><s:text name="inicio.saludo" />, <s:property value="#request.usuario"/>!</h2>
