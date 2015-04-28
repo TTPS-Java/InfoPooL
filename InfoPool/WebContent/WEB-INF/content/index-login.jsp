@@ -6,7 +6,7 @@
 <body>
 	<s:a href="login">Login</s:a>
 	<br>
-	<s:a href="registro"><s:text name="inicio.registrarse" /></s:a>
+	<s:a href="registro"><s:text name="inicio.registro" /></s:a>
 	<br>
 </body>
 </html>

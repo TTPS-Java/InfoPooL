@@ -8,11 +8,11 @@
     <s:url id="en" action="Index">
             <s:param name="request_locale">en</s:param>
     </s:url>
-    <s:a href="%{en}"><s:text name="idioma.ingles" /></s:a>
+    <s:a href="%{en}">English</s:a>
     <s:url id="es" action="Index">
             <s:param name="request_locale">es</s:param>
     </s:url>
-    <s:a href="%{es}"><s:text name="idioma.espaniol" /></s:a>
+    <s:a href="%{es}">Español</s:a>
 <h2><s:text name="inicio.saludo" />, <s:property value="#request.usuario"/>!</h2>
 
     <img src="imagenPerfil" width="100px" height="100px" />

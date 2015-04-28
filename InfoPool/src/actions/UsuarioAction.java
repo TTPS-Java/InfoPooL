@@ -108,7 +108,7 @@ public class UsuarioAction extends ActionSupport implements
 				.getSession();
 		UsuarioDAO dao = this.usuarioDao;
 		if (dao.existe(user.getNombreUsuario())) {
-			addFieldError("nombre", "El usuario ya existe");
+			addFieldError("nombreUsuario", getText("registro.usuario_existe"));
 			return INPUT;
 		} else {
 			BufferedImage bi = ImageIO.read(this.getImagen());
@@ -130,20 +130,6 @@ public class UsuarioAction extends ActionSupport implements
 			req.setAttribute("usuario", user);
 			return SUCCESS;
 		}
-	}
-
-	@SkipValidation
-	@Action(value = "borrarUsuario")
-	public String borrar() {
-		this.usuarioDao.borrar(user.getId());
-		return SUCCESS;
-	}
-
-	@SkipValidation
-	@Action(value = "verUsuario")
-	public String verDatos() {
-		user = (Viajero) session.get("usuario");
-		return SUCCESS;
 	}
 
 	public boolean esUnMail(String string) {
@@ -201,38 +187,37 @@ public class UsuarioAction extends ActionSupport implements
 	public void validate() {
 		if ((user.getNombreUsuario() == null)
 				|| (user.getNombreUsuario().equals(""))) {
-			addFieldError("nombreUsuario", "Debe ingresar un nombre de usuario");
+			addFieldError("nombreUsuario", getText("registro.falta_usuario"));
 		}
 		if ((user.getContrasenia() == null)
 				|| (user.getContrasenia().equals(""))) {
-			addFieldError("pass", "Debe ingresar una contrase�a");
+			addFieldError("contrasenia", getText("registro.falta_contrasenia"));
 		} else if (!user.getContrasenia().equals(confirmPass)) {
-			addFieldError("confirmPass", "Las contrasenia no coinciden");
+			addFieldError("confirmPass", getText("registro.error_confirmar"));
 		}
 		if ((user.getNombre() == null) || (user.getNombre().equals(""))) {
-			addFieldError("nombre", "Debe ingresar un nombre");
+			addFieldError("nombre", getText("registro.falta_nombre"));
 		}
 		if ((user.getApellido() == null) || (user.getApellido().equals(""))) {
-			addFieldError("apellido", "Debe ingresar un apellido");
+			addFieldError("apellido", getText("registro.falta_apellido"));
 		}
 		if ((user.getMail() == null)
 				|| (user.getMail().equals("") || !this.esUnMail(user.getMail()))) {
-			addFieldError("mail",
-					"Debe ingresar un email ejemplo: alejandro@hotmail.com");
+			addFieldError("mail", getText("registro.falta_mail"));
 		}
 		if ((user.getTelefono() == null) || (user.getTelefono().equals(""))) {
-			addFieldError("telefono", "Debe ingresar un telefono");
+			addFieldError("telefono", getText("registro.falta_telefono"));
 		} else {
 			try {
 				Integer.parseInt(user.getTelefono());
 			} catch (Exception e) {
-				addFieldError("telefono", "Debe ingresar un telefono");
+				addFieldError("telefono", getText("registro.falta_telefono"));
 			}
 		}
 		if (this.imagen == null
 				|| (this.imagenContentType != null && !this.imagenContentType
 						.equals("image/jpeg"))) {
-			addFieldError("imagen", "Debe ingresar una imagen en formato jpg");
+			addFieldError("imagen", getText("registro.error_imagen"));
 
 		}
 	}

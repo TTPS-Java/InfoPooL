@@ -9,19 +9,27 @@
 <title>Registracion</title>
 </head>
 <body>
-<h4>Registracion</h4>
+<s:url id="en" action="registro">
+	<s:param name="request_locale">en</s:param>
+</s:url>
+<s:a href="%{en}">English</s:a>
+<s:url id="es" action="registro">
+	<s:param name="request_locale">es</s:param>
+</s:url>
+<s:a href="%{es}">Español</s:a>
+<h4><s:text name="registro.registracion"></s:text></h4>
 <s:form action="editarUsuario" enctype="multipart/form-data" method="post">
-<s:file name="imagen" label="Imagen"/>
-<s:textfield label="Usuario"  name="nombreUsuario"></s:textfield>
-<s:password label="Contraseña" name="contrasenia"></s:password>
-<s:password label="Repita la contraseña" name="confirmPass"></s:password>
-<s:textfield label="Telefono"  name="telefono"></s:textfield>
-<s:textfield label="Nombre"  name="nombre"></s:textfield>
-<s:textfield label="Apellido"  name="apellido"></s:textfield>
-<s:textfield label="Mail"  name="mail"></s:textfield>
+<s:file name="imagen" key="registro.imagen"/>
+<s:textfield key="registro.usuario"  name="nombreUsuario"></s:textfield>
+<s:password key="registro.contrasenia" name="contrasenia"></s:password>
+<s:password key="registro.confirme" name="confirmPass"></s:password>
+<s:textfield key="registro.telefono"  name="telefono"></s:textfield>
+<s:textfield key="registro.nombre" name="nombre"></s:textfield>
+<s:textfield key="registro.apellido"  name="apellido"></s:textfield>
+<s:textfield key="registro.mail" name="mail"></s:textfield>
 
-<s:submit value="Enviar"></s:submit>
+<s:submit key="registro.enviar"></s:submit>
 </s:form>
-<s:a href="Index">Volver</s:a>
+<s:a href="Index"><s:text name="aplicacion.volver"></s:text></s:a>
 </body>
 </html>
