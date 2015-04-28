@@ -1,5 +1,7 @@
 package objetos;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,6 +13,7 @@ public class Mensaje {
 	private long id;
 	private String asunto;
 	private String contenido;
+	private Date fecha;
 	@OneToOne
 	private Viajero para;
 	@OneToOne
@@ -26,6 +29,7 @@ public class Mensaje {
 		this.contenido = contenido;
 		this.para = para;
 		this.de = de;
+		this.fecha = new Date();
 	}
 	public long getId() {
 		return id;
@@ -64,6 +68,14 @@ public class Mensaje {
 		return "Mensaje [id=" + id + ", asunto=" + asunto + ", contenido="
 				+ contenido + ", para=" + para + ", de="
 				+ de + "]";
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
 	}
 	
 	

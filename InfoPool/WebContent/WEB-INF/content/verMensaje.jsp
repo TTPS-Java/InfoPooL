@@ -5,18 +5,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Ver mensaje</title> <%-- <s:text name="mensaje.ver_mensaje"/> --%>
+<title><s:text name="mensaje.ver_mensaje"/></title> <%--  --%>
 </head>
 <body>
-<h4>Mensaje de <s:property value="#request.mensaje.de.nombre"/> <s:property value="#request.mensaje.de.apellido"/></h4> <%-- <s:text name="mensaje.mensaje_de"/> --%>
+<h4><s:text name="mensaje.mensaje_de"/><s:property value="#request.mensaje.de.nombre"/> <s:property value="#request.mensaje.de.apellido"/></h4> <%--  --%>
 <s:url id="replyUrl" action="mensajeNuevo">
 	<s:param name="idDestinatario" value="%{#request.mensaje.de.id}"></s:param>
 </s:url>
-<s:a href="%{replyUrl}">Responder</s:a> <%-- <s:text name="mensaje.responder"/> --%>
+<s:a href="%{replyUrl}"><s:text name="mensaje.responder"/></s:a> <%--  --%>
 <br/>
-<b>Asunto:</b> <s:property value="#request.mensaje.asunto"/><br/><%-- <s:text name="mensaje.asunto"/> --%>
+<b><s:text name="mensaje.asunto"/>:</b> <s:property value="#request.mensaje.asunto"/><br/><%--  --%>
 <s:property value="#request.mensaje.contenido"/>
 <br>
-<s:a href="verMensajes">Volver</s:a>
+<s:a href="verMensajes"><s:text name = "aplicacion.volver"/></s:a>
 </body>
 </html>

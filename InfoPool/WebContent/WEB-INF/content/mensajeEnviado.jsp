@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Mensaje enviado</title> <!-- <s:text name="mensaje.mensaje_enviado"/> -->
+<title><s:text name="mensaje.mensaje_enviado"/></title> <!--  -->
 </head>
 <body>
-	<h4>Se ha enviado el mensaje.</h4> <%-- <s:text name="mensaje.mensaje_enviado_msj"/> --%>
+	<h4><s:text name="mensaje.mensaje_enviado"/></h4> 
 	<br>
-	<s:a href="verMensajes">Volver</s:a> <%-- <s:text name="mensaje.volver"/> --%>
+	<s:a href="verMensajes"><s:text name="aplicacion.volver"/></s:a> 
 </body>
 </html>

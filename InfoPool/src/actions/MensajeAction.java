@@ -87,21 +87,18 @@ public class MensajeAction extends ActionSupport implements
 				try {
 					id = Long.parseLong(req.getParameter("idDestinatario"));
 				} catch (NumberFormatException e) {
-					addActionError("Debe elegir un destinatario valido"); // XXX
-																			// this.getText("mensaje.error_destinatario")
+					addActionError(this.getText("mensaje.error_destinatario")); 
 					verMensajes();
 					return INPUT;
 				}
 				Long idUsuarioSesion = (Long) session.get("usuario");
 				if (idUsuarioSesion == id) {
-					addActionError("No podés mandarte mensajes a vos mismo!"); // XXX
-																				// this.getText("mensaje.error_automensaje")
+					addActionError(this.getText("mensaje.error_automensaje"));
 					verMensajes();
 					return INPUT;
 				} else {
 					if (viajeroDAO.recuperar(id) == null) {
-						addActionError("El usuario no existe"); // XXX
-																// this.getText("mensaje.mensaje_no_existe")
+						addActionError(this.getText("mensaje.mensaje_no_existe"));
 						verMensajes();
 						return INPUT;
 					}
@@ -133,14 +130,14 @@ public class MensajeAction extends ActionSupport implements
 				try {
 					id = Long.parseLong(req.getParameter("idMensaje"));
 				} catch (NumberFormatException e) {
-					addActionError("Debe elegir un mensaje valido"); // XXX this.getText("mensaje.error_mensaje")
+					addActionError(this.getText("mensaje.error_mensaje"));
 					verMensajes();
 					return INPUT;
 				}
 				mensajeDAO.borrar(id);
 				return SUCCESS;
 			} else {
-				addActionError("Debe elegir un mensaje valido"); // XXX this.getText("mensaje.error_mensaje")
+				addActionError(this.getText("mensaje.error_mensaje")); 
 				verMensajes();
 				return INPUT;
 			}
@@ -162,13 +159,11 @@ public class MensajeAction extends ActionSupport implements
 			if (destinatario != null) {
 				Long idUsuarioSesion = (Long) session.get("usuario");
 				if (idUsuarioSesion == destinatario.getId()) {
-					addActionError("No podés mandarte mensajes a vos mismo!"); // XXX
-																				// this.getText("mensaje.error_automensaje")
+					addActionError(this.getText("mensaje.error_automensaje"));
 					return INPUT;
 				} else {
 					if (!viajeroDAO.existe(destinatario.getId())) {
-						addActionError("El usuario no existe"); // XXX
-																// this.getText("mensaje.mensaje_no_existe")
+						addActionError(getText("mensaje.mensaje_no_existe"));
 						return INPUT;
 					} else {
 						Viajero yo = viajeroDAO.recuperar(idUsuarioSesion);
@@ -181,8 +176,7 @@ public class MensajeAction extends ActionSupport implements
 					}
 				}
 			} else
-				addActionError("Debe elegir un destinatario valido"); // XXX
-																		// this.getText("mensaje.error_destinatario")
+				addActionError(this.getText("mensaje.error_destinatario"));
 			return "input";
 		} else {
 			return "index";
@@ -224,14 +218,12 @@ public class MensajeAction extends ActionSupport implements
 				try {
 					id = Long.parseLong(req.getParameter("idMensaje"));
 				} catch (NumberFormatException e) {
-					addActionError("Debe elegir un elemento valido para mostrar"); // XXX
-																					// this.getText("mensaje.error_mostrar")
+					addActionError(this.getText("mensaje.error_mostrar")); 
 					verMensajes();
 					return ERROR;
 				}
 				if (!mensajeDAO.existe(id)) {
-					addActionError("El mensaje no existe"); // XXX
-															// this.getText("mensaje.mensaje_no_existe")
+					addActionError(this.getText("mensaje.mensaje_no_existe"));
 					verMensajes();
 					return ERROR;
 				}
@@ -239,8 +231,7 @@ public class MensajeAction extends ActionSupport implements
 				req.setAttribute("mensaje", mensaje);
 				return SUCCESS;
 			} else {
-				addActionError("Debe elegir un elemento valido para mostrar"); // XXX
-																				// this.getText("mensaje.error_mostrar")
+				addActionError(this.getText("mensaje.error_mostrar"));
 				verMensajes();
 				return ERROR;
 			}
@@ -271,17 +262,15 @@ public class MensajeAction extends ActionSupport implements
 	@Override
 	public void validate() {
 		if (this.mensaje == null) {
-			addFieldError("asunto", "Debe completar los campos");
+			addFieldError("mensaje.asunto", this.getText("mensaje.null"));
 		}
 		if ((this.mensaje.getAsunto() == null)
 				|| (this.mensaje.getAsunto().equals(""))) {
-			addFieldError("asunto", "Debe escribir un asunto!"); // XXX
-																	// this.getText("mensaje.falta_asunto")
+			addFieldError("mensaje.asunto", this.getText("mensaje.falta_asunto"));
 		}
 		if ((this.mensaje.getContenido() == null)
 				|| (this.mensaje.getContenido().equals(""))) {
-			addFieldError("contenido", "Debe escribir un mensaje!"); // XXX
-																		// this.getText("mensaje.falta_mensaje")
+			addFieldError("mensaje.contenido", this.getText("mensaje.falta_mensaje"));
 		}
 	}
 
