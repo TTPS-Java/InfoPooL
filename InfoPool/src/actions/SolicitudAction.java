@@ -114,7 +114,7 @@ public class SolicitudAction extends ActionSupport {
 							"No hay suficientes asientos!");
 					return INPUT;
 				} else if (cantAsientos == 0) {
-					addFieldError("cantAsientos", "Pida al menos un asiento!");
+					addFieldError("cantAsientos", getText("pedir_asientos.cero"));
 					return INPUT;
 				} else {
 					viaje.setAsientosLibres(viaje.getAsientosLibres()
@@ -181,7 +181,7 @@ public class SolicitudAction extends ActionSupport {
 					solicitud.setEstado(estadoSolicitudDAO
 							.recuperar("Aceptada"));
 					/* Le agrega al viajero solicitante el viaje que solicito
-					   añadiedolo a su coleccion de viajesEstoy* */
+					   aï¿½adiedolo a su coleccion de viajesEstoy* */
 					Viajero v=this.viajeroDAO.recuperarConViajesEstoy(solicitud.getSolicitante().getId());
 					v.addViajeEstoy(viaje);
 					this.viajeroDAO.actualizar(v);

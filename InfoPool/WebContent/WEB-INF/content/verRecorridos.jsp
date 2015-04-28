@@ -8,9 +8,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-<title>ver recorridos</title>
+<title><s:text name="verrecorridos.ver_recorridos"></s:text></title>
 <!-- Struts2 JQuery -->
-<sj:head locale="es" jqueryui="true" jquerytheme="redmond"/>
+<sj:head locale="%{#session.locale}" jqueryui="true" jquerytheme="redmond"/>
 <script>
 function validarForm(){
 	  /*var pasoValidacion=true;
@@ -33,26 +33,26 @@ function validarForm(){
 
 function formatLink(cellvalue, options, rowObject) {
 	return ("<div style=\"text-align:center\">"
-			+ "<a class='button' title='Ver detalles' href='solicitudNueva?id="
+			+ "<a class='button' title='${verrecorridos.ver_detalles}' href='solicitudNueva?id="
 			+ cellvalue
-			+ "'>Pedir asientos</a>"+ "</div>");
+			+ "'><s:text name = 'verrecorridos.pedir_asientos' /> </a>"+ "</div>");
 }
 function formatLinkViajero(cellvalue, options, rowObject) {
 	return ("<div style=\"text-align:center\">"
-			+ "<a class='button' title='Ver detalles' href='calificacionesViajero?id="
+			+ "<a class='button' title='${verrecorridos.ver_usuario}' href='calificacionesViajero?id="
 			+ cellvalue
-			+ "'>Ver usuario</a>"+ "</div>");
+			+ "'><s:text name = 'verrecorridos.ver_usuario'/></a>"+ "</div>");
 }
 
 </script>
 </head>
 <body>
-<s:a href="Index">Volver</s:a>
+<s:a href="Index"><s:text name="aplicacion.volver"/></s:a>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     <h4><s:text name="verrecorridos.seleccion" /></h4>
     <s:form action="cambioDatosTablaDeRecorridosAction" method="post" onsubmit="return validarForm()">
     <s:radio name="viajeSeleccionado"  list="tiposDeViajes" value="defaultTipoDeViaje" key="verrecorridos.tipodeviaje"/>
-    <s:select  headerKey="-1" headerValue="Sin evento asociado" id="selectEvento" 
+    <s:select  headerKey="-1" headerValue="%{getText('verrecorridos.sin_evento')}" id="selectEvento" 
     key="verrecorridos.coneventoasociado" list="eventos"  listKey="id" listValue="nombre" name="idEvento" />
        <s:textfield name="fechaMinima" id="fechaMinima" key="verrecorridos.fechainicio" />
        <s:textfield name="fechaMaxima" id="fechaMaxima" key="verrecorridos.fechamaxima" /> 
@@ -63,7 +63,7 @@ function formatLinkViajero(cellvalue, options, rowObject) {
             <s:url id="remoteurl" action="datosAction"/>
 			<sjg:grid	
 				id="gridtable"
-				caption="Viajes"
+				caption="%{getText('verrecorridos.viajes')}"
 				dataType="json"
 				href="%{remoteurl}"
 				pager="true"
@@ -72,14 +72,14 @@ function formatLinkViajero(cellvalue, options, rowObject) {
 				rowNum="10"
 				rownumbers="true"
 				autowidth="true">
-				<sjg:gridColumn name="hasta.descripcion" index="hasta.descripcion" title="Nombre lugar de inicio"  sortable="true"/>
-				<sjg:gridColumn name="desde.descripcion" index="desde.descripcion" title="Nombre lugar de llegada" sortable="true"/>
-				<sjg:gridColumn name="asientosLibres" index="asientosLibres" title="asientosLibres" sortable="true"/>
-				<sjg:gridColumn name="fecha" index="fecha" title="fecha" sortable="true"/>
-				<sjg:gridColumn name="horaPartida" index="horaPartida" title="horaPartida" sortable="true"/>
-				<sjg:gridColumn name="horaVuelta" index="horaVuelta" title="horaVuelta" sortable="true"/>
-				<sjg:gridColumn name="id" index="acciones" title="Acciones" sortable="false" formatter="formatLink"/>
-				<sjg:gridColumn name="idConductor" index="detalle" title="Detalle" sortable="false" formatter="formatLinkViajero"/>
+				<sjg:gridColumn name="hasta.descripcion" index="hasta.descripcion" title="%{getText('verrecorridos.nombre_inicio')}"  sortable="true"/>
+				<sjg:gridColumn name="desde.descripcion" index="desde.descripcion" title="%{getText('verrecorridos.nombre_inicio')}" sortable="true"/>
+				<sjg:gridColumn name="asientosLibres" index="asientosLibres" title="%{getText('verrecorridos.asientos')}" sortable="true"/>
+				<sjg:gridColumn name="fecha" index="fecha" title="%{getText('verrecorridos.fecha')}" sortable="true"/>
+				<sjg:gridColumn name="horaPartida" index="horaPartida" title="%{getText('verrecorridos.horaPartida')}" sortable="true"/>
+				<sjg:gridColumn name="horaVuelta" index="horaVuelta" title="%{getText('verrecorridos.horaVuelta')}" sortable="true"/>
+				<sjg:gridColumn name="id" index="acciones" title="%{getText('verrecorridos.acciones')}" sortable="false" formatter="formatLink"/>
+				<sjg:gridColumn name="idConductor" index="detalle" title="%{getText('verrecorridos.detalle')}" sortable="false" formatter="formatLinkViajero"/>
 			</sjg:grid>
 <script>
 $(document).ready(function(){

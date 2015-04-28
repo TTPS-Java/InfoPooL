@@ -9,11 +9,11 @@
 <body>
 <h4>Login</h4>
 <s:form action="procesarLogin">
-<s:textfield label="Nombre" name="nombre"></s:textfield>
-<s:password label="Contraseña" name="pass"></s:password>
-<s:submit value="Entrar"></s:submit>
+<s:textfield key="login.usuario" name="nombre"></s:textfield>
+<s:password key="login.contrasenia" name="pass"></s:password>
+<s:submit key="login.entrar"></s:submit>
 </s:form>
-<s:a href="Index">Volver</s:a>
+<s:a href="Index"><s:text name="aplicacion.volver"/></s:a>
 
 </body>
 </html>

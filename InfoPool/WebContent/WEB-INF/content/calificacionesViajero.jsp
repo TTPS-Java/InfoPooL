@@ -5,18 +5,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Calificaciones de usuario</title>
+<title><s:text name = "calificaciones.calificacion"/></title>
 </head>
 <body>
-    <s:a href="tablaDeRecorridosAction">Volver</s:a>
-     <h4 style="color:red">calificaciones negativas:<s:property value="votosNegativos" /></h4>
-     <h4 style="color:green">calificaciones positivas:<s:property value="votosPositivos" /></h4>
-     <h3>Nombre de Usuario:<s:property value="viajero.nombreUsuario"/></h3>
-     <h3>Nombre :<s:property value="viajero.Nombre"/></h3>
-     <h3>Apellido:<s:property value="viajero.Apellido"/></h3>
-     <h3>Telefono:<s:property value="viajero.telefono"/></h3>
+    <s:a href="tablaDeRecorridosAction"><s:text name = "aplicacion.volver"/></s:a>
+     <h4 style="color:red"><s:text name = "calificaciones.negativas"/>:<s:property value="votosNegativos" /></h4>
+     <h4 style="color:green"><s:text name = "calificaciones.positivas"/>:<s:property value="votosPositivos" /></h4>
+     <h3><s:text name = "registro.usuario"/>:<s:property value="viajero.nombreUsuario"/></h3>
+     <h3><s:text name = "registro.nombre"/> :<s:property value="viajero.Nombre"/></h3>
+     <h3><s:text name = "registro.apellido"/>:<s:property value="viajero.Apellido"/></h3>
+     <h3><s:text name = "registro.telefono"/>:<s:property value="viajero.telefono"/></h3>
      <table>
-        <tr><th>Usuario</th><th></th></tr>
+        <tr><th><s:text name = "registro.usuario"/></th><th></th></tr>
      <s:iterator value="calificaciones">
         <tr>
         <td><s:property value="autor.nombreUsuario"/> </td>

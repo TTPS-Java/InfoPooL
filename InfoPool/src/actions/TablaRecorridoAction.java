@@ -112,7 +112,7 @@ public class TablaRecorridoAction extends ActionSupport {
 		return (String) session.get("horaMaxima");
 	}
     public  String getHoraMinima() {
-		return (String) session.get("horaMaxima");
+		return (String) session.get("horaMinima");
 	}
     public String getViajeSeleccionado() {
 		return this.getText("db."+(String) session.get("viajeSeleccionado"));
@@ -198,7 +198,7 @@ public String cambioDatosTablaDeRecorridosAction(){
        viajeDAO.recuperarViajesCompletosJSON(from,to,sidx,sord,this.getIdEvento(),this.getFechaMinima(),
        this.getFechaMaxima(),this.getHoraMaxima(),this.getHoraMinima(),this.getViajeSeleccionado(),t,idConductor));
 	   this.inicializar();
-	   //la lista t trae el tamaño total de la consulta sin cortar por el from ni to
+	   //la lista t trae el tamaï¿½o total de la consulta sin cortar por el from ni to
 	   record = t.get(0);
 	   gridModel = this.getViajes();
 	   total = (int) Math.ceil((double) record / (double) rows);
