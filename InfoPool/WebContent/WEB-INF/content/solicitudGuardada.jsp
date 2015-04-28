@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Solicitud guardada</title>
+<title><s:text name="pedir_asientos.guardado"/></title>
 </head>
 <body>
-	<h4>Se ha enviado la solicitud (${cantAsientos} asientos)</h4>
+	<h4><s:text name="pedir_asientos.guardado"/> (${cantAsientos})</h4>
 	<br>
-	<s:a href="Index">Volver</s:a>
+	<s:a href="Index"><s:text name="aplicacion.volver"/></s:a>
 </body>
 </html>

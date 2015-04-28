@@ -8,7 +8,7 @@
 <title><s:text  name="misviajes.titulo" /></title>
 </head>
 <body>
-   <s:a href="Index">Volver</s:a>
+   <s:a href="Index"><s:text name="aplicacion.volver"/></s:a>
    <h3><s:text  name="misviajes.titulo" /></h3>
    <table>
      <tr>

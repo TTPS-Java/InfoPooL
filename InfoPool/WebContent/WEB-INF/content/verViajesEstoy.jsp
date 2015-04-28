@@ -8,7 +8,7 @@
 <title><s:text  name="viajesestoy.titulo" /></title>
 </head>
 <body>
-<s:a href="Index">volver</s:a>
+<s:a href="Index"><s:text name = "aplicacion.volver"/></s:a>
 <h2><s:text  name="viajesestoy.titulo" /> : ${solicitudes.size()}</h2>
 <table>
      <tr>

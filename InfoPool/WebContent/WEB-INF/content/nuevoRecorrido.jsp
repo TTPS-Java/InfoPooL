@@ -4,12 +4,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<s:head/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
 <title></title>
 </head>
 <body>
-<s:a href="Index">Volver</s:a>
+<s:a href="Index"><s:text name="aplicacion.volver"/></s:a>
 <s:form action="guardarRecorridoAction" method="post">
 <s:radio name="boton"  list="tiposDeViajes" cssClass="bb" value="defaultTipoDeViaje"/>
 <s:checkboxlist list="dias" cssClass="misDias" name="misDias" value="defaultDia"/>

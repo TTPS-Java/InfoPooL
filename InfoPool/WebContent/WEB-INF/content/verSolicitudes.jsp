@@ -46,6 +46,6 @@
     </s:iterator>
     </table>
     <br>
-    <s:a href="Index">Volver</s:a>
+    <s:a href="Index"><s:text name="aplicacion.volver"/></s:a>
 </body>
 </html>
