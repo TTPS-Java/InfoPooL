@@ -61,12 +61,12 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 			try {
 				id = Long.parseLong(req.getParameter("idEvento"));
 			} catch (NumberFormatException e) {
-				addActionError("Debe elegir un elemento valido para modificar"); //XXX this.getText("evento.error_modificar")
+				addActionError(this.getText("evento.error_modificar"));
 				verEventos();
 				return ERROR;
 			}
 			if(!eventoDAO.existe(id)) {
-				addActionError("El evento no existe"); //XXX this.getText("evento.evento_no_existe")
+				addActionError(this.getText("evento.evento_no_existe"));
 				verEventos();
 				return ERROR;
 			};
@@ -91,12 +91,12 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 			try {
 				id = Long.parseLong(req.getParameter("idEvento"));
 			} catch (NumberFormatException e) {
-				addActionError("Debe elegir un elemento valido para mostrar"); //XXX this.getText("evento.error_mostrar")
+				addActionError(this.getText("evento.error_mostrar"));
 				verEventos();
 				return ERROR;
 			}
 			if(!eventoDAO.existe(id)) {
-				addActionError("El evento no existe"); //XXX this.getText("evento.evento_no_existe")
+				addActionError(this.getText("evento.evento_no_existe"));
 				verEventos();
 				return ERROR;
 			};
@@ -119,7 +119,7 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 		if( session.get("esAdmin")!=null && true==(Boolean)session.get("esAdmin")){
 			HttpServletRequest req = (HttpServletRequest)ActionContext.getContext().get(ServletActionContext.HTTP_REQUEST);
 			if(req.getParameter("idEvento")==null){
-				addActionError("Debe elegir un elemento valido para borrar"); //XXX this.getText("evento.error_borrar")
+				addActionError(this.getText("evento.error_borrar"));
 				verEventos();
 				return ERROR;
 			}
@@ -127,17 +127,17 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 			try {
 				id = Long.parseLong(req.getParameter("idEvento"));
 			} catch (NumberFormatException e) {
-				addActionError("Debe elegir un elemento valido para borrar"); //XXX this.getText("evento.error_borrar")
+				addActionError(this.getText("evento.error_borrar"));
 				verEventos();
 				return ERROR;
 			}
 			if(!eventoDAO.existe(id)) {
-				addActionError("El evento no existe"); //XXX this.getText("evento.evento_no_existe")
+				addActionError(this.getText("evento.evento_no_existe"));
 				verEventos();
 				return ERROR;
 			};
 			if(eventoDAO.estaEnUnViaje(id)) {
-				addActionError("El evento esta en un viaje y no se puede borrar"); //XXX this.getText("evento.evento_con_viajes")
+				addActionError(this.getText("evento.evento_con_viajes"));
 				verEventos();
 				return ERROR;
 			};
@@ -197,22 +197,22 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 	@Override
 	public void validate() {
 		if((evento.getNombre()==null)||(evento.getNombre().equals(""))){
-			addFieldError("nombre","Debe ingresar un nombre" ); //XXX this.getText("evento.falta_nombre")
+			addFieldError("nombre",this.getText("evento.falta_nombre") );
 		}
 		if((evento.getDescripcion()==null)||(evento.getDescripcion().equals(""))){
-			addFieldError("descripcion", "Debe ingresar una descripcion"); //XXX this.getText("evento.falta_descr")
+			addFieldError("descripcion", this.getText("evento.falta_descr"));
 		}
 		if((evento.getLugar().getDescripcion()==null)||(evento.getLugar().getDescripcion().equals(""))){
-			addFieldError("lugar.descripcion", "Debe ingresar un lugar"); //XXX this.getText("evento.falta_lugar")
+			addFieldError("lugar.descripcion", this.getText("evento.falta_lugar"));
 		}
 		if((evento.getFecha()==null)||(evento.getFecha().equals(""))){
-			addFieldError("fecha", "Debe ingresar una fecha"); //XXX this.getText("evento.falta_fecha")
+			addFieldError("fecha", this.getText("evento.falta_fecha"));
 		}
 		if(evento.getDuracionDias()==0){
-			addFieldError("duracionDias", "Debe ingresar una duracion"); //XXX this.getText("evento.falta_duracion")
+			addFieldError("duracionDias", this.getText("evento.falta_duracion"));
 		} 
 		if((evento.getHora()==null)||(evento.getHora().equals(""))||!evento.getHora().matches("^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$")){
-			addFieldError("hora", "Debe ingresar una hora"); //XXX this.getText("evento.falta_hora")
+			addFieldError("hora", this.getText("evento.falta_hora"));
 		}
 	}
 

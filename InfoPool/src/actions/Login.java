@@ -2,31 +2,16 @@ package actions;
 
 import interfacesDAO.AdministradorDAO;
 import interfacesDAO.UsuarioDAO;
-
-import java.util.Map;
+import objetos.Administrador;
+import objetos.Usuario;
+import objetos.Viajero;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.dispatcher.SessionMap;
-import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
-import DAOhiberJPA.AdministradorDAOhiberJPA;
-import DAOhiberJPA.FactoryDAO;
-import objetos.Administrador;
-import objetos.Usuario;
-
-
-
-
-
-
-
-
-
-import objetos.Viajero;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -78,7 +63,7 @@ public class Login extends ActionSupport  {
 		session = (SessionMap<String, Object>) ActionContext.getContext().getSession();
 		boolean viajeroBloqueado = false;
 		if (us == null) {
-			addFieldError("nombre", "El usuario no existe");
+			addFieldError("nombre", getText("login.usuario_no_existe"));
 			return INPUT;
 		} else {
 			
@@ -89,7 +74,7 @@ public class Login extends ActionSupport  {
 				}
 			}
 		 if(viajeroBloqueado==true){
-			 addFieldError("nombre", "Usted se encuentra bloqueado");
+			 addFieldError("nombre", getText("login.bloqueado"));
 			 return INPUT;
 		 }else{	
 			   if (us.getContrasenia().equals(pass)) {
@@ -101,7 +86,7 @@ public class Login extends ActionSupport  {
 				     session.put("usuario", us.getId());
 				    return SUCCESS;
 			   } else {
-				addFieldError("pass", "Clave incorrecta");
+				addFieldError("pass", getText("login.clave_incorrecta"));
 				return INPUT;
 			   }
 		  }
@@ -111,10 +96,10 @@ public class Login extends ActionSupport  {
 	@Override
 	public void validate() {
 		if ((getNombre() == null) || (getNombre().equals(""))) {
-			addFieldError("nombre", "Debe ingresar un nombre de usuario");
+			addFieldError("nombre", getText("login.falta_usuario"));
 		}
 		if ((getPass() == null) || (getPass().equals(""))) {
-			addFieldError("pass", "Debe ingresar una contraseña");
+			addFieldError("pass", getText("login.falta_pass"));
 		}
 	}
 

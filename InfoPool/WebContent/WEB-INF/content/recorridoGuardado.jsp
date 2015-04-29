@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Recorrido guardado</title>
+<title><s:text name="nuevorecorrido.recorrido_guardado"/></title>
 </head>
 <body>
-    <h4>Se ha guardado recorrido correctamente</h4>
+    <h4><s:text name="nuevorecorrido.recorrido_guardado"/></h4>
     <br>
-	<a href="recorridoNuevoAction">Volver</a>
+	<a href="recorridoNuevoAction"><s:text name="aplicacion.volver"/></a>
 </body>
 </html>

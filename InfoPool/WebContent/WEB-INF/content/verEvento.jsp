@@ -6,21 +6,20 @@
 <head>
 <s:head/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Ver Evento</title>
+<title><s:text name="evento.ver_evento"/></title>
 </head>
 <body>
-	<h4>Ver Evento</h4>
+	<h4><s:text name="evento.ver_evento"/></h4>
 	<table>
-	<tr><td>Nombre:</td><td>${evento.nombre}</td></tr>
-	<tr><td>Descripcion:</td><td>${evento.descripcion}</td></tr>
-	<tr><td>Fecha:</td><td><s:date name="evento.fecha" format="dd/MM/yyyy"/></td></tr>
-	<tr><td>Duracion</td><td>${evento.duracionDias} dias</td></tr>
-	<tr><td>Hora:</td><td>${evento.hora}</td></tr>
-	<tr><td>Lugar</td><td>${evento.lugar.descripcion}</td></tr>
-	<tr><td>~mapa~</td><td></td></tr>
+	<tr><td><s:text name="evento.nombre"/>:</td><td>${evento.nombre}</td></tr>
+	<tr><td><s:text name="evento.descr"/>:</td><td>${evento.descripcion}</td></tr>
+	<tr><td><s:text name="evento.fecha"/>:</td><td><s:date name="evento.fecha" format="dd/MM/yyyy"/></td></tr>
+	<tr><td><s:text name="evento.duracion"/></td><td>${evento.duracionDias} dias</td></tr>
+	<tr><td><s:text name="evento.hora"/>:</td><td>${evento.hora}</td></tr>
+	<tr><td><s:text name="evento._lugar"/></td><td>${evento.lugar.descripcion}</td></tr>
 	</table>
+	<s:a href="verEventos"><s:text name="aplicacion.volver"/></s:a>
 	<div id="googleMap" style="width:500px;height:380px;"></div>
-	<s:a href="verEventos">Volver</s:a>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 	<script

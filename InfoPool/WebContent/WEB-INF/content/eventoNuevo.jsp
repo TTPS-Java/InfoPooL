@@ -1,25 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>  
 <!DOCTYPE html>
 <html>
 <head>
+<s:head/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
-<title>Publicar Evento</title>
+<title><s:text name="evento.publicar_evento"/></title>
 </head>
 <body>
-	<h4>Publicar Evento</h4>
+	<h4><s:text name="evento.publicar_evento"/></h4>
 	<s:form action="guardarEvento" method="post">
-		<s:textfield name="nombre" label="Nombre" value="%{evento.nombre}" />
-		<s:textfield name="descripcion" label="Descripcion"	value="%{evento.descripcion}" />
-		<!--<sj:datepicker value="%{fecha}" id="date1" name="fecha" label="Fecha" displayFormat="yy-mm-dd"/>-->
-		<s:textfield id="fecha" name="fecha" label="Fecha" value="%{evento.fecha}" />
-		<s:textfield name="duracionDias" label="Duracion en dias"
+		<s:textfield name="nombre" key="evento.nombre" value="%{evento.nombre}" />
+		<s:textfield name="descripcion" key="evento.descr" value="%{evento.descripcion}" />
+		<s:textfield value="%{fecha}" id="fecha" name="evento.fecha" key="aplicacion.fecha" displayFormat="yy-mm-dd"/>
+		<s:textfield name="duracionDias" key="evento.duracion"
 			value="%{evento.duracionDias}" />
-		<s:textfield name="hora" label="Hora" value="%{evento.hora}" />
-		<h5>Lugar</h5>
-		<s:textfield name="lugar.descripcion" label="Lugar"
+		<s:textfield name="hora" key="evento.hora" value="%{evento.hora}" />
+		<s:textfield name="lugar.descripcion" key="evento._lugar"
 			value="%{evento.lugar.descripcion}" />
 		<s:hidden id="latitud" name="lugar.latitud" 
 			value="%{evento.lugar.latitud}" />
@@ -27,11 +27,11 @@
 			value="%{evento.lugar.longitud}" />
 		<s:hidden name="evento.id" value="%{evento.id}" />
 		<s:hidden name="evento.lugar.id" value="%{evento.lugar.id}" />
-		<s:submit value="Publicar"></s:submit>
+		<s:submit key="evento.publicar"></s:submit>
 	</s:form>
-	<h4>Seleeccione un lugar:</h4>
+	<h4><s:text name="evento.seleccione_lugar"/>:</h4>
+	<s:a href="verEventos"><s:text name="aplicacion.volver"/></s:a>
 	<div id="googleMap" style="width:500px;height:380px;"></div>
-	<s:a href="verEventos">Volver</s:a>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
 	<script
@@ -42,6 +42,9 @@
 		position : myCenter,
 	});
 	$(document).ready(function(){
+		$("#fecha").datepicker({
+			dateFormat : "dd/mm/yy",
+		});
 		function initialize() {
 			myCenter = new google.maps.LatLng(-34.903808, -57.938117);
 			marker = new google.maps.Marker({
@@ -75,7 +78,7 @@
 		}
 		initialize();
 		$("#fecha").datepicker({
-			dateFormat : "dd/mm/yy",
+			dateFormat : "dd-mm-yy",
 		});
 	});
 	</script>
