@@ -8,7 +8,7 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 	<property name="host" value="smtp.gmail.com" />
 	<property name="port" value="587" />
 	<property name="username" value="toraylatv@gmail.com" />
-	<property name="password" value="TENGO1gata" />
+	<property name="password" value="TENGO2gata" />
  
 	<property name="javaMailProperties">
 	   <props>
