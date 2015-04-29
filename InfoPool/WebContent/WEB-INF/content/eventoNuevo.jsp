@@ -15,7 +15,7 @@
 	<s:form action="guardarEvento" method="post">
 		<s:textfield name="nombre" key="evento.nombre" value="%{evento.nombre}" />
 		<s:textfield name="descripcion" key="evento.descr" value="%{evento.descripcion}" />
-		<s:textfield value="%{fecha}" id="fecha" name="evento.fecha" key="aplicacion.fecha" displayFormat="yy-mm-dd"/>
+		<s:textfield value="%{evento.fecha}" id="fecha" name="evento.fecha" key="aplicacion.fecha"/>
 		<s:textfield name="duracionDias" key="evento.duracion"
 			value="%{evento.duracionDias}" />
 		<s:textfield name="hora" key="evento.hora" value="%{evento.hora}" />
@@ -43,7 +43,7 @@
 	});
 	$(document).ready(function(){
 		$("#fecha").datepicker({
-			dateFormat : "dd/mm/yy",
+			dateFormat : "<s:text name = "formato_fecha"/>",
 		});
 		function initialize() {
 			myCenter = new google.maps.LatLng(-34.903808, -57.938117);
@@ -77,9 +77,6 @@
 			map.panTo(position);
 		}
 		initialize();
-		$("#fecha").datepicker({
-			dateFormat : "dd-mm-yy",
-		});
 	});
 	</script>
 

@@ -13,8 +13,8 @@
 	<s:text name="mensaje.para"/>:<s:property value="#session.destinatario.apellido"/>&nbsp;
 <s:property value="#session.destinatario.nombre"/> <%-- <s:text name="mensaje.para"/> --%>
 	<s:form action="guardarMensaje">
-		<s:textfield key="mensaje.asunto" name="mensaje.asunto"/>
-		<s:textfield key="mensaje.contenido" name="mensaje.contenido"/>
+		<s:textfield key="mensaje.asunto" name="asunto"/>
+		<s:textfield key="mensaje.contenido" name="contenido"/>
 		<s:submit key="mensaje.enviar"/>
 	</s:form>
 	<br>

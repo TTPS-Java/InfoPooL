@@ -84,10 +84,10 @@ function formatLinkViajero(cellvalue, options, rowObject) {
 <script>
 $(document).ready(function(){
 	  $("#fechaMinima").datepicker({
-			dateFormat : "dd/mm/yy",
+			dateFormat : "<s:text name = "formato_fecha"/>",
 		});
 	  $("#fechaMaxima").datepicker({
-			dateFormat : "dd/mm/yy",
+			dateFormat : "<s:text name = "formato_fecha"/>",
 		}); 
 });
 </script>

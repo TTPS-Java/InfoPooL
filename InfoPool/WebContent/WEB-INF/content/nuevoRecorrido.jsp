@@ -28,7 +28,7 @@
 <s:hidden id="latitudDestino" name="viaje.hasta.latitud" value="%{viaje.hasta.latitud}"/>
 <s:hidden id="longitudDestino" name="viaje.hasta.longitud" value="%{viaje.hasta.longitud}" />		
 <s:hidden  id="datoJSON" name="coordenadasEventos"  />
-<s:select  headerKey="-1" headerValue="Sin evento asociado" id="selectEvento" 
+<s:select  headerKey="-1" headerValue="%{getText('verrecorridos.sin_evento')}" id="selectEvento" 
    key="nuevorecorrido.eventoasociado" value="%{idElegido}"   list="eventos"  listKey="id" listValue="nombre" name="idElegido"/>
 <s:submit key="nuevorecorrido.guardarrecorrido"/>	
 </s:form>
@@ -191,12 +191,12 @@ $(document).ready(function(){
 		pincharEvento(map);
 	});
 	
-	if($('#guardarRecorridoAction_botonviaje_puntual').is(':checked')){
+	if($('#guardarRecorridoAction_botonPeriodic_trip').is(':checked')){
 		$(".misDias").hide();
     	$(".checkboxLabel").hide();
     	$(".misDias").attr('checked', false);
 	}
-	if($('#guardarRecorridoAction_botontimely_trip').is(':checked')){
+	if($('#guardarRecorridoAction_botonOne_time_trip').is(':checked')){
 		$(".misDias").hide();
     	$(".checkboxLabel").hide();
     	$(".misDias").attr('checked', false);
@@ -211,17 +211,17 @@ $(document).ready(function(){
     	$(".checkboxLabel").hide();
     	$(".misDias").attr('checked', false);
     });
-    $("#guardarRecorridoAction_botontrip_newspaper").click(function(){
+    $("#guardarRecorridoAction_botonPeriodic_trip").click(function(){
 			$(".misDias").show();
 			$(".checkboxLabel").show(); 	
 	});
-	$("#guardarRecorridoAction_botontimely_trip").click(function(){
+	$("#guardarRecorridoAction_botonOne_time_trip").click(function(){
 		$(".misDias").hide();
     	$(".checkboxLabel").hide();
     	$(".misDias").attr('checked', false);
     });
     $("#fecha").datepicker({
-		dateFormat : "dd/mm/yy",
+		dateFormat : "<s:text name = "formato_fecha"/>",
 	});
   function dibujar(){	
 	 if(!($("#latitudOrigen").val()==0) && !($("#longitudOrigen").val()==0) ){

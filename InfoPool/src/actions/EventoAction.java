@@ -206,7 +206,7 @@ public class EventoAction extends ActionSupport implements ModelDriven<Evento> {
 			addFieldError("lugar.descripcion", this.getText("evento.falta_lugar"));
 		}
 		if((evento.getFecha()==null)||(evento.getFecha().equals(""))){
-			addFieldError("fecha", this.getText("evento.falta_fecha"));
+			addFieldError("evento.fecha", this.getText("evento.falta_fecha"));
 		}
 		if(evento.getDuracionDias()==0){
 			addFieldError("duracionDias", this.getText("evento.falta_duracion"));

@@ -133,7 +133,7 @@ public class recorridoAction extends ActionSupport {
 	}
 	public String getDefaultTipoDeViaje(){
 		if(this.boton.equals("")){
-			return this.getText("nuevorecorrido.viaje_periodico");
+			return this.getText("nuevorecorrido.viaje_puntual");
 		}else{
 			return this.boton;
 		}
@@ -379,7 +379,7 @@ public class recorridoAction extends ActionSupport {
 		}
 		if(vs!=null){
 	     ArrayList<Solicitud> solicit=(ArrayList<Solicitud>) this.solicitudDao.recuperarPorSolicitante(vs);
-	     System.out.println("tamaño solicitudes:"+solicit.size());
+	     System.out.println("tamaï¿½o solicitudes:"+solicit.size());
 	     this.solicitudes = new ArrayList<Solicitud>();
 	     for(Solicitud s:solicit){
 	    	if(s.getEstado().getNombre().equals("Aceptada")) 

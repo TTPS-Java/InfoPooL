@@ -10,6 +10,6 @@
 <body>
     <h4><s:text name="nuevorecorrido.recorrido_guardado"/></h4>
     <br>
-	<a href="recorridoNuevoAction"><s:text name="aplicacion.volver"/></a>
+	<a href="Index"><s:text name="aplicacion.volver"/></a>
 </body>
 </html>
