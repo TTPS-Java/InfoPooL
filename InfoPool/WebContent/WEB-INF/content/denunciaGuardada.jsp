@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Denuncia guardada</title>
+<title><s:text name = "denuncia.denuncia_guardada"/></title>
 </head>
 <body>
-	<h4>Se ha guardado la denuncia. Se notificar&aacute; al administrador.</h4>
+	<h4><s:text name = "denuncia.mensaje_guardada"/></h4>
 	<br>
-	<s:a href="Index">Volver</s:a>
+	<s:a href="Index"><s:text name = "aplicacion.volver"/></s:a>
 </body>
 </html>

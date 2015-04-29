@@ -5,11 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Calificar a un usuario</title>
+<title><s:text name="calificaciones.titulo"/></title>
 </head>
 <body>
-    <s:a href="Index">Volver</s:a>
-    <h3>Calificar usuario</h3>
+    <s:a href="Index"><s:text name="aplicacion.volver"></s:text></s:a>
+    <h3><s:text name="calificaciones.titulo"/></h3>
     <s:form action="guardarCalificacionAction" method="post">
         <s:hidden name="idCalificado" value="%{idCalificado}" />
         <s:hidden name="idViaje" value="%{idViaje}" />

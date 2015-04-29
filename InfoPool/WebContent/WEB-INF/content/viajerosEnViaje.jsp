@@ -5,12 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>viajeros en el viaje</title>
+<title><s:text name = "verviajeros.en_viaje"/></title>
 </head>
 <body>
-<s:a href="verMisViajes">volver</s:a>
+<s:a href="verMisViajes"><s:text name="aplicacion.volver"/></s:a>
 <table>
-<tr><th>Usuario</th><th>nombre</th><th>apellido</th></tr>
+<tr><th><s:text name="registro.usuario"/></th><th><s:text name="registro.nombre"/></th><th><s:text name="registro.apellido"/></th></tr>
   <s:iterator value="viajerosEnViaje">
     <tr>
       <td><s:property value="nombreUsuario"/></td><td><s:property value="nombre"/></td><td><s:property value="apellido"/></td>

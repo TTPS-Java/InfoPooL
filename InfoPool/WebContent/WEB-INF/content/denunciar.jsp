@@ -17,6 +17,6 @@
 		<s:submit key="denunciar.enviar"/>
 	</s:form>
 	<br>
-	<s:a href="Index">Volver</s:a>
+	<s:a href="Index"><s:text name = "aplicacion.volver"/></s:a>
 </body>
 </html>
