@@ -133,7 +133,7 @@ public class recorridoAction extends ActionSupport {
 	}
 	public String getDefaultTipoDeViaje(){
 		if(this.boton.equals("")){
-			return this.getText("nuevorecorrido.viaje_puntual");
+			return this.getText("nuevorecorrido.viaje_periodico");
 		}else{
 			return this.boton;
 		}

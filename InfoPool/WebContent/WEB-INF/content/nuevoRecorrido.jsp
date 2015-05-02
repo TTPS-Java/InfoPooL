@@ -20,9 +20,15 @@
 <s:textfield id="asientosLibres" name="viaje.asientosLibres" value="%{viaje.asientosLibres}" key="nuevorecorrido.asientoslibres"  />
 <s:textfield name="viaje.desde.descripcion" value="%{viaje.desde.descripcion}" key="nuevorecorrido.nombrelugarorigen" />
 <s:textfield name="viaje.hasta.descripcion" value="%{viaje.hasta.descripcion}" key="nuevorecorrido.nombrelugardestino" />
+
+	
+<s:if test="%{viaje.id==null}"> 
+</s:if>
+<s:else>
 <s:hidden name="viaje.id" value="%{viaje.id}" />
 <s:hidden name="viaje.desde.id" value="%{viaje.desde.id}" />
 <s:hidden name="viaje.hasta.id" value="%{viaje.hasta.id}" />
+</s:else>
 <s:hidden id="latitudOrigen" name="viaje.desde.latitud" value="%{viaje.desde.latitud}"  />
 <s:hidden id="longitudOrigen" name="viaje.desde.longitud" value="%{viaje.desde.longitud}" /> 
 <s:hidden id="latitudDestino" name="viaje.hasta.latitud" value="%{viaje.hasta.latitud}"/>
@@ -30,7 +36,7 @@
 <s:hidden  id="datoJSON" name="coordenadasEventos"  />
 <s:select  headerKey="-1" headerValue="%{getText('verrecorridos.sin_evento')}" id="selectEvento" 
    key="nuevorecorrido.eventoasociado" value="%{idElegido}"   list="eventos"  listKey="id" listValue="nombre" name="idElegido"/>
-<s:submit key="nuevorecorrido.guardarrecorrido"/>	
+<s:submit key="nuevorecorrido.guardarrecorrido" name="nada"/>	
 </s:form>
 <br />
 <input id="reset" type="button" value="Reset" />
@@ -191,7 +197,7 @@ $(document).ready(function(){
 		pincharEvento(map);
 	});
 	
-	if($('#guardarRecorridoAction_botonPeriodic_trip').is(':checked')){
+	if($('#guardarRecorridoAction_botonviaje_puntual').is(':checked')){
 		$(".misDias").hide();
     	$(".checkboxLabel").hide();
     	$(".misDias").attr('checked', false);
